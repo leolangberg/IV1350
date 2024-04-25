@@ -6,6 +6,7 @@
 <h2>Notes</h2>
 <ul>
   <li>rename SalesHandler to PoS? </li>
+  <li>is "Payment" class ever used? (not "PaymentDTO")</li>
 </ul>
 
 <h2>Questions</h2>
