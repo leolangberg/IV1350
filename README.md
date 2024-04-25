@@ -20,6 +20,6 @@
 <h3>Further Questions:</h3>
 
 <ul>
-  <li>Testing with objects?</li>
+  <li>Testing without static instances?</li>
 </ul>
 
