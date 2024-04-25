@@ -4,11 +4,12 @@
 <h6> mvn compile </h6>
 <h6> mvn exec:java </h6>
 <h2>Notes</h2>
-<ul>
-  <li>rename SalesHandler to PoS? </li>
-  <li>is "Payment" class ever used? (not "PaymentDTO")</li>
-</ul>
-
+<h6>
+  <ul>
+    <li>rename SalesHandler to PoS? </li>
+    <li>is "Payment" class ever used? (not "PaymentDTO")</li>
+  </ul>
+</h6>
 <h2>Questions</h2>
 <h3>Appropriate response regarding task2 feedback:</h3>
 <ul>
