@@ -6,12 +6,12 @@ import java.util.*;
 public class SaleDTO {
 
     private final int sale_id;
-    private final List<ItemDTO> itemList;
+    private final Map<ItemDTO, Integer> itemList;
     private final double totalPrice;
     private final double totalVAT;
     private final double totalDiscount;
 
-    public SaleDTO(int sale_id, List<ItemDTO> itemList, double totalPrice, double totalVAT,
+    public SaleDTO(int sale_id, Map<ItemDTO, Integer> itemList, double totalPrice, double totalVAT,
             double totalDiscount) {
 
         this.sale_id = sale_id;
@@ -40,7 +40,7 @@ public class SaleDTO {
         return sale_id;
     }
 
-    public List<ItemDTO> getSaleItemList() {
+    public Map<ItemDTO, Integer> getSaleItemList() {
 
         return itemList;
     }

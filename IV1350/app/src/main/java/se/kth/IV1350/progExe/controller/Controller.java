@@ -57,7 +57,8 @@ public class Controller {
             return false;
         }
         salesHandler.addItem(itemDTO);
-        display.PrintItem(itemDTO);
+        display.printItem(itemDTO);
+        display.printSale(salesHandler.getSaleDTO());
         return true;
     }
 
@@ -76,19 +77,17 @@ public class Controller {
     }
 
     /**
-     * Asks salesHandler to create DTO version of current Sale Display SaleDTO.
-     * 
-     * COULD POTENTIALLY BE NULL VALUE?
-     * 
-     * maybe directly link newPayment() in endSale()
+     * Tells salesHandler to end Sale.
+     * The returned saleDTO is sent to check for discounts.
+     * A new updated saleDTO is then sent to display.
      */
     public void endSale() {
 
-        SaleDTO saleDTO = salesHandler.getSaleDTO();
+        SaleDTO saleDTO = salesHandler.endSale();
         DiscountDTO discountDTO = externalDiscountSys.getDiscount(saleDTO.getSaleItemList());
         salesHandler.applyDiscount(discountDTO); // updates saleDTO
 
-        display.PrintSale(salesHandler.getSaleDTO());
+        display.printEndSale(salesHandler.getSaleDTO());
 
     }
 
@@ -99,21 +98,20 @@ public class Controller {
     public boolean Payment(PaymentType enumType, double amountPaid) {
 
         SaleDTO saleDTO = salesHandler.getSaleDTO();
-        PaymentDTO paymentDTO =
-                new PaymentDTO(saleDTO.getSaleID(), enumType, saleDTO.getSalePrice(),
-                        saleDTO.getSaleDiscount(), saleDTO.getSaleVAT(), amountPaid);
+        PaymentDTO paymentDTO = new PaymentDTO(amountPaid, enumType, saleDTO);
         boolean paymentSuccess = salesHandler.transaction(paymentDTO);
 
-        if (paymentSuccess) {
-            // CREATE RECEIPT
+        if (paymentSuccess) { // CREATE RECEIPT
+
             ReceiptDTO receiptDTO = salesHandler.getReceiptDTO();
-            display.PrintReceipt(receiptDTO);
+            display.printReceipt(receiptDTO);
             cashRegister.updateCashRegister(amountPaid, paymentDTO.getPaymentChange());
             externalAccountingSys.logReceipt(receiptDTO);
             externalInventorySys.updateItemQuantity(saleDTO.getSaleItemList());
             return true;
+
         } else {
-            // PAYMENT FAILURE
+            display.printPaymentFailure(paymentDTO);
             return false;
         }
     }
@@ -130,7 +128,7 @@ public class Controller {
         boolean discountExists = salesHandler.applyDiscount(discountDTO);
 
         if (discountExists) {
-            display.PrintSale(salesHandler.getSaleDTO()); // print updated price after discount
+            display.printSale(salesHandler.getSaleDTO()); // print updated price after discount
 
             return true;
         } else {

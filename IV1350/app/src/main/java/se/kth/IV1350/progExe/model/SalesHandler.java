@@ -9,19 +9,16 @@ import java.time.LocalDateTime;
 public class SalesHandler {
 
     private Sale currentSale;
-    private Payment currentPayment;
-    private Receipt currentReceipt;
+    private PaymentDTO currentPayment;
+    private ReceiptDTO currentReceipt;
 
     private boolean saleCompleted;
-    private boolean paymentCompleted;
 
 
     public SalesHandler(int sale_id) {
 
         currentSale = new Sale(sale_id);
-
-        // saleCompleted = false;
-        paymentCompleted = false;
+        saleCompleted = false;
     }
 
 
@@ -42,7 +39,7 @@ public class SalesHandler {
      */
     public PaymentDTO getPaymentDTO() {
 
-        return new PaymentDTO(currentPayment);
+        return currentPayment;
     }
 
 
@@ -51,13 +48,13 @@ public class SalesHandler {
      */
     public ReceiptDTO getReceiptDTO() {
 
-        return new ReceiptDTO(currentReceipt);
+        return currentReceipt;
     }
 
 
     /**
+     * Adds ItemDTOs to current Sale. 
      * Checks wether sale is completed or not
-     *
      */
     public boolean addItem(ItemDTO itemDTO) {
 
@@ -66,6 +63,24 @@ public class SalesHandler {
             return true;
         }
         return false;
+    }
+
+    public SaleDTO endSale() {
+
+        saleCompleted = true;
+        return getSaleDTO();
+    }
+
+    public boolean transaction(PaymentDTO paymentDTO) {
+
+        if (paymentDTO.getPaymentPrice() > paymentDTO.getPaymentPaid()) {
+            return false;
+        } // not enough money for transaction
+
+        currentPayment = paymentDTO;
+        currentReceipt = new ReceiptDTO(getSaleDTO(), paymentDTO);
+
+        return true;
     }
 
     /**
@@ -95,34 +110,4 @@ public class SalesHandler {
 
         return true;
     }
-
-
-
-    public boolean Payment(PaymentDTO paymentDTO) {
-
-        if (!paymentCompleted) {
-            currentPayment = new Payment(paymentDTO);
-            paymentCompleted = true;
-            saleCompleted = true; // once payment is initialized you cannot add more items.
-            return true;
-        }
-        return false;
-    }
-
-
-
-    public boolean transaction(PaymentDTO paymentDTO) {
-
-        if (paymentDTO.getPaymentPrice() > paymentDTO.getPaymentPaid()) {
-            return false;
-        } // not enough money for transaction
-
-        currentPayment = new Payment(paymentDTO);
-        currentReceipt = new Receipt(new ReceiptDTO(123, currentSale, currentPayment)); // localtime
-
-        return true;
-    }
-
-
-
 }
