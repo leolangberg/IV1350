@@ -1,6 +1,5 @@
 package se.kth.IV1350.progExe.integration.external;
 
-import se.kth.IV1350.progExe.model.Item;
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 
 
@@ -31,7 +30,7 @@ public class ExternalInventorySys {
     }
 
 
-    public void updateItemQuantity(List<ItemDTO> itemList) {
+    public void updateItemQuantity(Map<ItemDTO, Integer> itemList) {
 
     }
 
@@ -45,7 +44,7 @@ public class ExternalInventorySys {
         public InventorySysDatabase() {
     
             this.Inventory = new Shelf[100];
-            //fillInventoryScript();
+            fillInventoryScript();
     
         }
     

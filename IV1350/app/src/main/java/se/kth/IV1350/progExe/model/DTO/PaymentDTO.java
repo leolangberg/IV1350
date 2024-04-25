@@ -1,6 +1,5 @@
 package se.kth.IV1350.progExe.model.DTO;
 
-import se.kth.IV1350.progExe.model.Payment;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
 public class PaymentDTO {
@@ -31,16 +30,16 @@ public class PaymentDTO {
 
     }
 
+    public PaymentDTO(double amountPaid, PaymentType enumType, SaleDTO saleDTO) {
 
-    public PaymentDTO(Payment payment) {
+        this.payment_id = saleDTO.getSaleID();
+        this.enumType = enumType;
+        this.totalPrice = saleDTO.getSalePrice();
+        this.discountApplied = saleDTO.getSaleDiscount();
+        this.totalVAT = saleDTO.getSaleVAT();
+        this.amountPaid = amountPaid;
 
-        this.payment_id = payment.getPaymentID();
-        this.enumType = payment.getPaymentType();
-        this.totalPrice = payment.getPaymentPrice();
-        this.discountApplied = payment.getPaymentDiscount();
-        this.totalVAT = payment.getPaymentVAT();
-        this.amountPaid = payment.getPaymentPaid();
-        this.change = payment.getPaymentChange();
+        this.change = amountPaid - totalPrice;
     }
 
     public int getPaymentID() {

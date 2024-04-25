@@ -1,8 +1,6 @@
 package se.kth.IV1350.progExe.model.DTO;
 
-import se.kth.IV1350.progExe.model.Sale;
-import se.kth.IV1350.progExe.model.Payment;
-import se.kth.IV1350.progExe.model.Receipt;
+import java.time.LocalDateTime;
 
 /**
  * ReceiptDTO class consist of a log for Sale + Payment + (time)
@@ -12,38 +10,31 @@ import se.kth.IV1350.progExe.model.Receipt;
  */
 public class ReceiptDTO {
 
-    private final long time;
-    private final Sale sale;
-    private final Payment payment;
+    private final LocalDateTime time;
+    private final SaleDTO saleDTO;
+    private final PaymentDTO paymentDTO;
 
-    public ReceiptDTO(long time, Sale sale, Payment payment) {
+    public ReceiptDTO(SaleDTO saleDTO, PaymentDTO paymentDTO) {
 
-        this.time = time;
-        this.sale = sale;
-        this.payment = payment;
+        this.time = LocalDateTime.now();
+        this.saleDTO = saleDTO;
+        this.paymentDTO = paymentDTO;
 
     }
 
-    public ReceiptDTO(Receipt receipt) {
-
-        this.time = receipt.getReceiptTime();
-        this.sale = receipt.getReceiptSale();
-        this.payment = receipt.getReceiptPayment();
-    }
-
-    public long getReceiptTime() {
+    public LocalDateTime getReceiptTime() {
 
         return time;
     }
 
-    public Sale getReceiptSale() {
+    public SaleDTO getReceiptSale() {
 
-        return sale;
+        return saleDTO;
     }
 
-    public Payment getReceiptPayment() {
+    public PaymentDTO getReceiptPayment() {
         
-        return payment;
+        return paymentDTO;
     }
 
 

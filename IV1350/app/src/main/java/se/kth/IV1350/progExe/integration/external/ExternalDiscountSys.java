@@ -39,7 +39,7 @@ public class ExternalDiscountSys {
      * When passed a list of all bought items, it tells a sum to be reduced from the total cost of
      * the entire sale. The sum is zero if there’s no discount.
      */
-    public DiscountDTO getDiscount(List<ItemDTO> itemlist) {
+    public DiscountDTO getDiscount(Map<ItemDTO, Integer> itemlist) {
 
         double sum = 0;
         // lookup on each specific item

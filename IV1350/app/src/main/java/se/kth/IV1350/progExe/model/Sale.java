@@ -1,7 +1,7 @@
 package se.kth.IV1350.progExe.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 
 
@@ -17,7 +17,7 @@ import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 public class Sale {
 
     private int sale_id;
-    private List<ItemDTO> itemList; // turn into map with quantity
+    private Map<ItemDTO, Integer> itemList; // turn into map with quantity
     private double totalPrice;
     private double totalVAT;
     private double totalDiscount;
@@ -25,7 +25,7 @@ public class Sale {
     public Sale(int sale_id) {
 
         this.sale_id = sale_id;
-        this.itemList = new ArrayList<>();
+        this.itemList = new HashMap<>();
 
     };
 
@@ -34,7 +34,7 @@ public class Sale {
         return sale_id;
     }
 
-    public List<ItemDTO> getSaleItemList() {
+    public Map<ItemDTO, Integer> getSaleItemList() {
 
         return itemList;
     }
@@ -57,10 +57,14 @@ public class Sale {
 
     /**
      * Adds items to item list also automatic updates to other ariables.
+     * @function getOrDefault() returns current quantity of that item or 0 if
+     * item does not exist in sale yet.
      */
     public void addItem(ItemDTO itemDTO) {
 
-        itemList.add(itemDTO);
+        int quantity = itemList.getOrDefault(itemDTO, 0);
+
+        itemList.put(itemDTO, (quantity + 1));
         totalPrice += itemDTO.getItemPrice() * itemDTO.getItemVAT(); // "including VAT"
         totalVAT += itemDTO.getItemVAT();
 

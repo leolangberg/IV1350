@@ -1,6 +1,5 @@
 package se.kth.IV1350.progExe.integration.external;
 
-import se.kth.IV1350.progExe.model.Receipt;
 import se.kth.IV1350.progExe.model.DTO.ReceiptDTO;
 
 
