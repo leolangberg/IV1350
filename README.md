@@ -20,6 +20,6 @@
 <h3>Further Questions:</h3>
 
 <ul>
-  <li></li>
+  <li>Testing with objects?</li>
 </ul>
 
