@@ -8,6 +8,7 @@
   <ul>
     <li>rename SalesHandler to PoS? </li>
     <li>is "Payment" class ever used? (not "PaymentDTO")</li>
+    <li>View.updateItemQuantity() same as getItem()</li>
   </ul>
 </h6>
 <h2>Questions</h2>
