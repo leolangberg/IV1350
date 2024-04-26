@@ -11,6 +11,7 @@
     <li> Discounts + correct process </li>
     <li>rename SalesHandler to PoS? </li>
     <li>View.updateItemQuantity() same as getItem()</li>
+    <li>Discount Handling NOT REQUIRED for SEM3</li>
   </ul>
 </h6>
 <h2>Questions</h2>
