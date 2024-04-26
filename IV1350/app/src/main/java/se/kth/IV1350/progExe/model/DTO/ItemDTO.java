@@ -12,7 +12,7 @@ public class ItemDTO {
     private final String itemName;
     private final String description;
     private final double price;
-    private final double VATrate;
+    private final double VATrate; //percentage.
 
 
     /**
