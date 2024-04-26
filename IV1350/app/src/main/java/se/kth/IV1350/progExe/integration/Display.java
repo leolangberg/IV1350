@@ -25,7 +25,7 @@ public class Display {
         System.out.println("Item ID: " + itemDTO.getItemID());
         System.out.println("Item name: " + itemDTO.getItemName());
         System.out.println("Item cost: " + itemDTO.getItemPrice());
-        System.out.println("VAT:" + itemDTO.getItemVAT());
+        System.out.println("VAT: " + (int) (itemDTO.getItemVAT() * 100) + "%");
         System.out.println("Item description: " + itemDTO.getItemDescription());
         System.out.println();
 
