@@ -7,18 +7,21 @@ import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 
 
 /**
- * The Sale class represents a sale of items.
+ * The Sale class represents a Sale of Items.
  * 
- * This class contains the sale ID, item list, total price, total VAT, and total discount of the sale.
+ * @sale_id This Sales unique identifier.
+ * @itemList Maps each itemDTO in Sale to respective Quantity. 
+ * @totalPrice Represents total Price of entire Sale (including VAT).
+ * @totalVAT Represents total VAT of entire Sale (numeral). Note (itemDTO.VATrate is percentage).
+ * @totalDiscount Represents total Discount sum of entire Sale (numeral).
  */
 public class Sale {
 
     private int sale_id;
-    private Map<ItemDTO, Integer> itemList; // turn into map with quantity
+    private Map<ItemDTO, Integer> itemList; 
     private double totalPrice;
-    private double totalVAT;
+    private double totalVAT; 
     private double totalDiscount;
-
 
     /**
      * Constructs a new Sale object.
@@ -82,19 +85,20 @@ public class Sale {
         return totalDiscount;
     }
 
-
     /**
-     * Retrieves the item list of this Sale.
+     * Adds ItemDTO to Sale.
+     * Retrieves and updates current quantity of said ItemDTO in Sale.
      * 
-     * @return The itemList of this Sale, represented as a map with ItemDTO as the key and quantity as the value.
+     * Function also updates totalPrice & totalVat accordingly. 
+     * (Note that totalVAT is numeral while ItemDTO.VAT is percentage). 
      */
     public void addItem(ItemDTO itemDTO) {
 
         int quantity = itemList.getOrDefault(itemDTO, 0);
-
         itemList.put(itemDTO, (quantity + 1));
-        totalPrice += itemDTO.getItemPrice() * itemDTO.getItemVAT(); // "including VAT"
-        totalVAT += itemDTO.getItemVAT();
+
+        totalPrice += itemDTO.getItemPrice();
+        totalVAT += (itemDTO.getItemVAT() * itemDTO.getItemPrice());
 
     }
 
@@ -119,5 +123,4 @@ public class Sale {
         this.totalDiscount *= (1 - percentage);
         this.totalPrice = this.totalPrice * (1 - percentage);
     }
-
 }

@@ -23,7 +23,7 @@ public class Display {
 
         System.out.println("Add 1 item with item id: " + itemDTO.getItemID());
         System.out.println("Item ID: " + itemDTO.getItemID());
-        System.out.println("Item name:" + itemDTO.getItemName());
+        System.out.println("Item name: " + itemDTO.getItemName());
         System.out.println("Item cost: " + itemDTO.getItemPrice());
         System.out.println("VAT:" + itemDTO.getItemVAT());
         System.out.println("Item description: " + itemDTO.getItemDescription());
@@ -137,7 +137,8 @@ public class Display {
         }
 
         System.out.printf("%-10s%8s%10s SEK%n", "Total:", "", saleDTO.getSalePrice());
-        System.out.println("VAT: " + saleDTO.getSaleVAT());
+        System.out.printf("%-10s%8s%10s SEK%n", "VAT:", "", saleDTO.getSaleVAT());
+        System.out.println();
         System.out.printf("%-10s%8s%10s SEK%n", "Cash:", "", paymentDTO.getPaymentPaid());
         System.out.printf("%-10s%8s%10s SEK%n", "Change:", "", paymentDTO.getPaymentChange());
 

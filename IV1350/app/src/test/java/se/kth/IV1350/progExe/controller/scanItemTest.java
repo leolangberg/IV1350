@@ -15,7 +15,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 
 public class scanItemTest {
-    
+
     private static View view;
     private static Controller ctrl;
     private static ExternalAccountingSys externalAccountingSys;
