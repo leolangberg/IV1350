@@ -7,6 +7,8 @@
 <h6>
   <ul>
     <li>Display -> Printer + View</li>
+    <li> Tests </li>
+    <li> Discounts + correct process </li>
     <li>rename SalesHandler to PoS? </li>
     <li>View.updateItemQuantity() same as getItem()</li>
   </ul>
