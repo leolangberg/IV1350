@@ -6,8 +6,10 @@
 <h2>Notes</h2>
 <h6>
   <ul>
+    <li>Display -> Printer + View</li>
+    <li> Tests </li>
+    <li> Discounts + correct process </li>
     <li>rename SalesHandler to PoS? </li>
-    <li>is "Payment" class ever used? (not "PaymentDTO")</li>
     <li>View.updateItemQuantity() same as getItem()</li>
   </ul>
 </h6>
@@ -15,7 +17,7 @@
 <h3>Appropriate response regarding task2 feedback:</h3>
 <ul>
   <li>1. returned valued are not specified for some of the function calls, for example getItem, Sale etc.</li>
-  <li>2. you should NOT update a DTO object, saleDTO.</li>
+  <li>2. you should NOT update a DTO object, saleDTO. [SOLVED]</li>
   <li>3 It is not clear how does View get information like amount, discount_id etc.</li>
   <li>4 class constructor and class name do not match for example, cashRegister</li>
 </ul>
@@ -23,6 +25,6 @@
 <h3>Further Questions:</h3>
 
 <ul>
-  <li>Testing without static instances?</li>
+  <li>Testing without static instances? [SOLVED] (create entire structure for test)</li>
 </ul>
 
