@@ -4,7 +4,9 @@ import se.kth.IV1350.progExe.model.DTO.*;
 import java.time.LocalDateTime;
 
 /**
- * if SaleCreator can only hold 1 sale in current list then it would be like storing it temporary?
+ * The SalesHandler class is responsible for handling sales.
+ * 
+ * This class contains the current Sale, PaymentDTO, and ReceiptDTO of the sale, as well as a boolean indicating if the sale is completed.
  */
 public class SalesHandler {
 
@@ -15,6 +17,13 @@ public class SalesHandler {
     private boolean saleCompleted;
 
 
+    /**
+     * Constructs a new SalesHandler object.
+     * 
+     * This constructor initializes the SalesHandler with a new Sale object with the provided sale_id and sets saleCompleted to false.
+     *
+     * @param sale_id The ID of the sale.
+     */
     public SalesHandler(int sale_id) {
 
         currentSale = new Sale(sale_id);
@@ -23,9 +32,9 @@ public class SalesHandler {
 
 
     /**
-     * Package currentSale as a DTO.
+     * Packages the currentSale as a SaleDTO.
      * 
-     * @return saleDTO.
+     * @return A SaleDTO object representing the currentSale.
      */
     public SaleDTO getSaleDTO() {
 
@@ -35,29 +44,30 @@ public class SalesHandler {
 
 
     /**
-     * Creates a DTO version of current Payment.
+     * Retrieves the current PaymentDTO.
+     * 
+     * @return The currentPayment of this SalesHandler.
      */
     public PaymentDTO getPaymentDTO() {
-
         return currentPayment;
     }
 
-
     /**
-     * Creates a DTO version of Receipt.
+     * Retrieves the current ReceiptDTO.
+     * 
+     * @return The currentReceipt of this SalesHandler.
      */
     public ReceiptDTO getReceiptDTO() {
-
         return currentReceipt;
     }
 
-
     /**
-     * Adds ItemDTOs to current Sale. 
-     * Checks wether sale is completed or not
+     * Adds an item to the current sale if the sale is not completed.
+     * 
+     * @param itemDTO The item to be added to the sale.
+     * @return True if the item was added, false otherwise.
      */
     public boolean addItem(ItemDTO itemDTO) {
-
         if (!saleCompleted) {
             currentSale.addItem(itemDTO);
             return true;
@@ -65,12 +75,28 @@ public class SalesHandler {
         return false;
     }
 
+
+    /**
+     * Ends the current sale.
+     * 
+     * This method sets saleCompleted to true and returns the current SaleDTO.
+     * 
+     * @return The current SaleDTO.
+     */
     public SaleDTO endSale() {
 
         saleCompleted = true;
         return getSaleDTO();
     }
 
+    /**
+     * Initiates a payment transaction.
+     * 
+     * This method checks if the payment is valid and creates a new ReceiptDTO if the payment is successful.
+     * 
+     * @param paymentDTO The payment to be made.
+     * @return True if the payment was successful, false otherwise.
+     */
     public boolean transaction(PaymentDTO paymentDTO) {
 
         if (paymentDTO.getPaymentPrice() > paymentDTO.getPaymentPaid()) {
@@ -84,11 +110,12 @@ public class SalesHandler {
     }
 
     /**
-     * Determines wether discount is Percentage % or Numeral. if discountDTO == null then it
-     * discount does not exist and discountApplied should already automatically remain 0.
+     * Applies a discount to the current sale.
      * 
-     * Returns true or false depending on if discount exists or not.
-     *
+     * This method applies a discount to the current sale based on the provided DiscountDTO.
+     * 
+     * @param discountDTO The discount to be applied.
+     * @return True if the discount was applied, false otherwise.
      */
     public boolean applyDiscount(DiscountDTO discountDTO) {
 

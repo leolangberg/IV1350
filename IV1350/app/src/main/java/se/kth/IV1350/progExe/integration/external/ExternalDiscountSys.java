@@ -5,31 +5,41 @@ import se.kth.IV1350.progExe.model.ENUM.DiscountType;
 
 import java.util.*;
 
+/**
+ * The ExternalDiscountSys class is responsible for handling all communication with the external discount system.
+ * 
+ * This class contains methods for retrieving discounts based on discount IDs, total prices, and item lists.
+ */
 public class ExternalDiscountSys {
 
     // Assume discounts are stored in a hash-map related array where: array[id]
     public DiscountSysDatabase database;
 
+    /**
+     * Constructs a new ExternalDiscountSys object.
+     * 
+     * This constructor initializes the ExternalDiscountSys with a new DiscountSysDatabase.
+     */
     public ExternalDiscountSys() {
         this.database = new DiscountSysDatabase();
-    };
-
-    /**
-     * When passed the customer id, it tells a percentage to be reduced from the total cost of the
-     * entire sale. The percentage is zero if there’s no discount.
-     * 
-     * Make sure to check wether customer_id actually exists. If it does not then return 0, meaning
-     * no discount.
-     */
-    public DiscountDTO getDiscount(int discount_id) {
-
-        return database.findDiscount(discount_id);
-
     }
 
     /**
-     * When passed the total cost of the entire sale, it tells a percentage to be reduced from this
-     * total cost. The percentage is zero if there’s no discount.
+     * Retrieves a discount based on the provided discount ID.
+     *
+     * @param discount_id The ID of the discount to retrieve.
+     * @return A DiscountDTO representing the discount, or null if the discount does not exist.
+     */
+    public DiscountDTO getDiscount(int discount_id) {
+        return database.findDiscount(discount_id);
+    }
+
+    /**
+     * Retrieves a discount based on the total price of the sale.
+     * This method currently always returns 0, indicating no discount.
+     *
+     * @param totalprice The total price of the sale.
+     * @return A double representing the discount percentage, currently always 0.
      */
     public double getDiscount(double totalprice) {
         return 0;
@@ -61,19 +71,33 @@ public class ExternalDiscountSys {
     
         private DiscountDTO[] discountDatabase;
     
+        /**
+         * Constructs a new DiscountSysDatabase object.
+         * 
+         * This constructor initializes the DiscountSysDatabase with a new DiscountDTO array and fills it with discount scripts.
+         */
         public DiscountSysDatabase() {
             this.discountDatabase = new DiscountDTO[100];
             fillDiscountScript();
         }
-    
+
+        /**
+         * Fills the discount database with discount scripts.
+         * 
+         * This method currently adds two discount scripts to the discount database.
+         */
         private void fillDiscountScript() {
             discountDatabase[0] = new DiscountDTO(DiscountType.NUMERAL, 10.00, 1 );
             discountDatabase[1] = new DiscountDTO(DiscountType.PERCENTAGE, 0.20, 2 );
-        
         }
-    
+
+        /**
+         * Retrieves a discount based on the provided discount ID.
+         *
+         * @param discount_id The ID of the discount to retrieve.
+         * @return A DiscountDTO representing the discount, or null if the discount does not exist.
+         */
         public DiscountDTO findDiscount(int discount_id) {
-            
             if(discountDatabase[discount_id] == null) {
                 return null;
             }

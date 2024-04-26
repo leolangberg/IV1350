@@ -13,7 +13,11 @@ public class Display {
     public Display() {}
 
     /**
-     * Program also presents item's description, price, and running total (including VAT)
+     * Prints the details of an item.
+     * 
+     * This method prints the ID, name, cost, VAT, and description of the provided ItemDTO.
+     * 
+     * @param itemDTO The ItemDTO whose details are to be printed.
      */
     public void printItem(ItemDTO itemDTO) {
 
@@ -27,7 +31,13 @@ public class Display {
 
     }
 
-
+    /**
+     * Prints the details of a sale.
+     * 
+     * This method prints the total cost (including VAT) and total VAT of the provided SaleDTO in SEK.
+     * 
+     * @param saleDTO The SaleDTO whose details are to be printed.
+     */
     public void printSale(SaleDTO saleDTO) {
 
         System.out.println("Total cost (incl VAT): " + saleDTO.getSalePrice() + " SEK");
@@ -36,12 +46,26 @@ public class Display {
     }
 
 
+    /**
+     * Prints the details of a sale at the end of the sale.
+     * 
+     * This method prints "End sale:" and then calls printSale with the provided SaleDTO.
+     * 
+     * @param saleDTO The SaleDTO whose details are to be printed.
+     */
     public void printEndSale(SaleDTO saleDTO) {
         System.out.println("End sale:");
         printSale(saleDTO);
     }
 
 
+    /**
+     * Prints the details of a payment.
+     * 
+     * This method prints the amount paid by the customer in SEK.
+     * 
+     * @param paymentDTO The PaymentDTO whose details are to be printed.
+     */
     public void printPayment(PaymentDTO paymentDTO) {
 
         System.out.println("Customer pays " + paymentDTO.getPaymentPaid() + " SEK");
@@ -49,6 +73,13 @@ public class Display {
     }
 
 
+    /**
+     * Prints the details of an update to the external inventory.
+     * 
+     * This method prints a message indicating that sale info has been sent to the external accounting system, and then prints the details of each item in the sale, including the item and the quantity, indicating that the external inventory system has been told to decrease the inventory quantity of each item.
+     * 
+     * @param saleDTO The SaleDTO whose details are to be printed.
+     */
     public void printUpdateExternalInventory(SaleDTO saleDTO) {
 
         System.out.println("Sent sale info to external accounting system.");
@@ -65,6 +96,13 @@ public class Display {
     }
 
 
+    /**
+     * Prints the details of a payment failure.
+     * 
+     * This method prints "PAYMENT FAILED" and then prints the total cost (including VAT) and the amount paid by the customer in SEK.
+     * 
+     * @param paymentDTO The PaymentDTO whose details are to be printed.
+     */
     public void printPaymentFailure(PaymentDTO paymentDTO) {
 
         System.out.println("PAYMENT FAILED");
@@ -74,6 +112,13 @@ public class Display {
     }
 
 
+    /**
+     * Prints the details of a receipt.
+     * 
+     * This method prints the time of the sale, the items in the sale, the total cost (including VAT), the VAT, the amount paid by the customer in SEK, and the change to give the customer in SEK.
+     * 
+     * @param receiptDTO The ReceiptDTO whose details are to be printed.
+     */
     public void printReceipt(ReceiptDTO receiptDTO) {
 
         System.out.println("------------ Begin receipt ------------");
@@ -100,6 +145,14 @@ public class Display {
         System.out.println();
     }
 
+    
+    /**
+     * Prints the details of the returned change.
+     * 
+     * This method prints the amount of change to give the customer in SEK.
+     * 
+     * @param change The amount of change to give the customer in SEK.
+     */
     public void printReturnedChange(double change) {
 
         System.out.println("Change to give the customer: " + change + " SEK");

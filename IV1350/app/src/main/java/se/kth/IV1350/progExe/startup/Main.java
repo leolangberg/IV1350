@@ -7,6 +7,11 @@ import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
 
+/**
+ * The Main class is the entry point of the application.
+ * 
+ * This class contains the main method, which initializes the application with a new View and Controller, and runs the script method. If an exception occurs, it is caught and printed to the error output stream.
+ */
 public class Main {
 
     /**
@@ -14,6 +19,14 @@ public class Main {
      */
     static View v; 
 
+
+    /**
+     * The main entry point for the application.
+     * 
+     * This method initializes the application with a new View and Controller, and runs the script method. If an exception occurs, it is caught and printed to the error output stream.
+     *
+     * @param args An array of command-line arguments for the application.
+     */
     public static void main(String[] args) {
         try {
             System.out.println("START");
@@ -25,6 +38,11 @@ public class Main {
         }
     }
 
+    /**
+     * A script that simulates a sale.
+     * 
+     * This method simulates a sale by calling the View methods newSale, scanItem, endSale, and newPayment.
+     */
     public static void script() {
         v.newSale(); //starts sale
         System.out.println();

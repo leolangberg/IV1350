@@ -7,12 +7,9 @@ import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 
 
 /**
- * Sale class
+ * The Sale class represents a sale of items.
  * 
- * 
- * itemlist holds all current items totalPrice should be automatically updated totalDiscount also
- * automatic or applied
- * 
+ * This class contains the sale ID, item list, total price, total VAT, and total discount of the sale.
  */
 public class Sale {
 
@@ -22,6 +19,14 @@ public class Sale {
     private double totalVAT;
     private double totalDiscount;
 
+
+    /**
+     * Constructs a new Sale object.
+     * 
+     * This constructor initializes the Sale with the provided sale_id and an empty itemList.
+     *
+     * @param sale_id The ID of the sale.
+     */
     public Sale(int sale_id) {
 
         this.sale_id = sale_id;
@@ -29,36 +34,59 @@ public class Sale {
 
     };
 
+    /**
+     * Retrieves the sale ID of this Sale.
+     * 
+     * @return The sale_id of this Sale.
+     */
     public int getSaleID() {
         
         return sale_id;
     }
 
+    /**
+     * Retrieves the item list of this Sale.
+     * 
+     * @return The itemList of this Sale, represented as a map with ItemDTO as the key and quantity as the value.
+     */
     public Map<ItemDTO, Integer> getSaleItemList() {
 
         return itemList;
     }
 
+
+    /**
+     * Retrieves the total price of this Sale.
+     * 
+     * @return The totalPrice of this Sale.
+     */
     public double getSalePrice() {
-        
         return totalPrice;
     }
 
+    /**
+     * Retrieves the total VAT of this Sale.
+     * 
+     * @return The totalVAT of this Sale.
+     */
     public double getSaleVAT() {
-
         return totalVAT;
     }
 
+    /**
+     * Retrieves the total discount of this Sale.
+     * 
+     * @return The totalDiscount of this Sale.
+     */
     public double getSaleDiscount() {
-
         return totalDiscount;
     }
 
 
     /**
-     * Adds items to item list also automatic updates to other ariables.
-     * @function getOrDefault() returns current quantity of that item or 0 if
-     * item does not exist in sale yet.
+     * Retrieves the item list of this Sale.
+     * 
+     * @return The itemList of this Sale, represented as a map with ItemDTO as the key and quantity as the value.
      */
     public void addItem(ItemDTO itemDTO) {
 
@@ -71,8 +99,9 @@ public class Sale {
     }
 
     /**
-     * Applies numeral discount. (totalDiscount += discount) because there can be multiple discounts
-     * applied.
+     * Applies a numeral discount to the total price and total discount.
+     * 
+     * @param numeral The numeral discount to be applied.
      */
     public void applyNumeralDiscount(double numeral) {
 
@@ -81,7 +110,9 @@ public class Sale {
     }
 
     /**
-     * Applies percentage discount.
+     * Applies a percentage discount to the total price and total discount.
+     * 
+     * @param percentage The percentage discount to be applied.
      */
     public void applyPercentageDiscount(double percentage) {
 
