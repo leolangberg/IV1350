@@ -21,6 +21,8 @@ public class Controller {
     private ExternalInventorySys externalInventorySys;
     private ExternalDiscountSys externalDiscountSys;
 
+    private StringHandler stringHandler;
+
     /**
      * Constructs a new Controller object.
      * 
@@ -42,6 +44,7 @@ public class Controller {
 
         this.display = display;
         this.cashRegister = cashRegister;
+        this.stringHandler = new StringHandler();
 
     };
 
@@ -60,18 +63,10 @@ public class Controller {
      * Fetches an item based on the provided item ID.
      *
      * @param item_id The ID of the item to fetch.
-     * @return A boolean indicating whether the item was successfully retrieved and added to the sale.
+     * @return A String indicating whether the item was successfully retrieved and added to the sale.
      */
-    public boolean getItem(int item_id) {
-
-        ItemDTO itemDTO = externalInventorySys.getItem(item_id);
-        if (itemDTO == null) {
-            return false;
-        }
-        salesHandler.addItem(itemDTO);
-        display.printItem(itemDTO);
-        display.printSale(salesHandler.getSaleDTO());
-        return true;
+    public String getItem(int item_id) {
+        return getItem(item_id, 1);
     }
 
     /**
@@ -79,16 +74,20 @@ public class Controller {
      * 
      * @param item_id The ID of the item to fetch.
      * @param quantity The quantity of the item to fetch.
-     * @return A boolean indicating whether the item was successfully retrieved and added to the sale.
+     * @return A String indicating whether the item was successfully retrieved and added to the sale.
      */
-    public boolean getItem(int item_id, int quantity) {
-        for (int i = 0; i < quantity; i++) {
-            if (getItem(item_id) == false) {
-                return false;
-            }
+    public String getItem(int item_id, int quantity) {
+
+        ItemDTO itemDTO = externalInventorySys.getItem(item_id, quantity);
+        if (itemDTO == null) {
+            return "ItemID: " + item_id + " is Invalid.";
         }
 
-        return true;
+        salesHandler.addItem(itemDTO, quantity);
+        String itemInfo = stringHandler.itemInfo(itemDTO, quantity);
+        String saleInfo = stringHandler.saleInfo(salesHandler.getSaleDTO());
+
+        return itemInfo + saleInfo;
     }
 
     /**
@@ -96,13 +95,13 @@ public class Controller {
      * The returned saleDTO is sent to check for discounts.
      * A new updated saleDTO is then sent to display.
      */
-    public void endSale() {
+    public String endSale() {
 
         SaleDTO saleDTO = salesHandler.endSale();
         DiscountDTO discountDTO = externalDiscountSys.getDiscount(saleDTO.getSaleItemList());
         salesHandler.applyDiscount(discountDTO); // updates saleDTO
 
-        display.printEndSale(salesHandler.getSaleDTO());
+        return stringHandler.EndSaleInfo(salesHandler.getSaleDTO());
 
     }
 
@@ -111,26 +110,27 @@ public class Controller {
      *
      * @param enumType The type of payment.
      * @param amountPaid The amount paid by the customer.
-     * @return A boolean indicating whether the payment was successful.
+     * @return String indicating whether the payment was successful.
      */
-    public boolean Payment(PaymentType enumType, double amountPaid) {
+    public String Payment(PaymentType enumType, double amountPaid) {
 
         SaleDTO saleDTO = salesHandler.getSaleDTO();
         PaymentDTO paymentDTO = new PaymentDTO(amountPaid, enumType, saleDTO);
         boolean paymentSuccess = salesHandler.transaction(paymentDTO);
 
-        if (paymentSuccess) { // CREATE RECEIPT
+        if (paymentSuccess) { 
 
             ReceiptDTO receiptDTO = salesHandler.getReceiptDTO();
             display.printReceipt(receiptDTO);
             cashRegister.updateCashRegister(amountPaid, paymentDTO.getPaymentChange());
             externalAccountingSys.logReceipt(receiptDTO);
             externalInventorySys.updateItemQuantity(saleDTO.getSaleItemList());
-            return true;
+
+            return stringHandler.paymentSuccess(paymentDTO);
 
         } else {
-            display.printPaymentFailure(paymentDTO);
-            return false;
+
+            return stringHandler.paymentFailure(paymentDTO);
         }
     }
 
@@ -138,7 +138,7 @@ public class Controller {
      * Retrieves and applies a discount based on the provided discount ID.
      *
      * @param discount_id The ID of the discount to retrieve and apply.
-     * @return A boolean indicating whether the discount was successfully retrieved and applied.
+     * @return indicating whether the discount was successfully retrieved and applied.
      */
     public boolean getDiscountFromID(int discount_id) {
 
@@ -146,7 +146,7 @@ public class Controller {
         boolean discountExists = salesHandler.applyDiscount(discountDTO);
 
         if (discountExists) {
-            display.printSale(salesHandler.getSaleDTO()); // print updated price after discount
+            stringHandler.saleInfo(salesHandler.getSaleDTO()); // print updated price after discount
 
             return true;
         } else {

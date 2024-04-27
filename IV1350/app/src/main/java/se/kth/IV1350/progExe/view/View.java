@@ -40,7 +40,7 @@ public class View {
      */
     public void endSale() {
 
-        ctrl.endSale();
+        System.out.println(ctrl.endSale());
 
     }
 
@@ -52,9 +52,9 @@ public class View {
      * @param item_id The ID of the item to be scanned.
      * @return True if the item was found, false otherwise.
      */
-    public boolean scanItem(int item_id) {
+    public void scanItem(int item_id) {
 
-        return ctrl.getItem(item_id);
+        System.out.println(ctrl.getItem(item_id));
 
     }
 
@@ -67,34 +67,11 @@ public class View {
      * @param quantity The quantity of the item to be scanned.
      * @return True if the item was found, false otherwise.
      */
-    public boolean scanItem(int item_id, int quantity) {
-        return ctrl.getItem(item_id, quantity);
+    public void scanItem(int item_id, int quantity) {
+
+        System.out.println(ctrl.getItem(item_id, quantity));
     }
 
-    /**
-     * Updates the quantity of an item.
-     * 
-     * This method tells the controller to update the quantity of an item with the provided item_id. If the item cannot be found, it returns false.
-     * 
-     * @param item_id The ID of the item to be updated.
-     * @param quantity The new quantity of the item.
-     * @return True if the item was found and the quantity was updated, false otherwise.
-     */
-    public boolean updateItemQuantity(int item_id, int quantity) {
-        return ctrl.getItem(item_id, quantity);
-    }
-
-    /**
-     * Applies a personal discount based on a customer ID.
-     * 
-     * This method tells the controller to apply a discount based on the provided customer_id. If the discount cannot be applied, it returns false.
-     * 
-     * @param customer_id The ID of the customer for whom the discount is to be applied.
-     * @return True if the discount was applied, false otherwise.
-     */
-    public boolean getPersonalDiscount(int customer_id) {
-        return ctrl.getDiscountFromID(customer_id);
-    }
 
     /**
      * Creates a new payment.
@@ -104,7 +81,23 @@ public class View {
      * @param enumType The type of the payment.
      * @param amountPaid The amount of the payment.
      */
-    public void newPayment(PaymentType enumType, double amountPaid) {
-        ctrl.Payment(enumType, amountPaid);
+    public void payment(PaymentType enumType, double amountPaid) {
+
+        System.out.println("Customer pays: " + amountPaid + " SEK");
+        System.out.println(ctrl.Payment(enumType, amountPaid));
+    }
+
+
+     /**
+     * Applies a personal discount based on a customer ID.
+     * 
+     * This method tells the controller to apply a discount based on the provided customer_id. If the discount cannot be applied, it returns false.
+     * 
+     * @param customer_id The ID of the customer for whom the discount is to be applied.
+     * @return True if the discount was applied, false otherwise.
+     */
+    public boolean getPersonalDiscount(int customer_id) {
+
+        return ctrl.getDiscountFromID(customer_id);
     }
 }

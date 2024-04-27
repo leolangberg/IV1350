@@ -29,7 +29,6 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            System.out.println("START");
             v = new View(new Controller(new ExternalAccountingSys(), new ExternalInventorySys(),
                     new ExternalDiscountSys(), new Display(), new cashRegister()));
             script();
@@ -45,16 +44,10 @@ public class Main {
      */
     public static void script() {
         v.newSale(); //starts sale
-        System.out.println();
-        System.out.println("NEWSALE");
-        System.out.println();
         v.scanItem(1); //scans apple (id: 1, quantity: 1)
-        System.out.println();
-        System.out.println("SCANITEM");
-        System.out.println();
         v.scanItem(2,5); //scans banana (id: 2, quantity: 5)
         v.endSale(); //endsale;
-        v.newPayment(PaymentType.CASH, 100);
+        v.payment(PaymentType.CASH, 100);
 
     }
 }
