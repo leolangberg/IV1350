@@ -31,3 +31,7 @@
   <li>Preffered One-Liners or Object declared then passed on?</li>
 </ul>
 
+<h5>Sample Run:</h5>
+
+![iv1350samplerun](https://github.com/leolangberg/IV1350/assets/152855963/1e1a8c77-fca9-4ad5-b698-d5712a9ee3e6)
+
