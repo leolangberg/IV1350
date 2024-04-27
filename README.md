@@ -29,6 +29,7 @@
 <ul>
   <li>Testing without static instances? [SOLVED] (create entire structure for test)</li>
   <li>Preffered One-Liners or Object declared then passed on?</li>
+  <li>No Args in Controller?</li>
 </ul>
 
 <h5>Sample Run:</h5>
