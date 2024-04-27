@@ -53,7 +53,7 @@ public class ExternalAccountingSys {
     public class AccountingSysDatabase {
     
 
-        private linkedListStruct receiptlog;
+        public linkedListStruct receiptlog;
     
 
         

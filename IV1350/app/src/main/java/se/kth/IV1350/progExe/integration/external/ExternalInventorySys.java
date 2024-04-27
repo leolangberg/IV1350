@@ -46,7 +46,7 @@ public class ExternalInventorySys {
      */
     public class InventorySysDatabase {
     
-        private Shelf[] Inventory;
+        private Shelf[] inventory;
     
         /**
         * Constructs a new InventorySysDatabase object.
@@ -55,7 +55,7 @@ public class ExternalInventorySys {
         */
         public InventorySysDatabase() {
     
-            this.Inventory = new Shelf[100];
+            this.inventory = new Shelf[100];
             fillInventoryScript();
     
         }
@@ -91,7 +91,7 @@ public class ExternalInventorySys {
         */
         public boolean addItem(ItemDTO itemDTO, int quantity) {
     
-            Inventory[itemDTO.getItemID()] = new Shelf(itemDTO, quantity);
+            inventory[itemDTO.getItemID()] = new Shelf(itemDTO, quantity);
             return true;
         }
     
@@ -99,23 +99,24 @@ public class ExternalInventorySys {
         * Retrieves an item from the inventory based on the provided item ID.
         * 
         * This method attempts to find a shelf in the inventory using the provided ID. 
-        * If the shelf exists and the quantity is greater than 0, it returns the itemDTO stored in the shelf. If the shelf does not exist or the quantity is 0, it returns null.
+        * If the shelf exists and the quantity is greater than 0, it returns the itemDTO stored in the shelf. 
+        * If the shelf does not exist or the quantity is < 0, it returns null.
         *
         * @param item_id The ID of the item to retrieve.
         * @return An ItemDTO representing the item, or null if the item does not exist or the quantity is 0.
         */
         public ItemDTO getItem(int item_id, int quantity) {
-    
-            if(Inventory[item_id] == null) {
-                return null;
-            }
-            Shelf shelf = Inventory[item_id];
-
-            if(shelf.quantity <= 0) {
-                return null;
-            }
             
-            if(shelf.quantity < quantity) {
+            if(item_id < 0 || item_id > inventory.length) {
+                return null;
+            } else if (inventory[item_id] == null) {
+                return null;
+            } 
+            Shelf shelf = inventory[item_id];
+
+            if(shelf.quantity <= 0 || quantity <= 0) {
+                return null;
+            } else if (shelf.quantity < quantity) {
                 return null;
             }
 
@@ -128,7 +129,7 @@ public class ExternalInventorySys {
          * This method initializes the Inventory with a new Shelf array of size 100.
          */
         public void clear() {
-            Inventory = new Shelf[100];
+            inventory = new Shelf[100];
         }
 
         /**

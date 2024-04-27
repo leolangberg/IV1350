@@ -14,14 +14,13 @@ import se.kth.IV1350.progExe.model.ENUM.*;
 public class Controller {
 
     private SalesHandler salesHandler;
+    private StringHandler stringHandler;
     private Display display;
     private cashRegister cashRegister;
 
     private ExternalAccountingSys externalAccountingSys;
     private ExternalInventorySys externalInventorySys;
     private ExternalDiscountSys externalDiscountSys;
-
-    private StringHandler stringHandler;
 
     /**
      * Constructs a new Controller object.
