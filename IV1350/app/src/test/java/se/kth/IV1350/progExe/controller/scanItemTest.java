@@ -1,8 +1,5 @@
 package se.kth.IV1350.progExe.controller;
 
-
-
-import se.kth.IV1350.progExe.view.View;
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.model.DTO.*;
@@ -16,7 +13,6 @@ import org.junit.AfterClass;
 
 public class scanItemTest {
 
-    private static View view;
     private static Controller ctrl;
     private static ExternalAccountingSys externalAccountingSys;
     private static ExternalDiscountSys externalDiscountSys;
@@ -34,13 +30,13 @@ public class scanItemTest {
         cashRegister = new cashRegister();
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, display, cashRegister);
-        view = new View(ctrl);
-
     }
 
     @Before
     public void setUp() {
-        externalInventorySys.database.addItem(new ItemDTO(1, "apple", "Granny Smith", 5.00, 0.12), 1);
+
+        ctrl.newSale();
+        externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 1);
     }
 
     @After
@@ -60,11 +56,12 @@ public class scanItemTest {
     */
     public void scanItemValidIdTest() {
 
-        int item_id = 1;
+        int item_id = 10;
+        String expResult = "Add 1 item with item id: 10\n" + "Item ID: 10\n" + "Item name: pear\n" + "Item cost: 5.0 SEK\n" + "VAT: 12%\n" + "Item description: green\n" + "\n" + "Total cost (incl VAT): 5.0 SEK\n" + "Total VAT: 0.6 SEK\n";
+        String result = ctrl.getItem(item_id);
+        String testMsg = "Scanned Item with valid id: \n" + "expResult:\n" + expResult + "Result:\n" + result;
 
-        boolean expResult = true;
-        boolean result = view.scanItem(item_id);
-        assertEquals( "Scanned Item with valid id: expResult: " + expResult + "  result: " + result, expResult, result);
+        assertEquals(testMsg, expResult, result);
     }
 
     @Test
@@ -73,25 +70,13 @@ public class scanItemTest {
      */
     public void scanItemInvalidIdTest() {
 
-        int item_id = 2;
+        int item_id = -1;
 
-        boolean expResult = false;
-        boolean result = view.scanItem(2);
-        assertEquals("Scanned Item with invalid id: expResult: " + expResult + "  result: " + result, expResult, result);
-    }
+        String expResult = "ItemID: -1 is Invalid.";
+        String result = ctrl.getItem(item_id);
+        String testMsg = "Scanned Item with Invalid id: \n" + "expResult:\n" + expResult + "Result:\n" + result;
 
-    @Test
-    /**
-     * Tries more instances of same Item than there exists in database.
-     */
-    public void scanItemNoQuantityInDatabase() {
-
-        int item_id = 1;
-        int quantity = 2;
-
-        boolean expResult = false;
-        boolean result = view.scanItem(item_id, quantity);
-        assertEquals("Scan Item with no more in stock/database expResult: " + expResult + "  result: " + result, expResult, result);
+        assertEquals(testMsg, expResult, result);
     }
 
     @Test
@@ -100,14 +85,32 @@ public class scanItemTest {
      */
     public void scanItemInvalidQuantity() {
 
-        int item_id = 1;
+        int item_id = 10;
         int quantity = 0;
 
-        boolean expResult = false;
-        boolean result = view.scanItem(item_id, quantity);
-        assertEquals("Scan Item with invalid (<= 0) Quantity: expResult: " + expResult + "  result: " + result, expResult, result);
+        String expResult = "ItemID: 10 is Invalid.";
+        String result = ctrl.getItem(item_id, quantity);
+        String testMsg = "Scanned Item with Invalid Quantity: \n" + "expResult:\n" + expResult + "Result:\n" + result;
+
+        assertEquals(testMsg, expResult, result);
+        
     }
 
 
+    @Test
+    /**
+     * Tries more instances of same Item than there exists in database.
+     */
+    public void scanItemNoQuantityInDatabase() {
+
+        int item_id = 10;
+        int quantity = 2;
+
+        String expResult = "ItemID: 10 is Invalid.";
+        String result = ctrl.getItem(item_id, quantity);
+        String testMsg = "Scanned Item with Higher Quantity than Inventory holds: \n" + "expResult:\n" + expResult + "Result:\n" + result;
+
+        assertEquals(testMsg, expResult, result);
+    }
 }
 
