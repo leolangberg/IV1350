@@ -67,12 +67,13 @@ public class SalesHandler {
      * @param itemDTO The item to be added to the sale.
      * @return True if the item was added, false otherwise.
      */
-    public boolean addItem(ItemDTO itemDTO) {
-        if (!saleCompleted) {
-            currentSale.addItem(itemDTO);
-            return true;
+    public boolean addItem(ItemDTO itemDTO, int quantity) {
+        if (saleCompleted) {
+            return false;
         }
-        return false;
+
+        currentSale.addItem(itemDTO, quantity);
+        return true;
     }
 
 

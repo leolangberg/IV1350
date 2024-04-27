@@ -1,8 +1,8 @@
 package se.kth.IV1350.progExe.model;
 
+import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 import java.util.HashMap;
 import java.util.Map;
-import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 
 
 
@@ -10,7 +10,7 @@ import se.kth.IV1350.progExe.model.DTO.ItemDTO;
  * The Sale class represents a Sale of Items.
  * 
  * @sale_id This Sales unique identifier.
- * @itemList Maps each itemDTO in Sale to respective Quantity. 
+ * @itemList Maps each itemDTO in Sale to respective ItemID. 
  * @totalPrice Represents total Price of entire Sale (including VAT).
  * @totalVAT Represents total VAT of entire Sale (numeral). Note (itemDTO.VATrate is percentage).
  * @totalDiscount Represents total Discount sum of entire Sale (numeral).
@@ -92,13 +92,13 @@ public class Sale {
      * Function also updates totalPrice & totalVat accordingly. 
      * (Note that totalVAT is numeral while ItemDTO.VAT is percentage). 
      */
-    public void addItem(ItemDTO itemDTO) {
+    public void addItem(ItemDTO itemDTO, int quantity) {
 
-        int quantity = itemList.getOrDefault(itemDTO, 0);
-        itemList.put(itemDTO, (quantity + 1));
+        int CurrentQuantity = itemList.getOrDefault(itemDTO, 0);
+        itemList.put(itemDTO, (CurrentQuantity + quantity));
 
-        totalPrice += itemDTO.getItemPrice();
-        totalVAT += (itemDTO.getItemVAT() * itemDTO.getItemPrice());
+        totalPrice += itemDTO.getItemPrice() * quantity;
+        totalVAT += (itemDTO.getItemVAT() * itemDTO.getItemPrice()) * quantity;
 
     }
 
