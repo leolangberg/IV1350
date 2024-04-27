@@ -6,6 +6,7 @@
 <h2>Notes</h2>
 <h6>
   <ul>
+    <li> Seminar 3 = build normal process + tests ---> Seminar 4 build fail process. <li>
     <li>Display -> Printer + View</li>
     <li> Tests </li>
     <li> Discounts + correct process </li>
