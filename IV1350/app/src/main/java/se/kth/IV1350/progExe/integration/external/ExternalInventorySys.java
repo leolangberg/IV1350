@@ -25,11 +25,11 @@ public class ExternalInventorySys {
 
     /**
      * Retrieves an item based on the provided item ID.
-     * @param item_id The ID of the item to retrieve.
+     * @param itemID The ID of the item to retrieve.
      * @return An ItemDTO representing the item, or null if the item does not exist.
      */
-    public ItemDTO getItem(int item_id, int quantity) {
-        return database.getItem(item_id, quantity);
+    public ItemDTO getItem(int itemID, int quantity) {
+        return database.getItem(itemID, quantity);
     }
 
     /**
@@ -102,17 +102,17 @@ public class ExternalInventorySys {
         * If the shelf exists and the quantity is greater than 0, it returns the itemDTO stored in the shelf. 
         * If the shelf does not exist or the quantity is < 0, it returns null.
         *
-        * @param item_id The ID of the item to retrieve.
+        * @param itemID The ID of the item to retrieve.
         * @return An ItemDTO representing the item, or null if the item does not exist or the quantity is 0.
         */
-        public ItemDTO getItem(int item_id, int quantity) {
+        public ItemDTO getItem(int itemID, int quantity) {
             
-            if(item_id < 0 || item_id > inventory.length) {
+            if(itemID < 0 || itemID > inventory.length) {
                 return null;
-            } else if (inventory[item_id] == null) {
+            } else if (inventory[itemID] == null) {
                 return null;
             } 
-            Shelf shelf = inventory[item_id];
+            Shelf shelf = inventory[itemID];
 
             if(shelf.quantity <= 0 || quantity <= 0) {
                 return null;

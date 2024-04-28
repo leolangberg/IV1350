@@ -8,7 +8,7 @@ package se.kth.IV1350.progExe.model.DTO;
  */
 public class ItemDTO {
 
-    private final int item_id;
+    private final int itemID;
     private final String itemName;
     private final String description;
     private final double price;
@@ -18,16 +18,16 @@ public class ItemDTO {
     /**
      * Constructs a new ItemDTO object.
      * 
-     * This constructor initializes the ItemDTO with the provided item_id, itemName, description, price, and VATrate.
+     * This constructor initializes the ItemDTO with the provided itemID, itemName, description, price, and VATrate.
      *
-     * @param item_id The ID of the item.
+     * @param itemID The ID of the item.
      * @param itemName The name of the item.
      * @param description The description of the item.
      * @param price The price of the item.
      * @param VATrate The VAT rate of the item.
      */
-    public ItemDTO(int item_id, String itemName, String descprition, double price, double VATrate) {
-        this.item_id = item_id;
+    public ItemDTO(int itemID, String itemName, String descprition, double price, double VATrate) {
+        this.itemID = itemID;
         this.itemName = itemName;
         this.description = descprition;
         this.price = price;
@@ -39,11 +39,11 @@ public class ItemDTO {
     /**
      * Retrieves the item ID of this ItemDTO.
      * 
-     * @return The item_id of this ItemDTO.
+     * @return The itemID of this ItemDTO.
      */
     public int getItemID() {
 
-        return item_id;
+        return itemID;
     }
 
     /**

@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * The Sale class represents a Sale of Items.
  * 
- * @sale_id This Sales unique identifier.
+ * @saleID This Sales unique identifier.
  * @itemList Maps each itemDTO in Sale to respective ItemID. 
  * @totalPrice Represents total Price of entire Sale (including VAT).
  * @totalVAT Represents total VAT of entire Sale (numeral). Note (itemDTO.VATrate is percentage).
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class Sale {
 
-    private int sale_id;
+    private int saleID;
     private Map<ItemDTO, Integer> itemList; 
     private double totalPrice;
     private double totalVAT; 
@@ -28,11 +28,11 @@ public class Sale {
      * 
      * This constructor initializes the Sale with the provided sale_id and an empty itemList.
      *
-     * @param sale_id The ID of the sale.
+     * @param saleID The ID of the sale.
      */
-    public Sale(int sale_id) {
+    public Sale(int saleID) {
 
-        this.sale_id = sale_id;
+        this.saleID = saleID;
         this.itemList = new HashMap<>();
 
     };
@@ -40,11 +40,11 @@ public class Sale {
     /**
      * Retrieves the sale ID of this Sale.
      * 
-     * @return The sale_id of this Sale.
+     * @return The saleID of this Sale.
      */
     public int getSaleID() {
         
-        return sale_id;
+        return saleID;
     }
 
     /**

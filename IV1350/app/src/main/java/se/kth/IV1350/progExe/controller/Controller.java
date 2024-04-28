@@ -61,25 +61,25 @@ public class Controller {
     /**
      * Fetches an item based on the provided item ID.
      *
-     * @param item_id The ID of the item to fetch.
+     * @param itemID The ID of the item to fetch.
      * @return A String indicating whether the item was successfully retrieved and added to the sale.
      */
-    public String getItem(int item_id) {
-        return getItem(item_id, 1);
+    public String getItem(int itemID) {
+        return getItem(itemID, 1);
     }
 
     /**
      * Fetches a specified quantity of an item based on the provided item ID.
      * 
-     * @param item_id The ID of the item to fetch.
+     * @param itemID The ID of the item to fetch.
      * @param quantity The quantity of the item to fetch.
      * @return A String indicating whether the item was successfully retrieved and added to the sale.
      */
-    public String getItem(int item_id, int quantity) {
+    public String getItem(int itemID, int quantity) {
 
-        ItemDTO itemDTO = externalInventorySys.getItem(item_id, quantity);
+        ItemDTO itemDTO = externalInventorySys.getItem(itemID, quantity);
         if (itemDTO == null) {
-            return "ItemID: " + item_id + " is Invalid.";
+            return "ItemID: " + itemID + " is Invalid.";
         }
 
         salesHandler.addItem(itemDTO, quantity);

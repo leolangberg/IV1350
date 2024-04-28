@@ -27,11 +27,11 @@ public class ExternalDiscountSys {
     /**
      * Retrieves a discount based on the provided discount ID.
      *
-     * @param discount_id The ID of the discount to retrieve.
+     * @param discountID The ID of the discount to retrieve.
      * @return A DiscountDTO representing the discount, or null if the discount does not exist.
      */
-    public DiscountDTO getDiscount(int discount_id) {
-        return database.findDiscount(discount_id);
+    public DiscountDTO getDiscount(int discountID) {
+        return database.findDiscount(discountID);
     }
 
     /**
@@ -94,14 +94,14 @@ public class ExternalDiscountSys {
         /**
          * Retrieves a discount based on the provided discount ID.
          *
-         * @param discount_id The ID of the discount to retrieve.
+         * @param discountID The ID of the discount to retrieve.
          * @return A DiscountDTO representing the discount, or null if the discount does not exist.
          */
-        public DiscountDTO findDiscount(int discount_id) {
-            if(discountDatabase[discount_id] == null) {
+        public DiscountDTO findDiscount(int discountID) {
+            if(discountDatabase[discountID] == null) {
                 return null;
             }
-            return discountDatabase[discount_id];
+            return discountDatabase[discountID];
         }
     
     
