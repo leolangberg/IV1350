@@ -51,13 +51,13 @@ public class ExternalDiscountSys {
      */
     public DiscountDTO getDiscount(Map<ItemDTO, Integer> itemlist) {
 
-        double sum = 0;
+        double sum = 10;
         // lookup on each specific item
         // lookup on item combination discounts etc.
 
         // creates a discountDTO out of the found discounts
-        DiscountDTO discountDTO = new DiscountDTO(DiscountType.NUMERAL, sum, 0);
-        return null;
+        DiscountDTO discountDTO = new DiscountDTO(DiscountType.NUMERAL, sum, 50);
+        return discountDTO;
 
     }
 
@@ -87,8 +87,8 @@ public class ExternalDiscountSys {
          * This method currently adds two discount scripts to the discount database.
          */
         private void fillDiscountScript() {
-            discountDatabase[0] = new DiscountDTO(DiscountType.NUMERAL, 10.00, 1 );
-            discountDatabase[1] = new DiscountDTO(DiscountType.PERCENTAGE, 0.20, 2 );
+            discountDatabase[1] = new DiscountDTO(DiscountType.NUMERAL, 10.00, 1 );
+            discountDatabase[2] = new DiscountDTO(DiscountType.PERCENTAGE, 0.20, 2 );
         }
 
         /**

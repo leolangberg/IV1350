@@ -12,6 +12,7 @@ import se.kth.IV1350.progExe.model.DTO.ReceiptDTO;
 public class ExternalAccountingSys {
 
     public AccountingSysDatabase database;
+    private int lastIndex = 0;
 
     /**
      * Constructs a new ExternalAccountingSys object.
@@ -74,7 +75,9 @@ public class ExternalAccountingSys {
      * @return An integer representing the new unique index.
      */
     public int newIndex() {
-        return receiptlog.length() + 1;
+        lastIndex++;
+        receiptlog.length();
+        return lastIndex;
     }
 
     /**
@@ -92,7 +95,7 @@ public class ExternalAccountingSys {
         /**
          * UTILITY LINKED LIST STRUCT
          */
-        private class linkedListStruct {
+        public class linkedListStruct {
     
             Node first;
     
@@ -113,10 +116,13 @@ public class ExternalAccountingSys {
              * @return An integer representing the length of the linked list.
              */
             public int length() {
-                if (first == null) {
-                    return 0;
+                Node current = first;
+                int length = 0;
+                while (current != null) {
+                    length++;
+                    current = current.next;
                 }
-                return first.index;
+                return length;
             }
     
             private class Node {
