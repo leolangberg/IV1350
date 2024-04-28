@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class SaleDTO {
 
-    private final int sale_id;
+    private final int saleID;
     private final Map<ItemDTO, Integer> itemList;
     private final double totalPrice;
     private final double totalVAT;
@@ -19,18 +19,18 @@ public class SaleDTO {
     /**
      * Constructs a new SaleDTO object.
      * 
-     * This constructor initializes the SaleDTO with the provided sale_id, itemList, totalPrice, totalVAT, and totalDiscount.
+     * This constructor initializes the SaleDTO with the provided saleID, itemList, totalPrice, totalVAT, and totalDiscount.
      *
-     * @param sale_id The ID of the sale.
+     * @param saleID The ID of the sale.
      * @param itemList The list of items in the sale, represented as a map with ItemDTO as the key and quantity as the value.
      * @param totalPrice The total price of the items in the sale.
      * @param totalVAT The total VAT applied to the items in the sale.
      * @param totalDiscount The total discount applied to the sale.
      */
-    public SaleDTO(int sale_id, Map<ItemDTO, Integer> itemList, double totalPrice, double totalVAT,
+    public SaleDTO(int saleID, Map<ItemDTO, Integer> itemList, double totalPrice, double totalVAT,
             double totalDiscount) {
 
-        this.sale_id = sale_id;
+        this.saleID = saleID;
         this.itemList = itemList;
         this.totalPrice = totalPrice;
         this.totalVAT = totalVAT;
@@ -47,7 +47,7 @@ public class SaleDTO {
      */
     public SaleDTO(Sale sale) {
 
-        this.sale_id = sale.getSaleID();
+        this.saleID = sale.getSaleID();
         this.itemList = sale.getSaleItemList();
         this.totalPrice = sale.getSalePrice();
         this.totalVAT = sale.getSaleVAT();
@@ -62,7 +62,7 @@ public class SaleDTO {
      * @return The sale_id of this SaleDTO.
      */
     public int getSaleID() {
-        return sale_id;
+        return saleID;
     }
 
     /**

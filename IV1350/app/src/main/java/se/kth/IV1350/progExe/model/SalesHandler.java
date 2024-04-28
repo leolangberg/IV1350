@@ -1,7 +1,6 @@
 package se.kth.IV1350.progExe.model;
 
 import se.kth.IV1350.progExe.model.DTO.*;
-import java.time.LocalDateTime;
 
 /**
  * The SalesHandler class is responsible for handling sales.
@@ -20,13 +19,13 @@ public class SalesHandler {
     /**
      * Constructs a new SalesHandler object.
      * 
-     * This constructor initializes the SalesHandler with a new Sale object with the provided sale_id and sets saleCompleted to false.
+     * This constructor initializes the SalesHandler with a new Sale object with the provided saleID and sets saleCompleted to false.
      *
-     * @param sale_id The ID of the sale.
+     * @param saleID The ID of the sale.
      */
-    public SalesHandler(int sale_id) {
+    public SalesHandler(int saleID) {
 
-        currentSale = new Sale(sale_id);
+        currentSale = new Sale(saleID);
         saleCompleted = false;
     }
 

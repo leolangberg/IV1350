@@ -11,20 +11,20 @@ public class DiscountDTO {
 
     private final DiscountType discountType;
     private final double value;
-    private final Integer discount_id;
+    private final Integer discountID;
 
     /**
      * Constructs a new DiscountDTO object.
      *
      * @param discountType The type of the discount.
      * @param value The value of the discount.
-     * @param discount_id The ID of the discount, which can represent either a customer_id or an item_id.
+     * @param discountID The ID of the discount, which can represent either a customerID or an itemID.
      */
-    public DiscountDTO(DiscountType discountType, double value, int discount_id) {
+    public DiscountDTO(DiscountType discountType, double value, int discountID) {
 
         this.discountType = discountType;
         this.value = value;
-        this.discount_id = discount_id;
+        this.discountID = discountID;
     }
 
     /**
@@ -36,7 +36,7 @@ public class DiscountDTO {
 
         this.discountType = discountType;
         this.value = value;
-        this.discount_id = null;
+        this.discountID = null;
     }
     /**
      * Retrieves the discount type of this DiscountDTO.
@@ -62,7 +62,7 @@ public class DiscountDTO {
      * @return The discount_id of this DiscountDTO.
      */
     public int getDiscountID() {
-        return discount_id;
+        return discountID;
     }
 
 };

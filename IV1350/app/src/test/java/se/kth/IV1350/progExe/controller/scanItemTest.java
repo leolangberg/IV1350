@@ -52,13 +52,13 @@ public class scanItemTest {
 
     @Test
     /**
-     * Tries to scan and fetch Item with valid id.
+     * Tries to fetch Item with valid id.
     */
     public void scanItemValidIdTest() {
 
-        int item_id = 10;
+        int itemID = 10;
         String expResult = "Add 1 item with item id: 10\n" + "Item ID: 10\n" + "Item name: pear\n" + "Item cost: 5.0 SEK\n" + "VAT: 12%\n" + "Item description: green\n" + "\n" + "Total cost (incl VAT): 5.0 SEK\n" + "Total VAT: 0.6 SEK\n";
-        String result = ctrl.getItem(item_id);
+        String result = ctrl.getItem(itemID);
         String testMsg = "Scanned Item with valid id: \n" + "expResult:\n" + expResult + "Result:\n" + result;
 
         assertEquals(testMsg, expResult, result);
@@ -66,14 +66,14 @@ public class scanItemTest {
 
     @Test
     /**
-     * Tries to scan and fetch Item with invalid id.
+     * Tries to fetch Item with invalid id.
      */
     public void scanItemInvalidIdTest() {
 
-        int item_id = -1;
+        int itemID = -1;
 
         String expResult = "ItemID: -1 is Invalid.";
-        String result = ctrl.getItem(item_id);
+        String result = ctrl.getItem(itemID);
         String testMsg = "Scanned Item with Invalid id: \n" + "expResult:\n" + expResult + "Result:\n" + result;
 
         assertEquals(testMsg, expResult, result);
@@ -81,15 +81,15 @@ public class scanItemTest {
 
     @Test
     /**
-     * Uses invalid Quantity ( quantity <= 0) for scanItem().
+     * Uses invalid Quantity ( quantity <= 0) for getItem().
      */
     public void scanItemInvalidQuantity() {
 
-        int item_id = 10;
+        int itemID = 10;
         int quantity = 0;
 
         String expResult = "ItemID: 10 is Invalid.";
-        String result = ctrl.getItem(item_id, quantity);
+        String result = ctrl.getItem(itemID, quantity);
         String testMsg = "Scanned Item with Invalid Quantity: \n" + "expResult:\n" + expResult + "Result:\n" + result;
 
         assertEquals(testMsg, expResult, result);
@@ -99,15 +99,15 @@ public class scanItemTest {
 
     @Test
     /**
-     * Tries more instances of same Item than there exists in database.
+     * Tries to fetch more instances of same Item than there exists in database.
      */
     public void scanItemNoQuantityInDatabase() {
 
-        int item_id = 10;
+        int itemID = 10;
         int quantity = 2;
 
         String expResult = "ItemID: 10 is Invalid.";
-        String result = ctrl.getItem(item_id, quantity);
+        String result = ctrl.getItem(itemID, quantity);
         String testMsg = "Scanned Item with Higher Quantity than Inventory holds: \n" + "expResult:\n" + expResult + "Result:\n" + result;
 
         assertEquals(testMsg, expResult, result);
