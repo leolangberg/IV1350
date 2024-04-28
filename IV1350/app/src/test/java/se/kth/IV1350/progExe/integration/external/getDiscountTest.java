@@ -2,10 +2,8 @@ package se.kth.IV1350.progExe.integration.external;
 
 
 import se.kth.IV1350.progExe.integration.*;
-import se.kth.IV1350.progExe.model.SalesHandler;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.ENUM.DiscountType;
-import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
 import static org.junit.Assert.assertEquals;
 

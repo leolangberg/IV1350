@@ -1,10 +1,14 @@
 package se.kth.IV1350.progExe.integration.external;
 
+
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.model.DTO.*;
-
+import se.kth.IV1350.progExe.model.ENUM.DiscountType;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -13,7 +17,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import se.kth.IV1350.progExe.controller.Controller;
 
-public class getItemTest {
+public class updateItemQuantityTest {
 
     private static Controller ctrl;
     private static ExternalAccountingSys externalAccountingSys;
@@ -29,6 +33,7 @@ public class getItemTest {
 
 
 
+ 
     @BeforeClass
     public static void initProgExe() {
 
@@ -46,7 +51,7 @@ public class getItemTest {
     public void setUp() {
         
         ctrl.newSale();
-        externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 1);
+        externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 5);
 
         
     }
@@ -63,20 +68,19 @@ public class getItemTest {
 
 
     @Test
-    public void getDiscountValidTest() {
+    public void updateItemQuantityValidTest() {
         
+        ItemDTO testItemDTO = new ItemDTO(10, "pear", "green", 50.00, 0.12);
+        Map<ItemDTO, Integer> itemList = new HashMap<>();
+        itemList.put(testItemDTO, 4);
 
-        ItemDTO result = externalInventorySys.database.getItem(10, 1);
-
-        ItemDTO expResult = new ItemDTO(10, "pear", "green", 5.00, 0.12);
+        int initialQuantity = externalInventorySys.getItemQuantity(testItemDTO.getItemID());
+        externalInventorySys.updateItemQuantity(itemList);
+        int finalQuantity = externalInventorySys.getItemQuantity(testItemDTO.getItemID());
+    
+        assertEquals(initialQuantity - 4, finalQuantity);
         
-        assertEquals(expResult.getItemID(), result.getItemID());
-        assertEquals(expResult.getItemName(), result.getItemName());
-        assertEquals(expResult.getItemDescription(), result.getItemDescription());
-        assertEquals(expResult.getItemPrice(), result.getItemPrice(), 0.01);
-        assertEquals(expResult.getItemVAT(), result.getItemVAT(), 0.01);
         
         
     }
-
 }

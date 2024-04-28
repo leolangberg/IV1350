@@ -1,10 +1,15 @@
-package se.kth.IV1350.progExe.integration.external;
+package se.kth.IV1350.progExe.integration;
+
 
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.model.DTO.*;
-
+import se.kth.IV1350.progExe.model.ENUM.DiscountType;
+import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -12,23 +17,26 @@ import org.junit.BeforeClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import se.kth.IV1350.progExe.controller.Controller;
+import se.kth.IV1350.progExe.integration.external.ExternalAccountingSys;
+import se.kth.IV1350.progExe.integration.external.ExternalDiscountSys;
+import se.kth.IV1350.progExe.integration.external.ExternalInventorySys;
 
-public class getItemTest {
+import static org.junit.Assert.assertEquals;
 
+public class updateCashRegisterTest {
+    
+    private static cashRegister cashRegister;
     private static Controller ctrl;
     private static ExternalAccountingSys externalAccountingSys;
     private static ExternalDiscountSys externalDiscountSys;
     private static ExternalInventorySys externalInventorySys;
     private static Display display;
-    private static cashRegister cashRegister;
-    
-   
+
 
     ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
     ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
 
-
-
+ 
     @BeforeClass
     public static void initProgExe() {
 
@@ -46,7 +54,7 @@ public class getItemTest {
     public void setUp() {
         
         ctrl.newSale();
-        externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 1);
+        externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 5);
 
         
     }
@@ -61,22 +69,16 @@ public class getItemTest {
         //delete all
     }
 
-
+    
     @Test
-    public void getDiscountValidTest() {
-        
+    public void testUpdateCashRegister() {
+        double initialCashAmount = cashRegister.cashAmount;
+        double paymentPrice = 100.0;
+        double paymentChange = 20.0;
+        PaymentDTO paymentDTO = new PaymentDTO(1, PaymentType.CASH, 80, 0, 0.12, 100);
 
-        ItemDTO result = externalInventorySys.database.getItem(10, 1);
+        cashRegister.updateCashRegister(paymentDTO);
 
-        ItemDTO expResult = new ItemDTO(10, "pear", "green", 5.00, 0.12);
-        
-        assertEquals(expResult.getItemID(), result.getItemID());
-        assertEquals(expResult.getItemName(), result.getItemName());
-        assertEquals(expResult.getItemDescription(), result.getItemDescription());
-        assertEquals(expResult.getItemPrice(), result.getItemPrice(), 0.01);
-        assertEquals(expResult.getItemVAT(), result.getItemVAT(), 0.01);
-        
-        
+        assertEquals(initialCashAmount + (paymentPrice - paymentChange), cashRegister.cashAmount, 0.0);
     }
-
 }
