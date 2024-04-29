@@ -1,10 +1,15 @@
 package se.kth.IV1350.progExe.integration.external;
 
+
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.model.DTO.*;
+import se.kth.IV1350.progExe.model.ENUM.DiscountType;
 
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -13,7 +18,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import se.kth.IV1350.progExe.controller.Controller;
 
-public class getItemTest {
+public class externalDiscountSysTest {
 
     private static Controller ctrl;
     private static ExternalAccountingSys externalAccountingSys;
@@ -46,8 +51,6 @@ public class getItemTest {
     public void setUp() {
         
         ctrl.newSale();
-        externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 1);
-
         
     }
 
@@ -63,20 +66,46 @@ public class getItemTest {
 
 
     @Test
-    public void getDiscountValidTest() {
+    public void GetDiscountByIdTest() {
+       
+       
+        DiscountDTO dummy = new DiscountDTO(DiscountType.NUMERAL, 10.0, 1);
         
+        DiscountDTO test = externalDiscountSys.getDiscount(1);
 
-        ItemDTO result = externalInventorySys.database.getItem(10, 1);
+        double expected = dummy.getDiscountValue();
 
-        ItemDTO expResult = new ItemDTO(10, "pear", "green", 5.00, 0.12);
-        
-        assertEquals(expResult.getItemID(), result.getItemID());
-        assertEquals(expResult.getItemName(), result.getItemName());
-        assertEquals(expResult.getItemDescription(), result.getItemDescription());
-        assertEquals(expResult.getItemPrice(), result.getItemPrice(), 0.01);
-        assertEquals(expResult.getItemVAT(), result.getItemVAT(), 0.01);
-        
+        double result = test.getDiscountValue();
+
+        assertEquals(expected, result, 0.01);
+    }
+
+
+    @Test
+    public void GetDiscountByTotalPriceTest() {
+        // Act
+        double result = externalDiscountSys.getDiscount(100.0);
+
+        // Assert
+        assertEquals(0.0, result, 0.01);
+    }
+
+
+    @Test
+    public void getDiscountTest() {
+
+        ItemDTO testItemDTO = new ItemDTO(15, "pear", "green", 50.00, 0.12);
+        Map<ItemDTO, Integer> itemList = new HashMap<>();
+        itemList.put(testItemDTO, 1);
+
+        DiscountDTO testresult = externalDiscountSys.getDiscount(itemList);
+
+        // Assert
+        assertEquals(10, testresult.getDiscountValue(), 0.01);
+        assertEquals(DiscountType.NUMERAL, testresult.getDiscountType());
+        assertEquals(50, testresult.getDiscountID());
         
     }
+
 
 }

@@ -2,10 +2,12 @@ package se.kth.IV1350.progExe.integration.external;
 
 
 import se.kth.IV1350.progExe.integration.*;
+import se.kth.IV1350.progExe.model.SalesHandler;
 import se.kth.IV1350.progExe.model.DTO.*;
-import se.kth.IV1350.progExe.model.ENUM.DiscountType;
+import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +19,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import se.kth.IV1350.progExe.controller.Controller;
 
-public class updateItemQuantityTest {
+public class externalAccountingSysTest {
 
     private static Controller ctrl;
     private static ExternalAccountingSys externalAccountingSys;
@@ -25,7 +27,8 @@ public class updateItemQuantityTest {
     private static ExternalInventorySys externalInventorySys;
     private static Display display;
     private static cashRegister cashRegister;
-    
+    private static SalesHandler salesHandler;  
+    private static ReceiptDTO receiptDTO;
    
 
     ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
@@ -33,7 +36,6 @@ public class updateItemQuantityTest {
 
 
 
- 
     @BeforeClass
     public static void initProgExe() {
 
@@ -51,10 +53,21 @@ public class updateItemQuantityTest {
     public void setUp() {
         
         ctrl.newSale();
-        externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 5);
 
+        ItemDTO itemDTO = new ItemDTO(10, "pear", "green", 5.00, 0.12);
+        Map<ItemDTO, Integer> itemList = new HashMap<>();
+        itemList.put(itemDTO, 1);
+
+        externalInventorySys.database.addItem(itemDTO, 1);
+
+        SaleDTO saleDTO = new SaleDTO(1, itemList, 100.0, 20.0, 10.0);
+        
+        PaymentDTO paymentDTO = new PaymentDTO(1, PaymentType.CASH, 100.0, 10.0, 20.0, 120.0);
+
+        receiptDTO = new ReceiptDTO(saleDTO, paymentDTO);
         
     }
+
 
     @After
     public void tearDown() {
@@ -68,19 +81,27 @@ public class updateItemQuantityTest {
 
 
     @Test
-    public void updateItemQuantityValidTest() {
-        
-        ItemDTO testItemDTO = new ItemDTO(10, "pear", "green", 50.00, 0.12);
-        Map<ItemDTO, Integer> itemList = new HashMap<>();
-        itemList.put(testItemDTO, 4);
+    public void logReceiptTest() {
 
-        int initialQuantity = externalInventorySys.getItemQuantity(testItemDTO.getItemID());
-        externalInventorySys.updateItemQuantity(itemList);
-        int finalQuantity = externalInventorySys.getItemQuantity(testItemDTO.getItemID());
+        int initialDatabaseSize = linkedList.length();
+        externalAccountingSys.logReceipt(receiptDTO);
+        int finalDatabaseSize = linkedList.length();
     
-        assertEquals(initialQuantity - 4, finalQuantity);
-        
-        
-        
+        assertEquals("The size of the database should increase by 1 after logging a receipt", initialDatabaseSize + 1, finalDatabaseSize);
+    }
+    
+
+
+    @Test
+    public void newIDTest() {
+
+        // newID method returns a new unique ID each time it's called,
+        // we can test it by calling it twice and checking that the two IDs are not the same.
+
+        int id1 = externalAccountingSys.newID();
+        int id2 = externalAccountingSys.newID();
+
+        assertNotEquals(id1, id2);
     }
 }
+

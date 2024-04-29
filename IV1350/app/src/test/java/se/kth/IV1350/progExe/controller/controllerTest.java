@@ -5,13 +5,16 @@ import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.model.DTO.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.After;
 import org.junit.AfterClass;
 
-public class scanItemTest {
+public class controllerTest {
 
     private static Controller ctrl;
     private static ExternalAccountingSys externalAccountingSys;
@@ -35,20 +38,33 @@ public class scanItemTest {
     @Before
     public void setUp() {
 
+        externalInventorySys.database.clear();
         ctrl.newSale();
         externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 1);
+        
     }
 
     @After
     public void tearDown() {
         externalInventorySys.database.clear();
+        ctrl.endSale();
     }
 
     @AfterClass
     public static void termProgExe() {
         //delete all
     }
-    
+
+
+    @Test
+    public void newSaleIdTest() {
+
+        int expResult = 2; // Sale ID starts at 1, so the second sale should have ID 2.
+        int result = externalAccountingSys.newID();
+        assertEquals(expResult, result);
+
+    }
+
 
     @Test
     /**
@@ -112,5 +128,47 @@ public class scanItemTest {
 
         assertEquals(testMsg, expResult, result);
     }
+
+
+    @Test
+    public void endSaleTest() {
+
+        
+        String expResult = "End Sale:\n" + //
+                        "Total cost (incl VAT): 0.0 SEK\n" + //
+                        "Total VAT: 0.0 SEK"
+                        + "\n" + "";
+        String result = ctrl.endSale();
+        assertEquals(expResult, result);
+
+    }
+
+
+    @Test
+    public void ValidPaymentTest() {
+
+        double amount = 100;
+    }
+
+
+
+
+    @Test
+    public void getDiscountFromIDTest() {
+
+        // getDiscountFromID method returns true if the discount exists and false otherwise,
+        // we can test it by calling it with a discount ID that we know exists and one that we know doesn't exist.
+
+        // Test with a discount ID that exists
+        int existingDiscountID = 1; // discount ID that exists
+        boolean result = ctrl.getDiscountFromID(existingDiscountID);
+        assertTrue(result);
+
+        // Test with a discount ID that doesn't exist
+        int nonExistingDiscountID = 15; // discount ID that doesn't exist
+        result = ctrl.getDiscountFromID(nonExistingDiscountID);
+        assertFalse(result);
+    }
+
 }
 

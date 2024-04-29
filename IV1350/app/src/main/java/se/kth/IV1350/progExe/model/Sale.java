@@ -114,13 +114,13 @@ public class Sale {
     }
 
     /**
-     * Applies a percentage discount to the total price and total discount.
+     * Applies a percentage discount to the total price and updates the total discount.
      * 
      * @param percentage The percentage discount to be applied.
      */
     public void applyPercentageDiscount(double percentage) {
-
-        this.totalDiscount *= (1 - percentage);
-        this.totalPrice = this.totalPrice * (1 - percentage);
+        double discountAmount = this.totalPrice * percentage;
+        this.totalDiscount += discountAmount;
+        this.totalPrice -= discountAmount;
     }
 }
