@@ -38,7 +38,24 @@ public class ExternalInventorySys {
      * @param itemList A map of ItemDTOs and their quantities to be updated in the inventory.
      */
     public void updateItemQuantity(Map<ItemDTO, Integer> itemList) {
-        // method body
+  
+        for (Map.Entry<ItemDTO, Integer> entry : itemList.entrySet()) {
+            ItemDTO itemDTO = entry.getKey();
+            int quantity = entry.getValue();
+            database.updateItemQuantity(itemDTO, quantity);
+        }
+    }
+
+
+
+    /**
+    * Retrieves the quantity of an item in the inventory based on the provided item ID.
+    * 
+    * @param itemID The ID of the item to retrieve the quantity for.
+    * @return The quantity of the item, or -1 if the item does not exist.
+    */
+    public int getItemQuantity(int itemID) {
+        return database.getItemQuantity(itemID);
     }
 
     /**
@@ -124,6 +141,28 @@ public class ExternalInventorySys {
         }
 
         /**
+        * Updates the quantity of a specific item in the inventory.
+        *
+        * @param itemDTO The item to update in the inventory. This object contains the item ID.
+        * @param quantity The quantity to subtract from the current quantity of the item in the inventory.
+        * @return true if the quantity was successfully updated, false if the item does not exist in the inventory,
+        *         if the item ID is out of range, or if the quantity on the shelf is less than the quantity to be subtracted.
+        */
+        public boolean updateItemQuantity(ItemDTO itemDTO, int quantity) {
+            int itemID = itemDTO.getItemID();
+            if(itemID < 0 || itemID >= inventory.length || inventory[itemID] == null) {
+                return false;
+            }
+            Shelf shelf = inventory[itemID];
+            if(shelf.quantity < quantity) {
+                return false;
+            }
+            shelf.quantity -= quantity;
+            return true;
+        }
+
+
+        /**
          * Clears the inventory.
          * 
          * This method initializes the Inventory with a new Shelf array of size 100.
@@ -142,6 +181,20 @@ public class ExternalInventorySys {
             addItem(new ItemDTO(2, "Banana", "chiquita", 7.00, 0.12), 10);
             addItem(new ItemDTO(3, "Orange", "", 15.00, 0.12), 5);
         }
+
+        /**
+        * Retrieves the quantity of an item in the inventory based on the provided item ID.
+        * 
+        * @param itemID The ID of the item to retrieve the quantity for.
+        * @return The quantity of the item, or -1 if the item does not exist.
+        */
+        public int getItemQuantity(int itemID) {
+            if(itemID < 0 || itemID >= inventory.length || inventory[itemID] == null) {
+             return -1;
+            }   
+            return inventory[itemID].quantity;
+        }
+
     }
     
 
