@@ -79,19 +79,19 @@ public class externalAccountingSysTest {
         //delete all
     }
 
-
+    // Test of logReceipt method
     @Test
     public void logReceiptTest() {
-
-        int initialDatabaseSize = linkedList.length();
+     
         externalAccountingSys.logReceipt(receiptDTO);
-        int finalDatabaseSize = linkedList.length();
-    
-        assertEquals("The size of the database should increase by 1 after logging a receipt", initialDatabaseSize + 1, finalDatabaseSize);
+
+        ReceiptDTO loggedReceipt = externalAccountingSys.database.receiptlog.lookup(receiptDTO.getReceiptSale().getSaleID());
+
+        assertEquals(receiptDTO, loggedReceipt);
     }
     
 
-
+    // Test of newID method
     @Test
     public void newIDTest() {
 

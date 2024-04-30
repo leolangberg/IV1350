@@ -65,6 +65,7 @@ public class externalInventorySysTest {
     }
 
 
+    // Test of getItemQuantity method
     @Test
     public void updateItemQuantityTest() {
         
@@ -82,7 +83,7 @@ public class externalInventorySysTest {
         
     }
 
-
+    // Test of getItem method
     @Test
     public void getItemTest() {
         

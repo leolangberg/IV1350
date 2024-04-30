@@ -2,7 +2,10 @@ package se.kth.IV1350.progExe.controller;
 
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.integration.external.*;
+import se.kth.IV1350.progExe.model.SalesHandler;
+import se.kth.IV1350.progExe.model.StringHandler;
 import se.kth.IV1350.progExe.model.DTO.*;
+import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,6 +25,8 @@ public class controllerTest {
     private static ExternalInventorySys externalInventorySys;
     private static Display display;
     private static cashRegister cashRegister;
+    private static StringHandler stringHandler;
+    private static SalesHandler salesHandler;
 
     @BeforeClass
     public static void initProgExe() {
@@ -29,8 +34,10 @@ public class controllerTest {
         externalAccountingSys = new ExternalAccountingSys();
         externalDiscountSys = new ExternalDiscountSys();
         externalInventorySys = new ExternalInventorySys();
+        stringHandler = new StringHandler();
         display = new Display();
         cashRegister = new cashRegister();
+        salesHandler = new SalesHandler(5);
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, display, cashRegister);
     }
@@ -38,10 +45,9 @@ public class controllerTest {
     @Before
     public void setUp() {
 
-        externalInventorySys.database.clear();
         ctrl.newSale();
         externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 1);
-        
+
     }
 
     @After
@@ -52,10 +58,10 @@ public class controllerTest {
 
     @AfterClass
     public static void termProgExe() {
-        //delete all
+        // delete all
     }
 
-
+    // Test for newSale() method
     @Test
     public void newSaleIdTest() {
 
@@ -65,15 +71,29 @@ public class controllerTest {
 
     }
 
+    // Test for endSale() method
+    @Test
+    public void endSaleTest() {
+
+        String expResult = "End Sale:\n" + //
+                "Total cost (incl VAT): 0.0 SEK\n" + //
+                "Total VAT: 0.0 SEK"
+                + "\n" + "";
+        String result = ctrl.endSale();
+        assertEquals(expResult, result);
+
+    }
 
     @Test
     /**
      * Tries to fetch Item with valid id.
-    */
+     */
     public void scanItemValidIdTest() {
 
         int itemID = 10;
-        String expResult = "Add 1 item with item id: 10\n" + "Item ID: 10\n" + "Item name: pear\n" + "Item cost: 5.0 SEK\n" + "VAT: 12%\n" + "Item description: green\n" + "\n" + "Total cost (incl VAT): 5.0 SEK\n" + "Total VAT: 0.6 SEK\n";
+        String expResult = "Add 1 item with item id: 10\n" + "Item ID: 10\n" + "Item name: pear\n"
+                + "Item cost: 5.0 SEK\n" + "VAT: 12%\n" + "Item description: green\n" + "\n"
+                + "Total cost (incl VAT): 5.0 SEK\n" + "Total VAT: 0.6 SEK\n";
         String result = ctrl.getItem(itemID);
         String testMsg = "Scanned Item with valid id: \n" + "expResult:\n" + expResult + "Result:\n" + result;
 
@@ -109,9 +129,8 @@ public class controllerTest {
         String testMsg = "Scanned Item with Invalid Quantity: \n" + "expResult:\n" + expResult + "Result:\n" + result;
 
         assertEquals(testMsg, expResult, result);
-        
-    }
 
+    }
 
     @Test
     /**
@@ -124,40 +143,50 @@ public class controllerTest {
 
         String expResult = "ItemID: 10 is Invalid.";
         String result = ctrl.getItem(itemID, quantity);
-        String testMsg = "Scanned Item with Higher Quantity than Inventory holds: \n" + "expResult:\n" + expResult + "Result:\n" + result;
+        String testMsg = "Scanned Item with Higher Quantity than Inventory holds: \n" + "expResult:\n" + expResult
+                + "Result:\n" + result;
 
         assertEquals(testMsg, expResult, result);
     }
 
-
     @Test
-    public void endSaleTest() {
-
-        
-        String expResult = "End Sale:\n" + //
-                        "Total cost (incl VAT): 0.0 SEK\n" + //
-                        "Total VAT: 0.0 SEK"
-                        + "\n" + "";
-        String result = ctrl.endSale();
-        assertEquals(expResult, result);
-
-    }
-
-
-    @Test
+    /**
+     * Tries to pay with valid payment.
+     */
     public void ValidPaymentTest() {
 
-        double amount = 100;
+        PaymentType paymentType = PaymentType.CASH;
+        double amountPaid = 100.0;
+
+        String result = ctrl.Payment(paymentType, amountPaid);
+
+        assertEquals(stringHandler.paymentSuccess(new PaymentDTO(amountPaid, paymentType, salesHandler.getSaleDTO())),
+                result);
     }
 
+    @Test
+    /**
+     * Tries to pay with invalid payment.
+     */
+    public void InvalidPaymentTest() {
 
+        ctrl.getItem(10);
+        PaymentType paymentType = PaymentType.CASH;
+        double amountPaid = 0.0;
 
+        String result = ctrl.Payment(paymentType, amountPaid);
+
+        assertEquals("Payment Failure.\n" + //
+                "Total cost (incl VAT): 5.0 SEK\n" + //
+                "Amount Paid: 0.0 SEK\n" + //
+                "", result);
+    }
 
     @Test
+    /**
+     * Tries to apply a discount with valid discount ID.
+     */
     public void getDiscountFromIDTest() {
-
-        // getDiscountFromID method returns true if the discount exists and false otherwise,
-        // we can test it by calling it with a discount ID that we know exists and one that we know doesn't exist.
 
         // Test with a discount ID that exists
         int existingDiscountID = 1; // discount ID that exists
@@ -171,4 +200,3 @@ public class controllerTest {
     }
 
 }
-

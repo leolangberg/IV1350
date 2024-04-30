@@ -65,6 +65,7 @@ public class saleTest {
     }
 
 
+    // Test for adding an item to the sale
     @Test
     public void testAddItem() {
 
@@ -79,6 +80,7 @@ public class saleTest {
     }
 
  
+    // Test for applying numeral discount
     @Test
     public void testApplyNumeralDiscount() {
         
@@ -97,6 +99,7 @@ public class saleTest {
         assertEquals(numeralDiscount, sale.getSaleDiscount(), 0.001); // Add delta value for comparing floating-point numbers
     }
 
+    // Test for applying percentage discount
     @Test
     public void testApplyPercentageDiscount() {
 

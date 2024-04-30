@@ -1,15 +1,10 @@
 package se.kth.IV1350.progExe.integration;
 
 
-import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.model.DTO.*;
-import se.kth.IV1350.progExe.model.ENUM.DiscountType;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
 import static org.junit.Assert.assertEquals;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -21,7 +16,6 @@ import se.kth.IV1350.progExe.integration.external.ExternalAccountingSys;
 import se.kth.IV1350.progExe.integration.external.ExternalDiscountSys;
 import se.kth.IV1350.progExe.integration.external.ExternalInventorySys;
 
-import static org.junit.Assert.assertEquals;
 
 public class cashRegisterTest {
     
@@ -69,7 +63,7 @@ public class cashRegisterTest {
         //delete all
     }
 
-    
+    // Test of updateCashRegister method
     @Test
     public void testUpdateCashRegister() {
         double initialCashAmount = cashRegister.cashAmount;

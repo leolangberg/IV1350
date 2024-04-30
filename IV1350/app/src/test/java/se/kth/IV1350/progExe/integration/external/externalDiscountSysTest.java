@@ -64,7 +64,7 @@ public class externalDiscountSysTest {
         //delete all
     }
 
-
+    // Test of getDiscount by id method
     @Test
     public void GetDiscountByIdTest() {
        
@@ -80,17 +80,15 @@ public class externalDiscountSysTest {
         assertEquals(expected, result, 0.01);
     }
 
-
+    // Test of getDiscount by price method
     @Test
     public void GetDiscountByTotalPriceTest() {
-        // Act
-        double result = externalDiscountSys.getDiscount(100.0);
 
-        // Assert
+        double result = externalDiscountSys.getDiscount(100.0);
         assertEquals(0.0, result, 0.01);
     }
 
-
+    // Test of getDiscount method
     @Test
     public void getDiscountTest() {
 
@@ -100,7 +98,6 @@ public class externalDiscountSysTest {
 
         DiscountDTO testresult = externalDiscountSys.getDiscount(itemList);
 
-        // Assert
         assertEquals(10, testresult.getDiscountValue(), 0.01);
         assertEquals(DiscountType.NUMERAL, testresult.getDiscountType());
         assertEquals(50, testresult.getDiscountID());
