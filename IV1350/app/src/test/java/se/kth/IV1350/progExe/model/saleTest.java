@@ -6,10 +6,6 @@ import se.kth.IV1350.progExe.integration.external.*;
 
 
 import static org.junit.Assert.assertEquals;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.BeforeClass;

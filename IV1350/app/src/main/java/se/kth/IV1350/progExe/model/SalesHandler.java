@@ -5,7 +5,8 @@ import se.kth.IV1350.progExe.model.DTO.*;
 /**
  * The SalesHandler class is responsible for handling sales.
  * 
- * This class contains the current Sale, PaymentDTO, and ReceiptDTO of the sale, as well as a boolean indicating if the sale is completed.
+ * This class contains the current Sale, PaymentDTO, and ReceiptDTO of the sale,
+ * as well as a boolean indicating if the sale is completed.
  */
 public class SalesHandler {
 
@@ -15,11 +16,11 @@ public class SalesHandler {
 
     private boolean saleCompleted;
 
-
     /**
      * Constructs a new SalesHandler object.
      * 
-     * This constructor initializes the SalesHandler with a new Sale object with the provided saleID and sets saleCompleted to false.
+     * This constructor initializes the SalesHandler with a new Sale object with the
+     * provided saleID and sets saleCompleted to false.
      *
      * @param saleID The ID of the sale.
      */
@@ -28,7 +29,6 @@ public class SalesHandler {
         currentSale = new Sale(saleID);
         saleCompleted = false;
     }
-
 
     /**
      * Packages the currentSale as a SaleDTO.
@@ -40,7 +40,6 @@ public class SalesHandler {
         return new SaleDTO(currentSale);
 
     }
-
 
     /**
      * Retrieves the current PaymentDTO.
@@ -75,7 +74,6 @@ public class SalesHandler {
         return true;
     }
 
-
     /**
      * Ends the current sale.
      * 
@@ -92,7 +90,8 @@ public class SalesHandler {
     /**
      * Initiates a payment transaction.
      * 
-     * This method checks if the payment is valid and creates a new ReceiptDTO if the payment is successful.
+     * This method checks if the payment is valid and creates a new ReceiptDTO if
+     * the payment is successful.
      * 
      * @param paymentDTO The payment to be made.
      * @return True if the payment was successful, false otherwise.
@@ -112,7 +111,8 @@ public class SalesHandler {
     /**
      * Applies a discount to the current sale.
      * 
-     * This method applies a discount to the current sale based on the provided DiscountDTO.
+     * This method applies a discount to the current sale based on the provided
+     * DiscountDTO.
      * 
      * @param discountDTO The discount to be applied.
      * @return True if the discount was applied, false otherwise.
@@ -137,4 +137,14 @@ public class SalesHandler {
 
         return true;
     }
+
+    /**
+     * Checks if the sale is completed.
+     * 
+     * @return True if the sale is completed, false otherwise.
+     */
+    public boolean isSaleCompleted() {
+        return saleCompleted;
+    }
+
 }
