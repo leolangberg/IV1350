@@ -100,7 +100,7 @@ public class SalesHandler {
 
         if (paymentDTO.getPaymentPrice() > paymentDTO.getPaymentPaid()) {
             return false;
-        } // not enough money for transaction
+        }
 
         currentPayment = paymentDTO;
         currentReceipt = new ReceiptDTO(getSaleDTO(), paymentDTO);

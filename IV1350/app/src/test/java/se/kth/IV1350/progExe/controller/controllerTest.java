@@ -61,17 +61,22 @@ public class controllerTest {
         // delete all
     }
 
-    // Test for newSale() method
+    /**
+     * Test for newSale() method
+     * ID 1 is already created in setUp()
+     */
     @Test
     public void newSaleIdTest() {
 
-        int expResult = 2; // Sale ID starts at 1, so the second sale should have ID 2.
+        int expResult = 2; // 1 is already created in setUp()
         int result = externalAccountingSys.newID();
         assertEquals(expResult, result);
 
     }
 
-    // Test for endSale() method
+    /**
+     * Test for endSale() method
+     */
     @Test
     public void endSaleTest() {
 
@@ -186,16 +191,22 @@ public class controllerTest {
     /**
      * Tries to apply a discount with valid discount ID.
      */
-    public void getDiscountFromIDTest() {
+    public void getDiscountFromIDValidTest() {
 
-        // Test with a discount ID that exists
-        int existingDiscountID = 1; // discount ID that exists
+        int existingDiscountID = 1;
         boolean result = ctrl.getDiscountFromID(existingDiscountID);
         assertTrue(result);
 
-        // Test with a discount ID that doesn't exist
-        int nonExistingDiscountID = 15; // discount ID that doesn't exist
-        result = ctrl.getDiscountFromID(nonExistingDiscountID);
+    }
+
+    @Test
+    /**
+     * Tries to apply a discount with invalid discount ID.
+     */
+    public void getDiscountFromIDInvalidTest() {
+
+        int nonExistingDiscountID = 15;
+        boolean result = ctrl.getDiscountFromID(nonExistingDiscountID);
         assertFalse(result);
     }
 

@@ -50,7 +50,6 @@ public class salesHandlerTest {
     @Before
     public void setUp() {
 
-
         salesHandler = new SalesHandler(saleID);
 
     }
@@ -65,7 +64,9 @@ public class salesHandlerTest {
         // delete all
     }
 
-    // Test case for the SalesHandler constructor
+    /*
+     * Test case for the SalesHandler constructor
+     */
     @Test
     public void testSalesHandlerConstructor() {
         assertNotNull(salesHandler.getSaleDTO());
@@ -73,8 +74,9 @@ public class salesHandlerTest {
         assertFalse(salesHandler.isSaleCompleted());
     }
 
-
-    // Test case for when the sale is completed
+    /*
+     * Test case for when the sale is completed
+     */
     @Test
     public void testEndSale() {
         SaleDTO saleDTO = salesHandler.endSale();
@@ -83,9 +85,10 @@ public class salesHandlerTest {
         assertNotNull(saleDTO);
         assertEquals(saleID, saleDTO.getSaleID());
     }
-    
 
-    // Test case for when the sale is not completed
+    /*
+     * Test case for when the sale is not completed
+     */
     @Test
     public void testTransaction() {
         PaymentDTO paymentDTO = new PaymentDTO(1, PaymentType.CASH, 100.0, 10.0, 20.0, 120.0);
@@ -97,7 +100,9 @@ public class salesHandlerTest {
         assertNotNull(salesHandler.getReceiptDTO());
     }
 
-    // Test case for when the payment is not enough
+    /*
+     * Test case for when the payment is not enough
+     */
     @Test
     public void testTransactionNotEnoughMoney() {
         PaymentDTO paymentDTO = new PaymentDTO(1, PaymentType.CASH, 200.0, 10.0, 20.0, 120.0);
@@ -109,19 +114,23 @@ public class salesHandlerTest {
         assertNull(salesHandler.getReceiptDTO());
     }
 
-
-    // Test case for when the discount is a numeral discount
-    @Test 
+    /*
+     * Test case for when the discount is a numeral discount
+     */
+    @Test
     public void testApplyDiscount() {
         DiscountDTO discountDTO = new DiscountDTO(DiscountType.PERCENTAGE, 0.1);
 
         boolean result = salesHandler.applyDiscount(discountDTO);
 
         assertTrue(result);
-        assertEquals(salesHandler.getSaleDTO().getSaleDiscount(), salesHandler.getSaleDTO().getSalePrice() * discountDTO.getDiscountValue(), 0.0001);
+        assertEquals(salesHandler.getSaleDTO().getSaleDiscount(),
+                salesHandler.getSaleDTO().getSalePrice() * discountDTO.getDiscountValue(), 0.0001);
     }
 
-    // Test case for when the discount is null
+    /*
+     * Test case for when the discount is null
+     */
     @Test
     public void testApplyDiscountNull() {
         boolean result = salesHandler.applyDiscount(null);

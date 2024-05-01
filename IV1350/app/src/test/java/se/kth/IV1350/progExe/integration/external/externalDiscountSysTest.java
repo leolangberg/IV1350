@@ -1,10 +1,8 @@
 package se.kth.IV1350.progExe.integration.external;
 
-
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.ENUM.DiscountType;
-
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,13 +24,9 @@ public class externalDiscountSysTest {
     private static ExternalInventorySys externalInventorySys;
     private static Display display;
     private static cashRegister cashRegister;
-    
-   
 
     ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
     ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
-
-
 
     @BeforeClass
     public static void initProgExe() {
@@ -44,14 +38,14 @@ public class externalDiscountSysTest {
         cashRegister = new cashRegister();
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, display, cashRegister);
-    
+
     }
 
     @Before
     public void setUp() {
-        
+
         ctrl.newSale();
-        
+
     }
 
     @After
@@ -61,16 +55,17 @@ public class externalDiscountSysTest {
 
     @AfterClass
     public static void termProgExe() {
-        //delete all
+        // delete all
     }
 
-    // Test of getDiscount by id method
+    /*
+     * Test of getDiscount by id method
+     */
     @Test
     public void GetDiscountByIdTest() {
-       
-       
+
         DiscountDTO dummy = new DiscountDTO(DiscountType.NUMERAL, 10.0, 1);
-        
+
         DiscountDTO test = externalDiscountSys.getDiscount(1);
 
         double expected = dummy.getDiscountValue();
@@ -80,7 +75,9 @@ public class externalDiscountSysTest {
         assertEquals(expected, result, 0.01);
     }
 
-    // Test of getDiscount by price method
+    /*
+     * Test of getDiscount by price method
+     */
     @Test
     public void GetDiscountByTotalPriceTest() {
 
@@ -88,7 +85,9 @@ public class externalDiscountSysTest {
         assertEquals(0.0, result, 0.01);
     }
 
-    // Test of getDiscount method
+    /*
+     * Test of getDiscount by item list method
+     */
     @Test
     public void getDiscountTest() {
 
@@ -101,8 +100,7 @@ public class externalDiscountSysTest {
         assertEquals(10, testresult.getDiscountValue(), 0.01);
         assertEquals(DiscountType.NUMERAL, testresult.getDiscountType());
         assertEquals(50, testresult.getDiscountID());
-        
-    }
 
+    }
 
 }

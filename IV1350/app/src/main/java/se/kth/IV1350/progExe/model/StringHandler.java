@@ -4,10 +4,9 @@ import se.kth.IV1350.progExe.model.DTO.*;
 
 public class StringHandler {
 
+    public StringHandler() {
+    };
 
-    public StringHandler() {};
-
-    
     public String itemInfo(ItemDTO itemDTO, int quantity) {
 
         String header = "Add " + quantity + " item with item id: " + itemDTO.getItemID() + "\n";
@@ -16,7 +15,7 @@ public class StringHandler {
         String itemCost = "Item cost: " + itemDTO.getItemPrice() + " SEK" + "\n";
         String itemVAT = "VAT: " + (int) (itemDTO.getItemVAT() * 100) + "%" + "\n";
         String itemDesc = "Item description: " + itemDTO.getItemDescription() + "\n";
-        
+
         String itemInfo = header + itemID + itemName + itemCost + itemVAT + itemDesc + "\n";
         return itemInfo;
     }

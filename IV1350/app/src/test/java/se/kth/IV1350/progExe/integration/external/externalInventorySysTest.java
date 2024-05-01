@@ -3,7 +3,6 @@ package se.kth.IV1350.progExe.integration.external;
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.model.DTO.*;
 
-
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
@@ -24,13 +23,9 @@ public class externalInventorySysTest {
     private static ExternalInventorySys externalInventorySys;
     private static Display display;
     private static cashRegister cashRegister;
-    
-   
 
     ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
     ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
-
-
 
     @BeforeClass
     public static void initProgExe() {
@@ -42,16 +37,15 @@ public class externalInventorySysTest {
         cashRegister = new cashRegister();
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, display, cashRegister);
-    
+
     }
 
     @Before
     public void setUp() {
-        
+
         ctrl.newSale();
         externalInventorySys.database.addItem(new ItemDTO(15, "pear", "green", 5.00, 0.12), 5);
 
-        
     }
 
     @After
@@ -61,14 +55,15 @@ public class externalInventorySysTest {
 
     @AfterClass
     public static void termProgExe() {
-        //delete all
+        // delete all
     }
 
-
-    // Test of getItemQuantity method
+    /*
+     * Test of updateItemQuantity method
+     */
     @Test
     public void updateItemQuantityTest() {
-        
+
         ItemDTO testItemDTO = new ItemDTO(15, "pear", "green", 50.00, 0.12);
         Map<ItemDTO, Integer> itemList = new HashMap<>();
         itemList.put(testItemDTO, 4);
@@ -76,31 +71,27 @@ public class externalInventorySysTest {
         int initialQuantity = externalInventorySys.getItemQuantity(testItemDTO.getItemID());
         externalInventorySys.updateItemQuantity(itemList);
         int finalQuantity = externalInventorySys.getItemQuantity(testItemDTO.getItemID());
-    
+
         assertEquals(initialQuantity - 4, finalQuantity);
-        
-        
-        
+
     }
 
-    // Test of getItem method
+    /*
+     * Test of getItem method
+     */
     @Test
     public void getItemTest() {
-        
 
         ItemDTO result = externalInventorySys.database.getItem(15, 1);
 
         ItemDTO expResult = new ItemDTO(15, "pear", "green", 5.00, 0.12);
-        
+
         assertEquals(expResult.getItemID(), result.getItemID());
         assertEquals(expResult.getItemName(), result.getItemName());
         assertEquals(expResult.getItemDescription(), result.getItemDescription());
         assertEquals(expResult.getItemPrice(), result.getItemPrice(), 0.01);
         assertEquals(expResult.getItemVAT(), result.getItemVAT(), 0.01);
-        
-        
-    }
 
- 
+    }
 
 }

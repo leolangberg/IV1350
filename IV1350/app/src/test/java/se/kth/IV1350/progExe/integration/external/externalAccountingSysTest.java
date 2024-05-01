@@ -1,6 +1,5 @@
 package se.kth.IV1350.progExe.integration.external;
 
-
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.model.SalesHandler;
 import se.kth.IV1350.progExe.model.DTO.*;
@@ -27,14 +26,11 @@ public class externalAccountingSysTest {
     private static ExternalInventorySys externalInventorySys;
     private static Display display;
     private static cashRegister cashRegister;
-    private static SalesHandler salesHandler;  
+    private static SalesHandler salesHandler;
     private static ReceiptDTO receiptDTO;
-   
 
     ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
     ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
-
-
 
     @BeforeClass
     public static void initProgExe() {
@@ -46,12 +42,12 @@ public class externalAccountingSysTest {
         cashRegister = new cashRegister();
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, display, cashRegister);
-    
+
     }
 
     @Before
     public void setUp() {
-        
+
         ctrl.newSale();
 
         ItemDTO itemDTO = new ItemDTO(10, "pear", "green", 5.00, 0.12);
@@ -61,13 +57,12 @@ public class externalAccountingSysTest {
         externalInventorySys.database.addItem(itemDTO, 1);
 
         SaleDTO saleDTO = new SaleDTO(1, itemList, 100.0, 20.0, 10.0);
-        
+
         PaymentDTO paymentDTO = new PaymentDTO(1, PaymentType.CASH, 100.0, 10.0, 20.0, 120.0);
 
         receiptDTO = new ReceiptDTO(saleDTO, paymentDTO);
-        
-    }
 
+    }
 
     @After
     public void tearDown() {
@@ -76,27 +71,31 @@ public class externalAccountingSysTest {
 
     @AfterClass
     public static void termProgExe() {
-        //delete all
+        // delete all
     }
 
-    // Test of logReceipt method
+    /*
+     * Test of logReceipt method
+     * newID method returns a new unique ID each time it's called,
+     * we can test it by calling it twice and checking that the two IDs are not the
+     * same.
+     */
     @Test
     public void logReceiptTest() {
-     
+
         externalAccountingSys.logReceipt(receiptDTO);
 
-        ReceiptDTO loggedReceipt = externalAccountingSys.database.receiptlog.lookup(receiptDTO.getReceiptSale().getSaleID());
+        ReceiptDTO loggedReceipt = externalAccountingSys.database.receiptlog
+                .lookup(receiptDTO.getReceiptSale().getSaleID());
 
         assertEquals(receiptDTO, loggedReceipt);
     }
-    
 
-    // Test of newID method
+    /*
+     * Test of newID method
+     */
     @Test
     public void newIDTest() {
-
-        // newID method returns a new unique ID each time it's called,
-        // we can test it by calling it twice and checking that the two IDs are not the same.
 
         int id1 = externalAccountingSys.newID();
         int id2 = externalAccountingSys.newID();
@@ -104,4 +103,3 @@ public class externalAccountingSysTest {
         assertNotEquals(id1, id2);
     }
 }
-
