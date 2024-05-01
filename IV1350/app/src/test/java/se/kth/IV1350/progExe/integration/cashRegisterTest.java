@@ -22,7 +22,7 @@ public class cashRegisterTest {
     private static ExternalAccountingSys externalAccountingSys;
     private static ExternalDiscountSys externalDiscountSys;
     private static ExternalInventorySys externalInventorySys;
-    private static Display display;
+    private static Printer printer;
 
     ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
     ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
@@ -33,10 +33,10 @@ public class cashRegisterTest {
         externalAccountingSys = new ExternalAccountingSys();
         externalDiscountSys = new ExternalDiscountSys();
         externalInventorySys = new ExternalInventorySys();
-        display = new Display();
+        printer = new Printer();
         cashRegister = new cashRegister();
 
-        ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, display, cashRegister);
+        ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, printer, cashRegister);
 
     }
 

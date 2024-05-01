@@ -17,7 +17,7 @@ public class Controller {
 
     private SalesHandler salesHandler;
     private StringHandler stringHandler;
-    private Display display;
+    private Printer printer;
     private cashRegister cashRegister;
 
     private ExternalAccountingSys externalAccountingSys;
@@ -28,7 +28,7 @@ public class Controller {
      * Constructs a new Controller object.
      * 
      * This constructor initializes the Controller with the provided external
-     * systems, display, and cash register.
+     * systems, Printer, and cash register.
      *
      * @param externalAccountingSys The external accounting system to be used by the
      *                              Controller.
@@ -36,18 +36,18 @@ public class Controller {
      *                              Controller.
      * @param externalDiscountSys   The external discount system to be used by the
      *                              Controller.
-     * @param display               The display to be used by the Controller.
+     * @param printer               The Printer to be used by the Controller.
      * @param cashRegister          The cash register to be used by the Controller.
      */
     public Controller(ExternalAccountingSys externalAccountingSys,
             ExternalInventorySys externalInventorySys, ExternalDiscountSys externalDiscountSys,
-            Display display, cashRegister cashRegister) {
+            Printer printer, cashRegister cashRegister) {
 
         this.externalAccountingSys = externalAccountingSys;
         this.externalDiscountSys = externalDiscountSys;
         this.externalInventorySys = externalInventorySys;
 
-        this.display = display;
+        this.printer = printer;
         this.cashRegister = cashRegister;
         this.stringHandler = new StringHandler();
 
@@ -154,7 +154,7 @@ public class Controller {
         cashRegister.updateCashRegister(paymentDTO);
         externalAccountingSys.logReceipt(receiptDTO);
         externalInventorySys.updateItemQuantity(saleDTO.getSaleItemList());
-        display.printReceipt(receiptDTO);
+        printer.printReceipt(receiptDTO);
     }
 
     /**

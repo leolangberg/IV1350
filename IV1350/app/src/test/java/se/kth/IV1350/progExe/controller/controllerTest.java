@@ -23,7 +23,7 @@ public class controllerTest {
     private static ExternalAccountingSys externalAccountingSys;
     private static ExternalDiscountSys externalDiscountSys;
     private static ExternalInventorySys externalInventorySys;
-    private static Display display;
+    private static Printer printer;
     private static cashRegister cashRegister;
     private static StringHandler stringHandler;
     private static SalesHandler salesHandler;
@@ -35,11 +35,11 @@ public class controllerTest {
         externalDiscountSys = new ExternalDiscountSys();
         externalInventorySys = new ExternalInventorySys();
         stringHandler = new StringHandler();
-        display = new Display();
+        printer = new Printer();
         cashRegister = new cashRegister();
         salesHandler = new SalesHandler(5);
 
-        ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, display, cashRegister);
+        ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, printer, cashRegister);
     }
 
     @Before

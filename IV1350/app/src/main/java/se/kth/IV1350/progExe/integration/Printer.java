@@ -4,15 +4,15 @@ import se.kth.IV1350.progExe.model.DTO.*;
 import java.util.Map;
 
 /**
- * Display shows and prints receipt of Sale. (Printer from Book)
+ * Printer shows and prints receipt of Sale. (Printer from Book)
  * 
  */
-public class Display {
+public class Printer {
 
     /**
-     * Initiates a new instance of Display.
+     * Initiates a new instance of Printer.
      */
-    public Display() {}
+    public Printer() {}
 
 
     /**

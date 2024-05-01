@@ -122,7 +122,7 @@ public class SalesHandler {
     public boolean applyDiscount(DiscountDTO discountDTO) {
 
         if (discountDTO == null) {
-            return false; // discount should be 0 automatically in payment.
+            return false; 
         }
 
         switch (discountDTO.getDiscountType()) {
