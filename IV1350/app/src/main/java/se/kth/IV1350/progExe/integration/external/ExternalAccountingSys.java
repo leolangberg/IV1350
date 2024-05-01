@@ -6,7 +6,7 @@ import se.kth.IV1350.progExe.model.DTO.ReceiptDTO;
  * The ExternalAccountingSys class is responsible for handling all communication
  * with the external accounting system.
  * 
- * This class contains methods for generating new unique IDs for sales, logging
+ * Contains methods for generating new unique IDs for sales, logging
  * receipts, and managing the accounting system database.
  */
 public class ExternalAccountingSys {
@@ -48,7 +48,7 @@ public class ExternalAccountingSys {
     }
 
     /**
-     * DATABASE
+     * ACCOUNTING SYSTEM DATABASE
      */
     public class AccountingSysDatabase {
 

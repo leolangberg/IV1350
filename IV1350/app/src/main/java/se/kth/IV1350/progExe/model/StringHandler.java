@@ -2,11 +2,24 @@ package se.kth.IV1350.progExe.model;
 
 import se.kth.IV1350.progExe.model.DTO.*;
 
+/**
+ * StringHandler class has the purpose of translating Sale, Item or Payment Objects
+ * into information in the form of String (which are to be returned to the View Layer).
+ */
 public class StringHandler {
 
-    public StringHandler() {
-    };
+    /**
+     * Initiates a new instance of StringHandler.
+     */
+    public StringHandler() {};
 
+    /**
+     * Translates ItemDTO and Quantity into String information.
+     * 
+     * @param itemDTO Item to be read.
+     * @param quantity Quantity to be read.
+     * @return String of all Item information.
+     */
     public String itemInfo(ItemDTO itemDTO, int quantity) {
 
         String header = "Add " + quantity + " item with item id: " + itemDTO.getItemID() + "\n";
@@ -20,6 +33,12 @@ public class StringHandler {
         return itemInfo;
     }
 
+    /**
+     * Translates Sale into String information.
+     * 
+     * @param saleDTO Sale to be read.
+     * @return String of all Sale information.
+     */
     public String saleInfo(SaleDTO saleDTO) {
 
         String cost = "Total cost (incl VAT): " + saleDTO.getSalePrice() + " SEK" + "\n";
@@ -28,6 +47,12 @@ public class StringHandler {
         return saleInfo;
     }
 
+    /**
+     * Translates data regarding the ending of the current Sale into String.
+     * 
+     * @param saleDTO Sale to be read.
+     * @return String of all Sale information.
+     */
     public String EndSaleInfo(SaleDTO saleDTO) {
 
         String header = "End Sale:\n";
@@ -35,6 +60,12 @@ public class StringHandler {
         return header + saleInfo;
     }
 
+    /**
+     * Translates successful payment into String information.
+     * 
+     * @param paymentDTO payment to be read.
+     * @return String of all necessary Payment information.
+     */
     public String paymentSuccess(PaymentDTO paymentDTO) {
 
         String transaction = "Payment Transaction Successful.\n";
@@ -42,6 +73,12 @@ public class StringHandler {
         return transaction + change;
     }
 
+     /**
+     * Translates unsuccessful payment into String information.
+     * 
+     * @param paymentDTO payment to be read.
+     * @return String of all necessary Payment information.
+     */
     public String paymentFailure(PaymentDTO paymentDTO) {
 
         String transaction = "Payment Failure." + "\n";

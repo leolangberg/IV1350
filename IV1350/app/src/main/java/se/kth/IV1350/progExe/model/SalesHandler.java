@@ -5,8 +5,11 @@ import se.kth.IV1350.progExe.model.DTO.*;
 /**
  * The SalesHandler class is responsible for handling sales.
  * 
- * This class contains the current Sale, PaymentDTO, and ReceiptDTO of the sale,
- * as well as a boolean indicating if the sale is completed.
+ * @currentSale represents ongoing Sale. 
+ * @currentPayment represent payment connected to ongoing Sale.
+ * @currentRecepit represent receipt connected to ongoing Sale.
+ * 
+ * @saleCompleted is boolean which locks current Sale from adding more items.
  */
 public class SalesHandler {
 
@@ -78,7 +81,6 @@ public class SalesHandler {
      * Ends the current sale.
      * 
      * This method sets saleCompleted to true and returns the current SaleDTO.
-     * 
      * @return The current SaleDTO.
      */
     public SaleDTO endSale() {

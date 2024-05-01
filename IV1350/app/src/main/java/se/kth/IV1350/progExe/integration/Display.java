@@ -4,19 +4,22 @@ import se.kth.IV1350.progExe.model.DTO.*;
 import java.util.Map;
 
 /**
- * Display showing ongoing sale, scanned items & price. (Printer from Book)
+ * Display shows and prints receipt of Sale. (Printer from Book)
  * 
  */
 public class Display {
 
-
+    /**
+     * Initiates a new instance of Display.
+     */
     public Display() {}
 
 
     /**
      * Prints the details of a receipt.
      * 
-     * This method prints the time of the sale, the items in the sale, the total cost (including VAT), the VAT, the amount paid by the customer in SEK, and the change to give the customer in SEK.
+     * This method prints the time of the sale, the items in the sale, the total VAT, the total cost (including VAT), 
+     * the amount paid by the customer in SEK, and the change to give the customer in SEK.
      * 
      * @param receiptDTO The ReceiptDTO whose details are to be printed.
      */
@@ -51,7 +54,9 @@ public class Display {
     /**
      * Prints the details of an update to the external inventory.
      * 
-     * This method prints a message indicating that sale info has been sent to the external accounting system, and then prints the details of each item in the sale, including the item and the quantity, indicating that the external inventory system has been told to decrease the inventory quantity of each item.
+     * This method prints a message indicating that sale info has been sent to the external accounting system,
+     * and then prints the details of each item in the sale, including the item and the quantity,
+     * indicating that the external inventory system has been told to decrease the inventory quantity of each item.
      * 
      * @param saleDTO The SaleDTO whose details are to be printed.
      */

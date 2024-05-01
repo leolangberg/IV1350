@@ -67,7 +67,7 @@ public class PaymentDTO {
     }
 
     /**
-     * Retrieves the payment ID of this PaymentDTO.
+     * Retrieves PaymentID.
      * 
      * @return The paymentID of this PaymentDTO.
      */
@@ -77,7 +77,7 @@ public class PaymentDTO {
     }
 
     /**
-     * Retrieves the payment type of this PaymentDTO.
+     * Retrieves PaymentType.
      * 
      * @return The enumType of this PaymentDTO.
      */
@@ -87,7 +87,7 @@ public class PaymentDTO {
     }
 
     /**
-     * Retrieves the total price of this PaymentDTO.
+     * Retrieves Total Price.
      * 
      * @return The totalPrice of this PaymentDTO.
      */
@@ -97,7 +97,7 @@ public class PaymentDTO {
     }
 
     /**
-     * Retrieves the discount applied to this PaymentDTO.
+     * Retrieves the discount applied.
      * 
      * @return The discountApplied of this PaymentDTO.
      */
@@ -108,7 +108,7 @@ public class PaymentDTO {
 
     
     /**
-     * Retrieves the total VAT of this PaymentDTO.
+     * Retrieves total VAT.
      * 
      * @return The totalVAT of this PaymentDTO.
      */
@@ -117,7 +117,7 @@ public class PaymentDTO {
     }
 
     /**
-     * Retrieves the amount paid in this PaymentDTO.
+     * Retrieves Amount Paid.
      * 
      * @return The amountPaid of this PaymentDTO.
      */
@@ -126,7 +126,7 @@ public class PaymentDTO {
     }
 
     /**
-     * Retrieves the change in this PaymentDTO.
+     * Retrieves payment Change.
      * 
      * @return The change of this PaymentDTO.
      */

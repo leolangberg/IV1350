@@ -3,10 +3,10 @@ package se.kth.IV1350.progExe.model.DTO;
 import java.time.LocalDateTime;
 
 /**
- * ReceiptDTO class consists of a log for Sale + Payment + (time)
- * 
- * Could potentially also have direct values (e.g price) which would then be carried over from the
- * payment (price = payment.getprice()).
+ * ReceiptDTO class represent the receipt of a Sale and Payment.
+ * @time show current date and time of purchase.
+ * @saleDTO represents finalized Sale.
+ * @paymentDTO represents finalized Payment.
  */
 public class ReceiptDTO {
 
@@ -18,7 +18,8 @@ public class ReceiptDTO {
     /**
      * Constructs a new ReceiptDTO object.
      * 
-     * This constructor initializes the ReceiptDTO with the provided saleDTO and paymentDTO, and sets the time to the current time.
+     * This constructor initializes the ReceiptDTO with the provided saleDTO and paymentDTO
+     * and sets the time to the current time.
      *
      * @param saleDTO The SaleDTO associated with this receipt.
      * @param paymentDTO The PaymentDTO associated with this receipt.
@@ -32,7 +33,7 @@ public class ReceiptDTO {
     }
 
     /**
-     * Retrieves the time of this ReceiptDTO.
+     * Retrieves the time.
      * 
      * @return The time of this ReceiptDTO.
      */
@@ -42,7 +43,7 @@ public class ReceiptDTO {
     }
 
     /**
-     * Retrieves the SaleDTO of this ReceiptDTO.
+     * Retrieves SaleDTO.
      * 
      * @return The saleDTO of this ReceiptDTO.
      */
@@ -52,7 +53,7 @@ public class ReceiptDTO {
     }
 
     /**
-     * Retrieves the PaymentDTO of this ReceiptDTO.
+     * Retrieves PaymentDTO.
      * 
      * @return The paymentDTO of this ReceiptDTO.
      */

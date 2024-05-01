@@ -7,21 +7,18 @@ import java.util.*;
 
 /**
  * The ExternalDiscountSys class is responsible for handling all communication
- * with the external discount system.
+ * with the Discount database.
  * 
- * This class contains methods for retrieving discounts based on discount IDs,
- * total prices, and item lists.
+ * Contains methods for retrieving discounts based on discount IDs, total prices, and item lists.
  */
 public class ExternalDiscountSys {
 
-    // Assume discounts are stored in a hash-map related array where: array[id]
     public DiscountSysDatabase database;
 
     /**
      * Constructs a new ExternalDiscountSys object.
      * 
-     * This constructor initializes the ExternalDiscountSys with a new
-     * DiscountSysDatabase.
+     * This constructor initializes the ExternalDiscountSys with a new DiscountSysDatabase.
      */
     public ExternalDiscountSys() {
         this.database = new DiscountSysDatabase();
@@ -75,7 +72,7 @@ public class ExternalDiscountSys {
     }
 
     /**
-     * DATABASE
+     * DISCOUNT DATABASE
      */
     public class DiscountSysDatabase {
 
