@@ -122,10 +122,10 @@ public class Controller {
      * Processes the payment for the current sale.
      * 
      * In case transaction succeeds then function calls updateSaleSystem which
-     * updates External Systems, function then prints receipts and
-     * returns payment information.
+     * updates External Systems and prints receipts.
+     * Payment function then returns payment information.
      *
-     * @param enumType   The type of payment.
+     * @param enumType The type of payment.
      * @param amountPaid The amount paid by the customer.
      * @return A String indicating whether the payment was successful or not.
      */
