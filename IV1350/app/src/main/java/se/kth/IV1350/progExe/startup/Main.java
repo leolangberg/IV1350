@@ -15,10 +15,6 @@ import se.kth.IV1350.progExe.model.ENUM.PaymentType;
  */
 public class Main {
 
-    /**
-     * View should become interactive as a execute() function or running
-     * blockIntepreter process.
-     */
     static View v;
 
     /**

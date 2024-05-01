@@ -6,7 +6,11 @@ import java.util.*;
 /**
  * The SaleDTO class is a DTO (Data Transfer Object) that contains information about a sale.
  * 
- * This class contains the sale ID, item list, total price, total VAT, and total discount of the sale.
+ * @saleID This Sales unique identifier.
+ * @itemList Maps each itemDTO in Sale to respective ItemID. 
+ * @totalPrice Represents total Price of entire Sale (including VAT).
+ * @totalVAT Represents total VAT of entire Sale (numeral). Note (itemDTO.VATrate is percentage).
+ * @totalDiscount Represents total Discount sum of entire Sale (numeral).
  */
 public class SaleDTO {
 
@@ -41,7 +45,8 @@ public class SaleDTO {
     /**
      * Constructs a new SaleDTO object from a Sale object.
      * 
-     * This constructor initializes the SaleDTO with the sale_id, itemList, totalPrice, totalVAT, and totalDiscount from the provided Sale object.
+     * This constructor initializes the SaleDTO with:
+     * sale_id, itemList, totalPrice, totalVAT, and totalDiscount from the provided Sale object.
      *
      * @param sale The Sale object from which the SaleDTO is created.
      */
@@ -68,7 +73,8 @@ public class SaleDTO {
     /**
      * Retrieves the item list of this SaleDTO.
      * 
-     * @return The itemList of this SaleDTO, represented as a map with ItemDTO as the key and quantity as the value.
+     * @return The itemList of this SaleDTO,
+     *         represented as a map with ItemDTO as the key and quantity as the value.
      */
     public Map<ItemDTO, Integer> getSaleItemList() {
         return itemList;

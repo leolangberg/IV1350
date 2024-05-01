@@ -39,7 +39,7 @@ public class DiscountDTO {
         this.discountID = null;
     }
     /**
-     * Retrieves the discount type of this DiscountDTO.
+     * Retrieves DiscountType.
      * 
      * @return The DiscountType of this DiscountDTO.
      */
@@ -48,7 +48,7 @@ public class DiscountDTO {
     }
 
     /**
-     * Retrieves the discount value of this DiscountDTO.
+     * Retrieves discount value.
      * 
      * @return The value of this DiscountDTO.
      */
@@ -57,7 +57,7 @@ public class DiscountDTO {
     }
 
     /**
-     * Retrieves the discount ID of this DiscountDTO.
+     * Retrieves DiscountID.
      * 
      * @return The discount_id of this DiscountDTO.
      */

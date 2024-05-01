@@ -7,7 +7,8 @@ import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 /**
  * The View class is responsible for handling all communication between the user interface and the controller.
  * 
- * This class contains methods for initiating a new sale, scanning items, ending a sale, applying discounts, and processing payments.
+ * This class contains methods for initiating: 
+ * new sale, scanning items, ending a sale, applying discounts, and processing payments.
  */
 public class View {
 
@@ -47,7 +48,8 @@ public class View {
      /**
      * Scans an item.
      * 
-     * This method tells the controller to get an item with the provided itemID. If the item cannot be found, it returns false.
+     * This method tells the controller to get an item with the provided itemID. 
+     * If the item cannot be found, Error Message will be returned.
      * 
      * @param itemID The ID of the item to be scanned.
      * @return True if the item was found, false otherwise.
@@ -76,7 +78,8 @@ public class View {
     /**
      * Creates a new payment.
      * 
-     * This method tells the controller to process a payment with the provided PaymentType and amount. The discount must be applied before this operation.
+     * This method tells the controller to process a payment with the provided PaymentType and Amount. 
+     * The discount must be applied before this operation.
      * 
      * @param enumType The type of the payment.
      * @param amountPaid The amount of the payment.
@@ -91,7 +94,8 @@ public class View {
      /**
      * Applies a personal discount based on a customer ID.
      * 
-     * This method tells the controller to apply a discount based on the provided customerID. If the discount cannot be applied, it returns false.
+     * This method tells the controller to apply a discount based on the provided customerID. 
+     * If there is no discount method returns false.
      * 
      * @param customerID The ID of the customer for whom the discount is to be applied.
      * @return True if the discount was applied, false otherwise.

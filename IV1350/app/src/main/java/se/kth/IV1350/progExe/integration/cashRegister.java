@@ -3,9 +3,7 @@ package se.kth.IV1350.progExe.integration;
 import se.kth.IV1350.progExe.model.DTO.PaymentDTO;
 
 /**
- * Cash Register is supposed to represent info gathered from customer paying for the sale. (e.g
- * Mastercard)
- * 
+ * Cash Register class is responsible for holding current Amount in Cashier Counter.  
  */
 public class cashRegister {
 

@@ -5,6 +5,7 @@ package se.kth.IV1350.progExe.model.DTO;
  * The ItemDTO class is a DTO (Data Transfer Object) that contains information about an item.
  * 
  * This class contains the item ID, name, description, price, and VAT rate.
+ * Please Note, VATrate is percentage.
  */
 public class ItemDTO {
 
@@ -12,7 +13,7 @@ public class ItemDTO {
     private final String itemName;
     private final String description;
     private final double price;
-    private final double VATrate; //percentage.
+    private final double VATrate;
 
 
     /**
@@ -24,7 +25,7 @@ public class ItemDTO {
      * @param itemName The name of the item.
      * @param description The description of the item.
      * @param price The price of the item.
-     * @param VATrate The VAT rate of the item.
+     * @param VATrate The VAT rate of the item (percentage).
      */
     public ItemDTO(int itemID, String itemName, String descprition, double price, double VATrate) {
         this.itemID = itemID;
@@ -37,7 +38,7 @@ public class ItemDTO {
 
 
     /**
-     * Retrieves the item ID of this ItemDTO.
+     * Retrieves ItemID.
      * 
      * @return The itemID of this ItemDTO.
      */
@@ -47,7 +48,7 @@ public class ItemDTO {
     }
 
     /**
-     * Retrieves the item name of this ItemDTO.
+     * Retrieves Item name.
      * 
      * @return The itemName of this ItemDTO.
      */
@@ -56,7 +57,7 @@ public class ItemDTO {
     }
 
     /**
-     * Retrieves the item description of this ItemDTO.
+     * Retrieves Item description.
      * 
      * @return The description of this ItemDTO.
      */
@@ -65,7 +66,7 @@ public class ItemDTO {
     }
 
     /**
-     * Retrieves the item price of this ItemDTO.
+     * Retrieves Item Price.
      * 
      * @return The price of this ItemDTO.
      */
@@ -74,9 +75,9 @@ public class ItemDTO {
     }
 
     /**
-     * Retrieves the VAT rate of this ItemDTO.
+     * Retrieves Item VATrate.
      * 
-     * @return The VATrate of this ItemDTO.
+     * @return The VATrate of this ItemDTO (percentage).
      */
     public double getItemVAT() {
         return VATrate;

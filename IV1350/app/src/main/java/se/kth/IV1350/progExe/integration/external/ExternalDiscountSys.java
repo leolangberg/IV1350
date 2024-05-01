@@ -7,21 +7,18 @@ import java.util.*;
 
 /**
  * The ExternalDiscountSys class is responsible for handling all communication
- * with the external discount system.
+ * with the Discount database.
  * 
- * This class contains methods for retrieving discounts based on discount IDs,
- * total prices, and item lists.
+ * Contains methods for retrieving discounts based on discount IDs, total prices, and item lists.
  */
 public class ExternalDiscountSys {
 
-    // Assume discounts are stored in a hash-map related array where: array[id]
     public DiscountSysDatabase database;
 
     /**
      * Constructs a new ExternalDiscountSys object.
      * 
-     * This constructor initializes the ExternalDiscountSys with a new
-     * DiscountSysDatabase.
+     * This constructor initializes the ExternalDiscountSys with a new DiscountSysDatabase.
      */
     public ExternalDiscountSys() {
         this.database = new DiscountSysDatabase();
@@ -50,21 +47,32 @@ public class ExternalDiscountSys {
     }
 
     /**
+     * FOR NOW DOES NOTHING. (WORK IN PROGRESS)
+     * 
      * When passed a list of all bought items, it tells a sum to be reduced from the
-     * total cost of
-     * the entire sale. The sum is zero if there’s no discount.
+     * total cost of the entire sale by matching each ItemID to potential DiscountID. 
+     * Returns discount of 0 if there’s no discount.
      */
-    public DiscountDTO getDiscount(Map<ItemDTO, Integer> itemlist) {
+    public DiscountDTO getDiscount(Map<ItemDTO, Integer> itemList) {
 
-        double sum = 10;
+        DiscountDTO discountDTO = new DiscountDTO(DiscountType.NUMERAL, 0, 50);
+        /*
+        double sum;
+        for (Map.Entry<ItemDTO, Integer> entry : itemList.entrySet()) {
+            ItemDTO itemDTO = entry.getKey();
+            DiscountDTO discountDTO = getDiscount(itemDTO.getItemID());
+            if(discountDTO != null) {
 
-        DiscountDTO discountDTO = new DiscountDTO(DiscountType.NUMERAL, sum, 50);
+            }
+        }
+        */
+
         return discountDTO;
 
     }
 
     /**
-     * DATABASE
+     * DISCOUNT DATABASE
      */
     public class DiscountSysDatabase {
 
@@ -89,6 +97,7 @@ public class ExternalDiscountSys {
         private void fillDiscountScript() {
             discountDatabase[1] = new DiscountDTO(DiscountType.NUMERAL, 10.00, 1);
             discountDatabase[2] = new DiscountDTO(DiscountType.PERCENTAGE, 0.20, 2);
+            discountDatabase[50] = new DiscountDTO(DiscountType.NUMERAL, 10, 50);
         }
 
         /**

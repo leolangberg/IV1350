@@ -136,7 +136,6 @@ public class Controller {
 
         if (paymentSuccess) {
             updateSaleSystem();
-            display.printReceipt(salesHandler.getReceiptDTO());
             return stringHandler.paymentSuccess(paymentDTO);
         } else {
             return stringHandler.paymentFailure(paymentDTO);
@@ -155,6 +154,7 @@ public class Controller {
         cashRegister.updateCashRegister(paymentDTO);
         externalAccountingSys.logReceipt(receiptDTO);
         externalInventorySys.updateItemQuantity(saleDTO.getSaleItemList());
+        display.printReceipt(receiptDTO);
     }
 
     /**

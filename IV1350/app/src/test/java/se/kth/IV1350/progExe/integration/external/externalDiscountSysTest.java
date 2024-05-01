@@ -97,7 +97,7 @@ public class externalDiscountSysTest {
 
         DiscountDTO testresult = externalDiscountSys.getDiscount(itemList);
 
-        assertEquals(10, testresult.getDiscountValue(), 0.01);
+        assertEquals(0, testresult.getDiscountValue(), 0.01);
         assertEquals(DiscountType.NUMERAL, testresult.getDiscountType());
         assertEquals(50, testresult.getDiscountID());
 
