@@ -6,31 +6,21 @@
 <h2>Notes</h2>
 <h6>
   <ul>
-    <li> Seminar 3 = build normal process + tests ---> Seminar 4 build fail process. <li>
-    <li>Display -> Printer + View</li>
-    <li> Tests </li>
-    <li> Discounts + correct process </li>
-    <li>rename SalesHandler to PoS? </li>
-    <li>View.updateItemQuantity() same as getItem()</li>
-    <li>Discount Handling NOT REQUIRED for SEM3</li>
+    <li> Add Unit Test to prove 1. <li>
+    <li>"reference to same itemList" meaning that to create new instance or to just lock it?</li>
   </ul>
 </h6>
 <h2>Questions</h2>
-<h3>Appropriate response regarding task2 feedback:</h3>
+<h3>Appropriate response regarding task3 feedback:</h3>
 <ul>
-  <li>1. returned valued are not specified for some of the function calls, for example getItem, Sale etc.</li>
-  <li>2. you should NOT update a DTO object, saleDTO. [SOLVED]</li>
-  <li>3 It is not clear how does View get information like amount, discount_id etc.</li>
-  <li>4 class constructor and class name do not match for example, cashRegister</li>
+  <li>1. DTO must be read only. SaleDTO has reference to the same itemList created by Sale. This violates MVC, since it means the controller can update itemList without going through the Sale Class.</li>
+  <li>2. Controller is doing views job by preparing string that is printed by the view. This violates MVC.</li>
 </ul>
 
 <h3>Further Questions:</h3>
 
 <ul>
-  <li>Testing without static instances? [SOLVED] (create entire structure for test)</li>
-  <li>Preffered One-Liners or Object declared then passed on?</li>
-  <li>No Args in Controller?</li>
-  <li>One test class per tested class?</li>
+  <li></li>
 </ul>
 
 <h5>Sample Run:</h5>
