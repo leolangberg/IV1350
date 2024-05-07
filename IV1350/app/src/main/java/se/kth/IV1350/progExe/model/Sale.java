@@ -1,6 +1,7 @@
 package se.kth.IV1350.progExe.model;
 
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 

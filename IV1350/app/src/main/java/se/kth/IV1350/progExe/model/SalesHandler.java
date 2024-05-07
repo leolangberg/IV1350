@@ -1,5 +1,6 @@
 package se.kth.IV1350.progExe.model;
 
+import java.util.Collections;
 import se.kth.IV1350.progExe.model.DTO.*;
 
 /**

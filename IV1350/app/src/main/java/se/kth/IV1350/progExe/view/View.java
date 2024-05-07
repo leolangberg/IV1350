@@ -1,6 +1,11 @@
 package se.kth.IV1350.progExe.view;
 
 import se.kth.IV1350.progExe.controller.Controller;
+import se.kth.IV1350.progExe.controller.OperationFailedException;
+
+import se.kth.IV1350.progExe.logger.ConsoleLogger;
+import se.kth.IV1350.progExe.logger.Logger;
+
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
 
@@ -9,10 +14,14 @@ import se.kth.IV1350.progExe.model.ENUM.PaymentType;
  * 
  * This class contains methods for initiating: 
  * new sale, scanning items, ending a sale, applying discounts, and processing payments.
+ * 
+ * @Controller instance directing and performing tasks.
+ * @Logger Error-message handler. 
  */
 public class View {
 
     private Controller ctrl;
+    private Logger logger;
 
     /**
      * View Constructor.
@@ -20,6 +29,7 @@ public class View {
      */
     public View(Controller ctrl) {
 
+        this.logger = new ConsoleLogger();
         this.ctrl = ctrl;
     }
 
@@ -56,7 +66,12 @@ public class View {
      */
     public void scanItem(int itemID) {
 
-        System.out.println(ctrl.getItem(itemID));
+        try {
+            System.out.println(ctrl.getItem(itemID)); 
+
+        } catch(OperationFailedException ope) {
+            logger.log(ope.getMessage());
+        }
 
     }
 
@@ -71,7 +86,12 @@ public class View {
      */
     public void scanItem(int itemID, int quantity) {
 
-        System.out.println(ctrl.getItem(itemID, quantity));
+        try {
+            System.out.println(ctrl.getItem(itemID, quantity)); 
+
+        } catch(OperationFailedException ope) {
+            logger.log(ope.getMessage());
+        }
     }
 
 

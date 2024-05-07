@@ -71,9 +71,14 @@ public class Controller {
      * @return A String indicating whether the item was successfully retrieved and
      *         added to the sale.
      */
-    public String getItem(int itemID) {
+    public String getItem(int itemID) throws OperationFailedException {
 
-        return getItem(itemID, 1);
+        try {
+            return getItem(itemID, 1);
+        } catch (OperationFailedException ope) {
+            throw new OperationFailedException(ope.getMessage(), ope);
+        }
+
     }
 
     /**
@@ -84,19 +89,22 @@ public class Controller {
      * @return A String indicating whether the item was successfully retrieved and
      *         added to the sale.
      */
-    public String getItem(int itemID, int quantity) {
+    public String getItem(int itemID, int quantity) throws OperationFailedException {
 
-        ItemDTO itemDTO = externalInventorySys.getItem(itemID, quantity);
-        if (itemDTO == null) {
-            String errorMsg = "ItemID: " + itemID + " is Invalid.";
-            return errorMsg;
+        try {
+            ItemDTO itemDTO = externalInventorySys.getItem(itemID, quantity);
+            salesHandler.addItem(itemDTO, quantity);
+            String itemInfo = stringHandler.itemInfo(itemDTO, quantity);
+            String saleInfo = stringHandler.saleInfo(salesHandler.getSaleDTO());
+            return itemInfo + saleInfo;
+
+        } catch (DatabaseConnectionException dbce) {
+            throw new OperationFailedException(dbce.getMessage(), dbce);
+        } catch (InvalidIdentifierException ide) {
+            throw new OperationFailedException(ide.getMessage(), ide);
+        } catch (InvalidQuantityException iqe) {
+            throw new OperationFailedException(iqe.getMessage(), iqe);
         }
-
-        salesHandler.addItem(itemDTO, quantity);
-        String itemInfo = stringHandler.itemInfo(itemDTO, quantity);
-        String saleInfo = stringHandler.saleInfo(salesHandler.getSaleDTO());
-
-        return itemInfo + saleInfo;
     }
 
     /**

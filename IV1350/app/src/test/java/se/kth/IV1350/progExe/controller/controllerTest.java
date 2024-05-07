@@ -10,7 +10,7 @@ import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
+import java.rmi.server.Operation;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -93,23 +93,30 @@ public class controllerTest {
     /**
      * Tries to fetch Item with valid id.
      */
-    public void scanItemValidIdTest() {
+    public void scanItemValidIdTest() throws OperationFailedException {
 
         int itemID = 10;
         String expResult = "Add 1 item with item id: 10\n" + "Item ID: 10\n" + "Item name: pear\n"
                 + "Item cost: 5.0 SEK\n" + "VAT: 12%\n" + "Item description: green\n" + "\n"
                 + "Total cost (incl VAT): 5.0 SEK\n" + "Total VAT: 0.6 SEK\n";
-        String result = ctrl.getItem(itemID);
+        String result;
+
+        try {
+            result = ctrl.getItem(itemID);
+        } catch (OperationFailedException ope) {
+            result = ope.getMessage();
+        }
+
         String testMsg = "Scanned Item with valid id: \n" + "expResult:\n" + expResult + "Result:\n" + result;
 
         assertEquals(testMsg, expResult, result);
     }
 
-    @Test
+    @Test(expected = OperationFailedException.class)
     /**
      * Tries to fetch Item with invalid id.
      */
-    public void scanItemInvalidIdTest() {
+    public void scanItemInvalidIdTest() throws OperationFailedException {
 
         int itemID = -1;
 
@@ -120,11 +127,11 @@ public class controllerTest {
         assertEquals(testMsg, expResult, result);
     }
 
-    @Test
+    @Test(expected = OperationFailedException.class)
     /**
      * Uses invalid Quantity ( quantity <= 0) for getItem().
      */
-    public void scanItemInvalidQuantity() {
+    public void scanItemInvalidQuantity() throws OperationFailedException {
 
         int itemID = 10;
         int quantity = 0;
@@ -141,7 +148,7 @@ public class controllerTest {
     /**
      * Tries to fetch more instances of same Item than there exists in database.
      */
-    public void scanItemNoQuantityInDatabase() {
+    public void scanItemNoQuantityInDatabase() throws OperationFailedException {
 
         int itemID = 10;
         int quantity = 2;
@@ -173,7 +180,7 @@ public class controllerTest {
     /**
      * Tries to pay with invalid payment.
      */
-    public void InvalidPaymentTest() {
+    public void InvalidPaymentTest() throws OperationFailedException {
 
         ctrl.getItem(10);
         PaymentType paymentType = PaymentType.CASH;

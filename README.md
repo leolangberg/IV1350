@@ -6,7 +6,13 @@
 <h2>Notes</h2>
 <h6>
   <ul>
-    <li> Seminar 3 = build normal process + tests ---> Seminar 4 build fail process. <li>
+    <li>Update Tests to work with Exceptions.</li>
+  </ul>
+</h6>
+<!--
+<h6>
+  <ul>
+    <li> Seminar 3 = build normal process + tests -> Seminar 4 build fail process. <li>
     <li>Display -> Printer + View</li>
     <li> Tests </li>
     <li> Discounts + correct process </li>
@@ -15,23 +21,34 @@
     <li>Discount Handling NOT REQUIRED for SEM3</li>
   </ul>
 </h6>
-<h2>Questions</h2>
-<h3>Appropriate response regarding task2 feedback:</h3>
+-->
+<h2>Questions Seminar 4</h2>
+<h6>
+  <ul>
+    <li>Logger in View Layer?</li>
+    <li>Exception polymorphism & how to handle longer exception catching?</li>
+    <li>How do Junit tests work with Exceptions?</li>
+  </ul>
+</h6>
+<!-- <h3>Appropriate response regarding task2 feedback:</h3>
 <ul>
   <li>1. returned valued are not specified for some of the function calls, for example getItem, Sale etc.</li>
   <li>2. you should NOT update a DTO object, saleDTO. [SOLVED]</li>
   <li>3 It is not clear how does View get information like amount, discount_id etc.</li>
   <li>4 class constructor and class name do not match for example, cashRegister</li>
 </ul>
-
+-->
+<!-- 
 <h3>Further Questions:</h3>
-
+-->
+<!--
 <ul>
   <li>Testing without static instances? [SOLVED] (create entire structure for test)</li>
   <li>Preffered One-Liners or Object declared then passed on?</li>
   <li>No Args in Controller?</li>
   <li>One test class per tested class?</li>
 </ul>
+-->
 
 <h5>Sample Run:</h5>
 

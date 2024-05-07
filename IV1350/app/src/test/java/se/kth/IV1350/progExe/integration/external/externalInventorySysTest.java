@@ -62,7 +62,7 @@ public class externalInventorySysTest {
      * Test of updateItemQuantity method
      */
     @Test
-    public void updateItemQuantityTest() {
+    public void updateItemQuantityTest() throws InvalidIdentifierException, DatabaseConnectionException {
 
         ItemDTO testItemDTO = new ItemDTO(15, "pear", "green", 50.00, 0.12);
         Map<ItemDTO, Integer> itemList = new HashMap<>();
@@ -80,7 +80,7 @@ public class externalInventorySysTest {
      * Test of getItem method
      */
     @Test
-    public void getItemTest() {
+    public void getItemTest() throws InvalidIdentifierException, InvalidQuantityException, DatabaseConnectionException {
 
         ItemDTO result = externalInventorySys.database.getItem(15, 1);
 
