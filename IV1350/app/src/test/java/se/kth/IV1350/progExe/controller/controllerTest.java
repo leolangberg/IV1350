@@ -25,7 +25,7 @@ public class controllerTest {
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
     private static cashRegister cashRegister;
-    private static StringHandler stringHandler;
+    private static logger stringHandler;
     private static SalesHandler salesHandler;
 
     @BeforeClass
@@ -34,7 +34,7 @@ public class controllerTest {
         externalAccountingSys = new ExternalAccountingSys();
         externalDiscountSys = new ExternalDiscountSys();
         externalInventorySys = new ExternalInventorySys();
-        stringHandler = new StringHandler();
+        stringHandler = new logger();
         printer = new Printer();
         cashRegister = new cashRegister();
         salesHandler = new SalesHandler(5);

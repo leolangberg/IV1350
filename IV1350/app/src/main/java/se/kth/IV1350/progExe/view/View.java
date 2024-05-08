@@ -3,8 +3,6 @@ package se.kth.IV1350.progExe.view;
 import se.kth.IV1350.progExe.controller.Controller;
 import se.kth.IV1350.progExe.controller.OperationFailedException;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
-import se.kth.IV1350.progExe.view.logger.ConsoleLogger;
-import se.kth.IV1350.progExe.view.logger.Logger;
 
 
 /**
@@ -19,7 +17,7 @@ import se.kth.IV1350.progExe.view.logger.Logger;
 public class View {
 
     private Controller ctrl;
-    private Logger consoleLog;
+    private StringHandler stringHandler;
 
     /**
      * View Constructor.
@@ -27,7 +25,7 @@ public class View {
      */
     public View(Controller ctrl) {
 
-        this.consoleLog = new ConsoleLogger();
+        this.stringHandler = new StringHandler();
         this.ctrl = ctrl;
     }
 
@@ -49,7 +47,7 @@ public class View {
      */
     public void endSale() {
 
-        consoleLog.EndSaleInfo(ctrl.endSale());
+        stringHandler.EndSaleInfo(ctrl.endSale());
 
     }
 
@@ -65,10 +63,10 @@ public class View {
     public void scanItem(int itemID) {
 
         try {
-            consoleLog.itemPackageInfo(ctrl.getItem(itemID)); 
+            stringHandler.itemPackageInfo(ctrl.getItem(itemID)); 
 
         } catch(OperationFailedException ope) {
-            consoleLog.log(ope.getMessage());
+            stringHandler.log(ope.getMessage());
         }
 
     }
@@ -84,10 +82,10 @@ public class View {
      */
     public void scanItem(int itemID, int quantity) {
         try {
-            consoleLog.itemPackageInfo(ctrl.getItem(itemID, quantity)); 
+            stringHandler.itemPackageInfo(ctrl.getItem(itemID, quantity)); 
 
         } catch(OperationFailedException ope) {
-            consoleLog.log(ope.getMessage());
+            stringHandler.log(ope.getMessage());
         }
     }
 
@@ -103,12 +101,12 @@ public class View {
      */
     public void payment(PaymentType enumType, double amountPaid) {
 
-        consoleLog.log("Customer pays: " + amountPaid + " SEK");
+        stringHandler.log("Customer pays: " + amountPaid + " SEK");
         try {
-            consoleLog.paymentSuccess(ctrl.Payment(enumType, amountPaid));
+            stringHandler.paymentSuccess(ctrl.Payment(enumType, amountPaid));
 
         } catch (OperationFailedException ope) {
-            consoleLog.log(ope.getMessage());
+            stringHandler.log(ope.getMessage());
         }
     }
 
@@ -122,8 +120,8 @@ public class View {
      * @param customerID The ID of the customer for whom the discount is to be applied.
      * @return True if the discount was applied, false otherwise.
      */
-    public boolean getPersonalDiscount(int customerID) {
+    public void getPersonalDiscount(int customerID) {
 
-        return ctrl.getDiscountFromID(customerID);
+        ctrl.getDiscountFromID(customerID);
     }
 }

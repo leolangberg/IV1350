@@ -1,4 +1,4 @@
-package se.kth.IV1350.progExe.view.logger;
+package se.kth.IV1350.progExe.view;
 
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 import se.kth.IV1350.progExe.model.DTO.ItemPackageDTO;
@@ -8,17 +8,16 @@ import se.kth.IV1350.progExe.model.DTO.SaleDTO;
 /**
  * Prints log messages to <code>System.out</code>.
  */
-public class ConsoleLogger implements Logger {
+public class StringHandler {
     
     /**
      * Prints the specified string to <code>System.out</code>.
      * 
      * @param message The string that will be printed to <code>System.out</code>.
      */
-    @Override
     public void log(String message) {
         System.out.println(message);
-    }
+    } 
 
      /**
      * Translates ItemDTO, Quantity, runningTotalCost & runningTotalVAT into String information.
@@ -81,7 +80,6 @@ public class ConsoleLogger implements Logger {
      * 
      * @param paymentDTO payment to be read.
      */
-    @Override
     public void paymentSuccess(PaymentDTO paymentDTO) {
 
         String transaction = "Payment Transaction Successful.\n";

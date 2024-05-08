@@ -171,8 +171,8 @@ public class Controller {
      * @param saleDTO
      */
     private void findDiscount(SaleDTO saleDTO) {
-        DiscountDTO discountDTO = externalDiscountSys.getDiscount(saleDTO.getSaleItemList());
-        salesHandler.applyDiscount(discountDTO);
+        // DiscountDTO discountDTO = externalDiscountSys.getDiscountByItemList(saleDTO.getSaleItemList());
+        // salesHandler.applyDiscount(discountDTO);
     }
 
     /**
@@ -182,15 +182,10 @@ public class Controller {
      * @return indicating whether the discount was successfully retrieved and
      *         applied.
      */
-    public boolean getDiscountFromID(int discountID) {
+    public void getDiscountFromID(int discountID) {
 
-        DiscountDTO discountDTO = externalDiscountSys.getDiscount(discountID);
-        boolean discountExists = salesHandler.applyDiscount(discountDTO);
+        // DiscountDTO discountDTO = externalDiscountSys.getDiscount(discountID);
+        // boolean discountExists = salesHandler.applyDiscount(discountDTO);
 
-        if (discountExists) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
