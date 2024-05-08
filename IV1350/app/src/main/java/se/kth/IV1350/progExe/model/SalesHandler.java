@@ -38,29 +38,21 @@ public class SalesHandler {
      * 
      * @return A SaleDTO object representing the currentSale.
      */
-    public SaleDTO getSaleDTO() {
-
-        return new SaleDTO(currentSale);
-
-    }
+    public SaleDTO getSaleDTO() { return new SaleDTO(currentSale); }
 
     /**
      * Retrieves the current PaymentDTO.
      * 
      * @return The currentPayment of this SalesHandler.
      */
-    public PaymentDTO getPaymentDTO() {
-        return currentPayment;
-    }
+    public PaymentDTO getPaymentDTO() { return currentPayment; }
 
     /**
      * Retrieves the current ReceiptDTO.
      * 
      * @return The currentReceipt of this SalesHandler.
      */
-    public ReceiptDTO getReceiptDTO() {
-        return currentReceipt;
-    }
+    public ReceiptDTO getReceiptDTO() { return currentReceipt; }
 
     /**
      * Adds an item to the current sale if the sale is not completed.

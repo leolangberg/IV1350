@@ -42,45 +42,34 @@ public class ItemDTO {
      * 
      * @return The itemID of this ItemDTO.
      */
-    public int getItemID() {
-
-        return itemID;
-    }
+    public int getItemID() { return itemID; }
 
     /**
      * Retrieves Item name.
      * 
      * @return The itemName of this ItemDTO.
      */
-    public String getItemName() {
-        return itemName;
-    }
+    public String getItemName() { return itemName; }
 
     /**
      * Retrieves Item description.
      * 
      * @return The description of this ItemDTO.
      */
-    public String getItemDescription() {
-        return description;
-    }
+    public String getItemDescription() { return description; }
 
     /**
      * Retrieves Item Price.
      * 
      * @return The price of this ItemDTO.
      */
-    public double getItemPrice() {
-        return price;
-    }
+    public double getItemPrice() { return price; }
 
     /**
      * Retrieves Item VATrate.
      * 
      * @return The VATrate of this ItemDTO (percentage).
      */
-    public double getItemVAT() {
-        return VATrate;
-    }
+    public double getItemVAT() { return VATrate; }
 
 }

@@ -3,10 +3,9 @@ package se.kth.IV1350.progExe.controller;
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.model.SalesHandler;
-import se.kth.IV1350.progExe.model.StringHandler;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
-
+import se.kth.IV1350.progExe.view.StringHandler;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

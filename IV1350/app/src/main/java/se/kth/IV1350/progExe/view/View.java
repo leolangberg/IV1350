@@ -13,6 +13,7 @@ import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 public class View {
 
     private Controller ctrl;
+    private StringHandler stringHandler;
 
     /**
      * View Constructor.
@@ -21,6 +22,7 @@ public class View {
     public View(Controller ctrl) {
 
         this.ctrl = ctrl;
+        this.stringHandler = new StringHandler();
     }
 
     /**
@@ -41,7 +43,7 @@ public class View {
      */
     public void endSale() {
 
-        System.out.println(ctrl.endSale());
+        stringHandler.EndSaleInfo(ctrl.endSale());
 
     }
 
@@ -56,7 +58,7 @@ public class View {
      */
     public void scanItem(int itemID) {
 
-        System.out.println(ctrl.getItem(itemID));
+        stringHandler.itemPackageInfo(ctrl.getItem(itemID));
 
     }
 
@@ -71,7 +73,7 @@ public class View {
      */
     public void scanItem(int itemID, int quantity) {
 
-        System.out.println(ctrl.getItem(itemID, quantity));
+        stringHandler.itemPackageInfo(ctrl.getItem(itemID, quantity));
     }
 
 
@@ -87,21 +89,7 @@ public class View {
     public void payment(PaymentType enumType, double amountPaid) {
 
         System.out.println("Customer pays: " + amountPaid + " SEK");
-        System.out.println(ctrl.Payment(enumType, amountPaid));
+        stringHandler.paymentSuccess(ctrl.Payment(enumType, amountPaid));
     }
 
-
-     /**
-     * Applies a personal discount based on a customer ID.
-     * 
-     * This method tells the controller to apply a discount based on the provided customerID. 
-     * If there is no discount method returns false.
-     * 
-     * @param customerID The ID of the customer for whom the discount is to be applied.
-     * @return True if the discount was applied, false otherwise.
-     */
-    public boolean getPersonalDiscount(int customerID) {
-
-        return ctrl.getDiscountFromID(customerID);
-    }
 }
