@@ -17,11 +17,11 @@
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/controller/OperationFailedException.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/SalesHandler.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/external/InvalidQuantityException.java
-/Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/view/logger/ConsoleLogger.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/DTO/PaymentDTO.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/view/View.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/DTO/DiscountDTO.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/external/ExternalDiscountSys.java
+/Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/view/StringHandler.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/ENUM/PaymentType.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/view/logger/FileLogger.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/InvalidAddItemCallException.java

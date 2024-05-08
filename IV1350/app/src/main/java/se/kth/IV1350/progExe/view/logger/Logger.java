@@ -1,4 +1,4 @@
-package se.kth.IV1350.progExe.view.StringHandler;
+package se.kth.IV1350.progExe.view.logger;
 
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 import se.kth.IV1350.progExe.model.DTO.ItemPackageDTO;
@@ -10,7 +10,7 @@ import se.kth.IV1350.progExe.model.DTO.SaleDTO;
  * handle log locations, it is up to the implementing
  * class to decide where the log is.
  */
-public interface logger {
+public interface Logger {
     
     /**
      * The specified message is printed to the log.
