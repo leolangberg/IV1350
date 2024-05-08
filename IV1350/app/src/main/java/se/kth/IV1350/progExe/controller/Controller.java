@@ -15,13 +15,13 @@ import se.kth.IV1350.progExe.model.ENUM.*;
  */
 public class Controller {
 
-    private SalesHandler salesHandler;
-    private Printer printer;
-    private cashRegister cashRegister;
-
     private ExternalAccountingSys externalAccountingSys;
     private ExternalInventorySys externalInventorySys;
     private ExternalDiscountSys externalDiscountSys;
+
+    private SalesHandler salesHandler;
+    private CashRegister cashRegister;
+    private Printer printer;
 
     /**
      * Constructs a new Controller object.
@@ -40,7 +40,7 @@ public class Controller {
      */
     public Controller(ExternalAccountingSys externalAccountingSys,
             ExternalInventorySys externalInventorySys, ExternalDiscountSys externalDiscountSys,
-            Printer printer, cashRegister cashRegister) {
+            Printer printer, CashRegister cashRegister) {
 
         this.externalAccountingSys = externalAccountingSys;
         this.externalDiscountSys = externalDiscountSys;

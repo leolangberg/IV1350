@@ -42,47 +42,35 @@ public class Sale {
      * 
      * @return The saleID of this Sale.
      */
-    public int getSaleID() {
-        
-        return saleID;
-    }
+    public int getSaleID() { return saleID; }
 
     /**
      * Retrieves the item list of this Sale.
      * 
      * @return The itemList of this Sale, represented as a map with ItemDTO as the key and quantity as the value.
      */
-    public Map<ItemDTO, Integer> getSaleItemList() {
-
-        return itemList;
-    }
+    public Map<ItemDTO, Integer> getSaleItemList() { return itemList; }
 
     /**
      * Retrieves the total price of this Sale.
      * 
      * @return The totalPrice of this Sale.
      */
-    public double getSalePrice() {
-        return totalPrice;
-    }
+    public double getSalePrice() { return totalPrice; }
 
     /**
      * Retrieves the total VAT of this Sale.
      * 
      * @return The totalVAT of this Sale.
      */
-    public double getSaleVAT() {
-        return totalVAT;
-    }
+    public double getSaleVAT() { return totalVAT; }
 
     /**
      * Retrieves the total discount of this Sale.
      * 
      * @return The totalDiscount of this Sale.
      */
-    public double getSaleDiscount() {
-        return totalDiscount;
-    }
+    public double getSaleDiscount() { return totalDiscount; }
 
     /**
      * Adds ItemDTO to Sale.
