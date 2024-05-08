@@ -8,16 +8,19 @@
   <ul>
     <li> Add Unit Test to prove 1. <li>
     <li>"reference to same itemList" meaning that to create new instance or to just lock it?</li>
-    <li></li>
-    <li>1. is solved by placing a lock on itemlist (so that controller cannot use it).</li>
-    <li>2. is solved by introducing ItemPackageDTO that contains ItemDTO, quantity, runningTotalCost, runningTotalVAT which contains all information that View Layer needs to print correct statements. </li>
   </ul>
 </h6>
 <h2>Questions</h2>
 <h3>Appropriate response regarding task3 feedback:</h3>
 <ul>
   <li>1. DTO must be read only. SaleDTO has reference to the same itemList created by Sale. This violates MVC, since it means the controller can update itemList without going through the Sale Class.</li>
+  <h6>
+     <li>Solved by placing a lock on itemlist (so that controller cannot use it).</li>
+  </h6>
   <li>2. Controller is doing views job by preparing string that is printed by the view. This violates MVC.</li>
+  <h6>
+    <li>Solved by introducing ItemPackageDTO that contains ItemDTO, quantity, runningTotalCost, runningTotalVAT which contains all information that View Layer needs to print correct statements. </li>
+  </h6>
 </ul>
 
 <h3>Further Questions:</h3>
