@@ -1,6 +1,5 @@
 package se.kth.IV1350.progExe.model;
 
-import java.util.Collections;
 import se.kth.IV1350.progExe.model.DTO.*;
 
 /**
@@ -35,47 +34,17 @@ public class SalesHandler {
     }
 
     /**
-     * Packages the currentSale as a SaleDTO.
-     * 
-     * @return A SaleDTO object representing the currentSale.
-     */
-    public SaleDTO getSaleDTO() {
-
-        return new SaleDTO(currentSale);
-
-    }
-
-    /**
-     * Retrieves the current PaymentDTO.
-     * 
-     * @return The currentPayment of this SalesHandler.
-     */
-    public PaymentDTO getPaymentDTO() {
-        return currentPayment;
-    }
-
-    /**
-     * Retrieves the current ReceiptDTO.
-     * 
-     * @return The currentReceipt of this SalesHandler.
-     */
-    public ReceiptDTO getReceiptDTO() {
-        return currentReceipt;
-    }
-
-    /**
      * Adds an item to the current sale if the sale is not completed.
      * 
      * @param itemDTO The item to be added to the sale.
-     * @return True if the item was added, false otherwise.
+     * @throws InvalidAddItemCallException is thrown if item is added to completed Sale.
      */
-    public boolean addItem(ItemDTO itemDTO, int quantity) {
+    public void addItem(ItemDTO itemDTO, int quantity) throws InvalidAddItemCallException {
         if (saleCompleted) {
-            return false;
+            throw new InvalidAddItemCallException("Cannot Add Items to a completed Sale.");
         }
 
         currentSale.addItem(itemDTO, quantity);
-        return true;
     }
 
     /**
@@ -97,18 +66,16 @@ public class SalesHandler {
      * the payment is successful.
      * 
      * @param paymentDTO The payment to be made.
-     * @return True if the payment was successful, false otherwise.
+     * @throws TransactionFailedException is thrown if payment is unsuccessful.
      */
-    public boolean transaction(PaymentDTO paymentDTO) {
+    public void transaction(PaymentDTO paymentDTO) throws TransactionFailedException {
 
         if (paymentDTO.getPaymentPrice() > paymentDTO.getPaymentPaid()) {
-            return false;
+            throw new TransactionFailedException("Invalid Payment.");
         }
 
         currentPayment = paymentDTO;
         currentReceipt = new ReceiptDTO(getSaleDTO(), paymentDTO);
-
-        return true;
     }
 
     /**
@@ -142,12 +109,30 @@ public class SalesHandler {
     }
 
     /**
+     * Packages the currentSale as a SaleDTO.
+     * 
+     * @return A SaleDTO object representing the currentSale.
+     */
+    public SaleDTO getSaleDTO() { return new SaleDTO(currentSale); }
+
+    /**
+     * Retrieves the current PaymentDTO.
+     * 
+     * @return The currentPayment of this SalesHandler.
+     */
+    public PaymentDTO getPaymentDTO() { return currentPayment; }
+
+    /**
+     * Retrieves the current ReceiptDTO.
+     * 
+     * @return The currentReceipt of this SalesHandler.
+     */
+    public ReceiptDTO getReceiptDTO() { return currentReceipt; }
+
+    /**
      * Checks if the sale is completed.
      * 
      * @return True if the sale is completed, false otherwise.
      */
-    public boolean isSaleCompleted() {
-        return saleCompleted;
-    }
-
+    public boolean isSaleCompleted() { return saleCompleted; }
 }

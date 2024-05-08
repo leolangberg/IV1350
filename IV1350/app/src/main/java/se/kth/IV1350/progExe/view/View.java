@@ -2,11 +2,9 @@ package se.kth.IV1350.progExe.view;
 
 import se.kth.IV1350.progExe.controller.Controller;
 import se.kth.IV1350.progExe.controller.OperationFailedException;
-
-import se.kth.IV1350.progExe.logger.ConsoleLogger;
-import se.kth.IV1350.progExe.logger.Logger;
-
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
+import se.kth.IV1350.progExe.view.logger.ConsoleLogger;
+import se.kth.IV1350.progExe.view.logger.Logger;
 
 
 /**
@@ -21,7 +19,7 @@ import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 public class View {
 
     private Controller ctrl;
-    private Logger logger;
+    private Logger consoleLog;
 
     /**
      * View Constructor.
@@ -29,7 +27,7 @@ public class View {
      */
     public View(Controller ctrl) {
 
-        this.logger = new ConsoleLogger();
+        this.consoleLog = new ConsoleLogger();
         this.ctrl = ctrl;
     }
 
@@ -51,7 +49,7 @@ public class View {
      */
     public void endSale() {
 
-        System.out.println(ctrl.endSale());
+        consoleLog.EndSaleInfo(ctrl.endSale());
 
     }
 
@@ -67,10 +65,10 @@ public class View {
     public void scanItem(int itemID) {
 
         try {
-            System.out.println(ctrl.getItem(itemID)); 
+            consoleLog.itemPackageInfo(ctrl.getItem(itemID)); 
 
         } catch(OperationFailedException ope) {
-            logger.log(ope.getMessage());
+            consoleLog.log(ope.getMessage());
         }
 
     }
@@ -78,19 +76,18 @@ public class View {
     /**
      * Scans an item and specifies a quantity.
      * 
-     * This method tells the controller to get an item with the provided itemID and quantity. If the item cannot be found, it returns false.
+     * This method tells the controller to get an item with the provided itemID and quantity. 
+     * If the item cannot be found, an Exception is thrown.
      * 
      * @param itemID The ID of the item to be scanned.
      * @param quantity The quantity of the item to be scanned.
-     * @return True if the item was found, false otherwise.
      */
     public void scanItem(int itemID, int quantity) {
-
         try {
-            System.out.println(ctrl.getItem(itemID, quantity)); 
+            consoleLog.itemPackageInfo(ctrl.getItem(itemID, quantity)); 
 
         } catch(OperationFailedException ope) {
-            logger.log(ope.getMessage());
+            consoleLog.log(ope.getMessage());
         }
     }
 
@@ -106,8 +103,13 @@ public class View {
      */
     public void payment(PaymentType enumType, double amountPaid) {
 
-        System.out.println("Customer pays: " + amountPaid + " SEK");
-        System.out.println(ctrl.Payment(enumType, amountPaid));
+        consoleLog.log("Customer pays: " + amountPaid + " SEK");
+        try {
+            consoleLog.paymentSuccess(ctrl.Payment(enumType, amountPaid));
+
+        } catch (OperationFailedException ope) {
+            consoleLog.log(ope.getMessage());
+        }
     }
 
 
