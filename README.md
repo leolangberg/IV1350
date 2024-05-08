@@ -8,6 +8,9 @@
   <ul>
     <li> Add Unit Test to prove 1. <li>
     <li>"reference to same itemList" meaning that to create new instance or to just lock it?</li>
+    <li></li>
+    <li>1. is solved by placing a lock on itemlist (so that controller cannot use it).</li>
+    <li>2. is solved by introducing ItemPackageDTO that contains ItemDTO, quantity, runningTotalCost, runningTotalVAT which contains all information that View Layer needs to print correct statements. </li>
   </ul>
 </h6>
 <h2>Questions</h2>
