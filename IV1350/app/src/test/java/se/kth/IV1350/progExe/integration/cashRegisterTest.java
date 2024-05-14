@@ -17,7 +17,7 @@ import se.kth.IV1350.progExe.integration.external.ExternalInventorySys;
 
 public class cashRegisterTest {
 
-    private static cashRegister cashRegister;
+    private static CashRegister cashRegister;
     private static Controller ctrl;
     private static ExternalAccountingSys externalAccountingSys;
     private static ExternalDiscountSys externalDiscountSys;
@@ -34,7 +34,7 @@ public class cashRegisterTest {
         externalDiscountSys = new ExternalDiscountSys();
         externalInventorySys = new ExternalInventorySys();
         printer = new Printer();
-        cashRegister = new cashRegister();
+        cashRegister = new CashRegister();
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, printer, cashRegister);
 

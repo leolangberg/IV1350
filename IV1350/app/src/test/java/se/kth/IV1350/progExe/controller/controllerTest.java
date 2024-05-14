@@ -6,6 +6,7 @@ import se.kth.IV1350.progExe.model.SalesHandler;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 import se.kth.IV1350.progExe.view.StringHandler;
+import se.kth.IV1350.progExe.view.logger.Logger;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -29,7 +30,7 @@ public class controllerTest {
     private static ExternalDiscountSys externalDiscountSys;
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
-    private static cashRegister cashRegister;
+    private static CashRegister cashRegister;
     private static StringHandler stringHandler;
     private static SalesHandler salesHandler;
 
@@ -41,7 +42,7 @@ public class controllerTest {
         externalInventorySys = new ExternalInventorySys();
         stringHandler = new StringHandler();
         printer = new Printer();
-        cashRegister = new cashRegister();
+        cashRegister = new CashRegister();
         salesHandler = new SalesHandler(5);
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, printer, cashRegister);
@@ -83,22 +84,20 @@ public class controllerTest {
      * Test for endSale() method
      */
     @Test
-    public void endSaleTest() {
+    public void endSaleTest() throws OperationFailedException{
 
         ctrl.getItem(10);
 
         SaleDTO result = ctrl.endSale();
 
-
         ItemDTO item = new ItemDTO(10, "pear", "green", 5.00, 0.12);
         Map<ItemDTO, Integer> itemList = new HashMap<>();
         itemList.put(item, 1);
-        double totalCost = 5.00; 
-        double totalVAT = 0.60; 
-        double totalDiscount = 0.0; 
-        int saleID = 1; 
+        double totalCost = 5.00;
+        double totalVAT = 0.60;
+        double totalDiscount = 0.0;
+        int saleID = 1;
         SaleDTO expResult = new SaleDTO(saleID, itemList, totalCost, totalVAT, totalDiscount);
-
 
         assertEquals(expResult.getSaleID(), result.getSaleID());
         assertEquals(expResult.getSalePrice(), result.getSalePrice(), 0.0001);
@@ -110,7 +109,7 @@ public class controllerTest {
      * Tries to fetch Item with valid id.
      */
     @Test
-    public void scanItemIdTest() {
+    public void scanItemValidIdTest() throws OperationFailedException {
         int itemID = 10;
         ItemDTO item = new ItemDTO(10, "pear", "green", 5.00, 0.12);
         int quantity = 1;
@@ -126,28 +125,34 @@ public class controllerTest {
         assertEquals(expResult.getPackageRunningVAT(), result.getPackageRunningVAT(), 0.0001);
     }
 
-    @Test(expected = java.lang.NullPointerException.class)
-    public void scanItemInvalidIdTest() {
-        int itemID = -1; 
+    @Test(expected = OperationFailedException.class)
+    /**
+     * Tries to fetch Item with invalid id.
+     */
+    public void scanItemInvalidIdTest() throws OperationFailedException {
+        int itemID = -1;
         ctrl.getItem(itemID);
-  
+
     }
 
-    @Test(expected = java.lang.NullPointerException.class)
-    public void scanItemInvalidQuantity() {
+    @Test(expected = OperationFailedException.class)
+    /**
+     * Uses invalid Quantity ( quantity <= 0) for getItem().
+     */
+    public void scanItemInvalidQuantity() throws OperationFailedException {
         int itemID = 10;
         int quantity = 0;
         ctrl.getItem(itemID, quantity);
- 
+
     }
 
     /**
      * Tries to fetch more instances of same Item than there exists in database.
      */
-    @Test(expected = java.lang.NullPointerException.class)
-    public void scanItemNoQuantityInDatabase() {
+
+    public void scanItemNoQuantityInDatabase() throws OperationFailedException {
         int itemID = 10;
-        int quantity = 2; 
+        int quantity = 2;
         ItemPackageDTO result = ctrl.getItem(itemID, quantity);
     }
 
@@ -155,7 +160,7 @@ public class controllerTest {
      * Tries to pay with valid payment.
      */
     @Test
-    public void ValidPaymentTest() {
+    public void ValidPaymentTest() throws OperationFailedException{
 
         ctrl.getItem(10);
         PaymentType paymentType = PaymentType.CASH;
@@ -165,8 +170,8 @@ public class controllerTest {
         Map<ItemDTO, Integer> itemList = new HashMap<>();
         itemList.put(item, 1);
         double totalCost = 5.00;
-        double totalVAT = 0.60; 
-        double totalDiscount = 0.0; 
+        double totalVAT = 0.60;
+        double totalDiscount = 0.0;
         int saleID = 1;
         SaleDTO DummySale = new SaleDTO(saleID, itemList, totalCost, totalVAT, totalDiscount);
 
@@ -185,8 +190,9 @@ public class controllerTest {
     /**
      * Tries to pay with invalid payment.
      */
-    @Test(expected = java.lang.NullPointerException.class)
-    public void InvalidPaymentTest() {
+    @Test(expected = OperationFailedException.class)
+
+    public void InvalidPaymentTest() throws OperationFailedException {
 
         ctrl.getItem(10);
         PaymentType paymentType = PaymentType.CASH;
@@ -195,15 +201,15 @@ public class controllerTest {
         ItemDTO item = new ItemDTO(10, "pear", "green", 5.00, 0.12);
         Map<ItemDTO, Integer> itemList = new HashMap<>();
         itemList.put(item, 1);
-        double totalCost = 5.00; 
-        double totalVAT = 0.60; 
-        double totalDiscount = 0.0; 
+        double totalCost = 5.00;
+        double totalVAT = 0.60;
+        double totalDiscount = 0.0;
         int saleID = 1;
         SaleDTO DummySale = new SaleDTO(saleID, itemList, totalCost, totalVAT, totalDiscount);
 
         PaymentDTO result = ctrl.Payment(paymentType, amountPaid);
 
-        double expectedChange = amountPaid - 5.0; 
+        double expectedChange = amountPaid - 5.0;
         PaymentDTO expectedResult = new PaymentDTO(amountPaid, paymentType, DummySale);
 
         assertEquals(expectedResult.getPaymentPrice(), result.getPaymentPrice(), 0.01);

@@ -29,7 +29,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             v = new View(new Controller(new ExternalAccountingSys(), new ExternalInventorySys(),
-                    new ExternalDiscountSys(), new Printer(), new cashRegister()));
+                    new ExternalDiscountSys(), new Printer(), new CashRegister()));
             script();
         } catch (Exception e) {
             System.err.println(e);
@@ -47,6 +47,8 @@ public class Main {
         v.scanItem(1);
         v.scanItem(2, 5);
         v.endSale(); 
+        v.scanItem(2,1);
+        v.payment(PaymentType.CASH, 10);
         v.payment(PaymentType.CASH, 100);
 
     }

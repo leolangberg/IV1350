@@ -6,7 +6,7 @@ import se.kth.IV1350.progExe.model.DTO.PaymentDTO;
 import se.kth.IV1350.progExe.model.DTO.SaleDTO;
 
 /**
- * Class translates and prints object-related information.
+ * Prints log messages to <code>System.out</code>.
  */
 public class StringHandler {
     

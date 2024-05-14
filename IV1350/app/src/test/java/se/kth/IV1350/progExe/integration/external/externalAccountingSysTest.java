@@ -25,7 +25,7 @@ public class externalAccountingSysTest {
     private static ExternalDiscountSys externalDiscountSys;
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
-    private static cashRegister cashRegister;
+    private static CashRegister cashRegister;
     private static SalesHandler salesHandler;
     private static ReceiptDTO receiptDTO;
 
@@ -39,7 +39,7 @@ public class externalAccountingSysTest {
         externalDiscountSys = new ExternalDiscountSys();
         externalInventorySys = new ExternalInventorySys();
         printer = new Printer();
-        cashRegister = new cashRegister();
+        cashRegister = new CashRegister();
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, printer, cashRegister);
 
