@@ -25,11 +25,22 @@ public class ExternalInventorySys {
 
     /**
      * Retrieves an item based on the provided item ID.
+     *
      * @param itemID The ID of the item to retrieve.
-     * @return An ItemDTO representing the item, or null if the item does not exist.
+     * @return An ItemDTO representing the item, or throw error if null.
      */
-    public ItemDTO getItem(int itemID, int quantity) {
-        return database.getItem(itemID, quantity);
+    public ItemDTO getItem(int itemID, int quantity) throws InvalidIdentifierException, InvalidQuantityException, DatabaseConnectionException {
+        try {
+
+            return database.getItem(itemID, quantity);
+
+        } catch (DatabaseConnectionException dbce) {
+            throw new DatabaseConnectionException(dbce.getMessage(), dbce);
+        } catch (InvalidIdentifierException ide) {
+            throw new InvalidIdentifierException(ide.getMessage(), ide);
+        } catch (InvalidQuantityException iqe) {
+            throw new InvalidQuantityException(iqe.getMessage(), iqe);
+        }
     }
 
     /**
@@ -52,10 +63,16 @@ public class ExternalInventorySys {
     * Retrieves the quantity of an item in the inventory based on the provided item ID.
     * 
     * @param itemID The ID of the item to retrieve the quantity for.
-    * @return The quantity of the item, or -1 if the item does not exist.
+    * @return The quantity of the item, or throw error if itemID does not exist.
     */
-    public int getItemQuantity(int itemID) {
-        return database.getItemQuantity(itemID);
+    public int getItemQuantity(int itemID) throws InvalidIdentifierException, DatabaseConnectionException {
+        try {
+            return database.getItemQuantity(itemID);
+        } catch (DatabaseConnectionException dbce) {
+            throw new DatabaseConnectionException(dbce.getMessage(), dbce);
+        } catch (InvalidIdentifierException ide) {
+            throw new InvalidIdentifierException(ide.getMessage(), ide);
+        }
     }
 
     /**
@@ -64,6 +81,7 @@ public class ExternalInventorySys {
     public class InventorySysDatabase {
     
         private Shelf[] inventory;
+        private boolean databaseConnection;
     
         /**
         * Constructs a new InventorySysDatabase object.
@@ -73,6 +91,7 @@ public class ExternalInventorySys {
         public InventorySysDatabase() {
     
             this.inventory = new Shelf[100];
+            this.databaseConnection = true;
             fillInventoryScript();
     
         }
@@ -122,19 +141,25 @@ public class ExternalInventorySys {
         * @param itemID The ID of the item to retrieve.
         * @return An ItemDTO representing the item, or null if the item does not exist or the quantity is 0.
         */
-        public ItemDTO getItem(int itemID, int quantity) {
-            
+        public ItemDTO getItem(int itemID, int quantity) throws InvalidIdentifierException, InvalidQuantityException, DatabaseConnectionException {
+
+            if(this.databaseConnection != true) {
+                throw new DatabaseConnectionException("No connection to Database.");
+            }
+
             if(itemID < 0 || itemID > inventory.length) {
-                return null;
+                throw new InvalidIdentifierException("ItemID: " + itemID + " is invalid.");
             } else if (inventory[itemID] == null) {
-                return null;
+                throw new InvalidIdentifierException("ItemID: " + itemID + " is invalid.");
             } 
             Shelf shelf = inventory[itemID];
 
-            if(shelf.quantity <= 0 || quantity <= 0) {
-                return null;
+            if(shelf.quantity <= 0) {
+                throw new InvalidQuantityException("Quantity for ItemID: " + itemID + " is " + shelf.quantity + ".");
+            } else if(quantity <= 0) {
+                throw new InvalidQuantityException("Quantity provided: " + quantity + " is invalid.");
             } else if (shelf.quantity < quantity) {
-                return null;
+                throw new InvalidQuantityException("itemID: " + itemID + " Quantity provided: " + quantity + " Quantity in database: " + shelf.quantity);
             }
 
             return shelf.itemDTO;
@@ -186,13 +211,21 @@ public class ExternalInventorySys {
         * Retrieves the quantity of an item in the inventory based on the provided item ID.
         * 
         * @param itemID The ID of the item to retrieve the quantity for.
-        * @return The quantity of the item, or -1 if the item does not exist.
+        * @return The quantity of the item, or throw error if it itemID does not exist.
         */
-        public int getItemQuantity(int itemID) {
+        public int getItemQuantity(int itemID) throws InvalidIdentifierException, DatabaseConnectionException {
             if(itemID < 0 || itemID >= inventory.length || inventory[itemID] == null) {
-             return -1;
+              throw new InvalidIdentifierException("ItemID: " + itemID + " is invalid.");
             }   
             return inventory[itemID].quantity;
+        }
+
+        /**
+         * Changes state of connectivity to database. (For testing purposes, see Seminar Task 4)
+         * @param connection true or false.
+         */
+        public void setDatabaseConnection(boolean connection) {
+            this.databaseConnection = connection;
         }
 
     }

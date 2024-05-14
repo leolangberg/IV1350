@@ -5,7 +5,7 @@ import se.kth.IV1350.progExe.model.DTO.PaymentDTO;
 /**
  * Cash Register class is responsible for holding current Amount in Cashier Counter.  
  */
-public class cashRegister {
+public class CashRegister {
 
     int cashier_id;
     double cashAmount;
@@ -16,7 +16,7 @@ public class cashRegister {
      * This constructor initializes the cashRegister with a cashAmount of 0.
      * Currently holds dummy data. 
      */
-    public cashRegister() {
+    public CashRegister() {
         this.cashier_id = 1;
         this.cashAmount = 500;
     }

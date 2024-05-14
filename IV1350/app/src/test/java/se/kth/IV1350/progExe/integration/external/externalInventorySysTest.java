@@ -22,7 +22,7 @@ public class externalInventorySysTest {
     private static ExternalDiscountSys externalDiscountSys;
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
-    private static cashRegister cashRegister;
+    private static CashRegister cashRegister;
 
     ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
     ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
@@ -34,7 +34,7 @@ public class externalInventorySysTest {
         externalDiscountSys = new ExternalDiscountSys();
         externalInventorySys = new ExternalInventorySys();
         printer = new Printer();
-        cashRegister = new cashRegister();
+        cashRegister = new CashRegister();
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, printer, cashRegister);
 
@@ -62,7 +62,7 @@ public class externalInventorySysTest {
      * Test of updateItemQuantity method
      */
     @Test
-    public void updateItemQuantityTest() {
+    public void updateItemQuantityTest() throws InvalidIdentifierException, DatabaseConnectionException {
 
         ItemDTO testItemDTO = new ItemDTO(15, "pear", "green", 50.00, 0.12);
         Map<ItemDTO, Integer> itemList = new HashMap<>();
@@ -80,7 +80,7 @@ public class externalInventorySysTest {
      * Test of getItem method
      */
     @Test
-    public void getItemTest() {
+    public void getItemTest() throws InvalidIdentifierException, InvalidQuantityException, DatabaseConnectionException {
 
         ItemDTO result = externalInventorySys.database.getItem(15, 1);
 

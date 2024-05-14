@@ -37,30 +37,20 @@ public class ReceiptDTO {
      * 
      * @return The time of this ReceiptDTO.
      */
-    public LocalDateTime getReceiptTime() {
-
-        return time;
-    }
+    public LocalDateTime getReceiptTime() { return time; }
 
     /**
      * Retrieves SaleDTO.
      * 
      * @return The saleDTO of this ReceiptDTO.
      */
-    public SaleDTO getReceiptSale() {
-
-        return saleDTO;
-    }
+    public SaleDTO getReceiptSale() { return saleDTO; }
 
     /**
      * Retrieves PaymentDTO.
      * 
      * @return The paymentDTO of this ReceiptDTO.
      */
-    public PaymentDTO getReceiptPayment() {
-        
-        return paymentDTO;
-    }
-
-
+    public PaymentDTO getReceiptPayment() { return paymentDTO; }
+    
 }

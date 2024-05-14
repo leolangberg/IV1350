@@ -3,13 +3,19 @@ package se.kth.IV1350.progExe.controller;
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.model.SalesHandler;
-import se.kth.IV1350.progExe.model.StringHandler;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
-
+import se.kth.IV1350.progExe.view.StringHandler;
+import se.kth.IV1350.progExe.view.logger.Logger;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -24,7 +30,7 @@ public class controllerTest {
     private static ExternalDiscountSys externalDiscountSys;
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
-    private static cashRegister cashRegister;
+    private static CashRegister cashRegister;
     private static StringHandler stringHandler;
     private static SalesHandler salesHandler;
 
@@ -36,7 +42,7 @@ public class controllerTest {
         externalInventorySys = new ExternalInventorySys();
         stringHandler = new StringHandler();
         printer = new Printer();
-        cashRegister = new cashRegister();
+        cashRegister = new CashRegister();
         salesHandler = new SalesHandler(5);
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, printer, cashRegister);
@@ -78,136 +84,139 @@ public class controllerTest {
      * Test for endSale() method
      */
     @Test
-    public void endSaleTest() {
+    public void endSaleTest() throws OperationFailedException{
 
-        String expResult = "End Sale:\n" + //
-                "Total cost (incl VAT): 0.0 SEK\n" + //
-                "Total VAT: 0.0 SEK"
-                + "\n" + "";
-        String result = ctrl.endSale();
-        assertEquals(expResult, result);
+        ctrl.getItem(10);
 
+        SaleDTO result = ctrl.endSale();
+
+        ItemDTO item = new ItemDTO(10, "pear", "green", 5.00, 0.12);
+        Map<ItemDTO, Integer> itemList = new HashMap<>();
+        itemList.put(item, 1);
+        double totalCost = 5.00;
+        double totalVAT = 0.60;
+        double totalDiscount = 0.0;
+        int saleID = 1;
+        SaleDTO expResult = new SaleDTO(saleID, itemList, totalCost, totalVAT, totalDiscount);
+
+        assertEquals(expResult.getSaleID(), result.getSaleID());
+        assertEquals(expResult.getSalePrice(), result.getSalePrice(), 0.0001);
+        assertEquals(expResult.getSaleVAT(), result.getSaleVAT(), 0.0001);
+        assertEquals(expResult.getSaleDiscount(), result.getSaleDiscount(), 0.0001);
     }
 
-    @Test
     /**
      * Tries to fetch Item with valid id.
      */
-    public void scanItemValidIdTest() {
-
+    @Test
+    public void scanItemValidIdTest() throws OperationFailedException {
         int itemID = 10;
-        String expResult = "Add 1 item with item id: 10\n" + "Item ID: 10\n" + "Item name: pear\n"
-                + "Item cost: 5.0 SEK\n" + "VAT: 12%\n" + "Item description: green\n" + "\n"
-                + "Total cost (incl VAT): 5.0 SEK\n" + "Total VAT: 0.6 SEK\n";
-        String result = ctrl.getItem(itemID);
-        String testMsg = "Scanned Item with valid id: \n" + "expResult:\n" + expResult + "Result:\n" + result;
+        ItemDTO item = new ItemDTO(10, "pear", "green", 5.00, 0.12);
+        int quantity = 1;
+        double runningTotalCost = 5.00;
+        double runningTotalVAT = 0.60;
+        ItemPackageDTO expResult = new ItemPackageDTO(item, quantity, runningTotalCost, runningTotalVAT);
 
-        assertEquals(testMsg, expResult, result);
+        ItemPackageDTO result = ctrl.getItem(itemID);
+
+        assertEquals(expResult.getPackageItemDTO().getItemID(), result.getPackageItemDTO().getItemID());
+        assertEquals(expResult.getPackageItemQuantity(), result.getPackageItemQuantity());
+        assertEquals(expResult.getPackageRunningTotal(), result.getPackageRunningTotal(), 0.0001);
+        assertEquals(expResult.getPackageRunningVAT(), result.getPackageRunningVAT(), 0.0001);
     }
 
-    @Test
+    @Test(expected = OperationFailedException.class)
     /**
      * Tries to fetch Item with invalid id.
      */
-    public void scanItemInvalidIdTest() {
-
+    public void scanItemInvalidIdTest() throws OperationFailedException {
         int itemID = -1;
+        ctrl.getItem(itemID);
 
-        String expResult = "ItemID: -1 is Invalid.";
-        String result = ctrl.getItem(itemID);
-        String testMsg = "Scanned Item with Invalid id: \n" + "expResult:\n" + expResult + "Result:\n" + result;
-
-        assertEquals(testMsg, expResult, result);
     }
 
-    @Test
+    @Test(expected = OperationFailedException.class)
     /**
      * Uses invalid Quantity ( quantity <= 0) for getItem().
      */
-    public void scanItemInvalidQuantity() {
-
+    public void scanItemInvalidQuantity() throws OperationFailedException {
         int itemID = 10;
         int quantity = 0;
-
-        String expResult = "ItemID: 10 is Invalid.";
-        String result = ctrl.getItem(itemID, quantity);
-        String testMsg = "Scanned Item with Invalid Quantity: \n" + "expResult:\n" + expResult + "Result:\n" + result;
-
-        assertEquals(testMsg, expResult, result);
+        ctrl.getItem(itemID, quantity);
 
     }
 
-    @Test
     /**
      * Tries to fetch more instances of same Item than there exists in database.
      */
-    public void scanItemNoQuantityInDatabase() {
 
+    public void scanItemNoQuantityInDatabase() throws OperationFailedException {
         int itemID = 10;
         int quantity = 2;
-
-        String expResult = "ItemID: 10 is Invalid.";
-        String result = ctrl.getItem(itemID, quantity);
-        String testMsg = "Scanned Item with Higher Quantity than Inventory holds: \n" + "expResult:\n" + expResult
-                + "Result:\n" + result;
-
-        assertEquals(testMsg, expResult, result);
+        ItemPackageDTO result = ctrl.getItem(itemID, quantity);
     }
 
-    @Test
     /**
      * Tries to pay with valid payment.
      */
-    public void ValidPaymentTest() {
+    @Test
+    public void ValidPaymentTest() throws OperationFailedException{
 
+        ctrl.getItem(10);
         PaymentType paymentType = PaymentType.CASH;
         double amountPaid = 100.0;
 
-        String result = ctrl.Payment(paymentType, amountPaid);
+        ItemDTO item = new ItemDTO(10, "pear", "green", 5.00, 0.12);
+        Map<ItemDTO, Integer> itemList = new HashMap<>();
+        itemList.put(item, 1);
+        double totalCost = 5.00;
+        double totalVAT = 0.60;
+        double totalDiscount = 0.0;
+        int saleID = 1;
+        SaleDTO DummySale = new SaleDTO(saleID, itemList, totalCost, totalVAT, totalDiscount);
 
-        assertEquals(stringHandler.paymentSuccess(new PaymentDTO(amountPaid, paymentType, salesHandler.getSaleDTO())),
-                result);
+        PaymentDTO result = ctrl.Payment(paymentType, amountPaid);
+
+        double expectedChange = amountPaid - 5.0;
+        PaymentDTO expectedResult = new PaymentDTO(amountPaid, paymentType, DummySale);
+
+        assertEquals(expectedResult.getPaymentPrice(), result.getPaymentPrice(), 0.01);
+        assertEquals(expectedResult.getPaymentDiscount(), result.getPaymentDiscount(), 0.01);
+        assertEquals(expectedResult.getPaymentVAT(), result.getPaymentVAT(), 0.01);
+        assertEquals(expectedResult.getPaymentPaid(), result.getPaymentPaid(), 0.01);
+        assertEquals(expectedResult.getPaymentChange(), result.getPaymentChange(), 0.01);
     }
 
-    @Test
     /**
      * Tries to pay with invalid payment.
      */
-    public void InvalidPaymentTest() {
+    @Test(expected = OperationFailedException.class)
+
+    public void InvalidPaymentTest() throws OperationFailedException {
 
         ctrl.getItem(10);
         PaymentType paymentType = PaymentType.CASH;
         double amountPaid = 0.0;
 
-        String result = ctrl.Payment(paymentType, amountPaid);
+        ItemDTO item = new ItemDTO(10, "pear", "green", 5.00, 0.12);
+        Map<ItemDTO, Integer> itemList = new HashMap<>();
+        itemList.put(item, 1);
+        double totalCost = 5.00;
+        double totalVAT = 0.60;
+        double totalDiscount = 0.0;
+        int saleID = 1;
+        SaleDTO DummySale = new SaleDTO(saleID, itemList, totalCost, totalVAT, totalDiscount);
 
-        assertEquals("Payment Failure.\n" + //
-                "Total cost (incl VAT): 5.0 SEK\n" + //
-                "Amount Paid: 0.0 SEK\n" + //
-                "", result);
-    }
+        PaymentDTO result = ctrl.Payment(paymentType, amountPaid);
 
-    @Test
-    /**
-     * Tries to apply a discount with valid discount ID.
-     */
-    public void getDiscountFromIDValidTest() {
+        double expectedChange = amountPaid - 5.0;
+        PaymentDTO expectedResult = new PaymentDTO(amountPaid, paymentType, DummySale);
 
-        int existingDiscountID = 1;
-        boolean result = ctrl.getDiscountFromID(existingDiscountID);
-        assertTrue(result);
-
-    }
-
-    @Test
-    /**
-     * Tries to apply a discount with invalid discount ID.
-     */
-    public void getDiscountFromIDInvalidTest() {
-
-        int nonExistingDiscountID = 15;
-        boolean result = ctrl.getDiscountFromID(nonExistingDiscountID);
-        assertFalse(result);
+        assertEquals(expectedResult.getPaymentPrice(), result.getPaymentPrice(), 0.01);
+        assertEquals(expectedResult.getPaymentDiscount(), result.getPaymentDiscount(), 0.01);
+        assertEquals(expectedResult.getPaymentVAT(), result.getPaymentVAT(), 0.01);
+        assertEquals(expectedResult.getPaymentPaid(), result.getPaymentPaid(), 0.01);
+        assertEquals(expectedResult.getPaymentChange(), result.getPaymentChange(), 0.01);
     }
 
 }

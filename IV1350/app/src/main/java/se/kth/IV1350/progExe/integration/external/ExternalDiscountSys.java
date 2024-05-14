@@ -31,19 +31,17 @@ public class ExternalDiscountSys {
      * @return A DiscountDTO representing the discount, or null if the discount does
      *         not exist.
      */
-    public DiscountDTO getDiscount(int discountID) {
+    public DiscountDTO getDiscountByID(int discountID) {
         return database.findDiscount(discountID);
     }
 
     /**
-     * Retrieves a discount based on the total price of the sale.
-     * This method currently always returns 0, indicating no discount.
-     *
-     * @param totalprice The total price of the sale.
-     * @return A double representing the discount percentage, currently always 0.
+     * When passed the total cost of the entire sale, it tells a percentage to be
+     * reduced from this total cost. The percentage is zero if there’s no discount.
      */
-    public double getDiscount(double totalprice) {
-        return 0;
+    public double getDiscountByTotalPrice(double totalprice) {
+        double percentage = 0;
+        return percentage;
     }
 
     /**
@@ -53,22 +51,20 @@ public class ExternalDiscountSys {
      * total cost of the entire sale by matching each ItemID to potential DiscountID. 
      * Returns discount of 0 if there’s no discount.
      */
-    public DiscountDTO getDiscount(Map<ItemDTO, Integer> itemList) {
+    public double getDiscountByItemList(Map<ItemDTO, Integer> itemList) {
 
-        DiscountDTO discountDTO = new DiscountDTO(DiscountType.NUMERAL, 0, 50);
-        /*
-        double sum;
+        double sum = 0;
+
         for (Map.Entry<ItemDTO, Integer> entry : itemList.entrySet()) {
+
             ItemDTO itemDTO = entry.getKey();
-            DiscountDTO discountDTO = getDiscount(itemDTO.getItemID());
-            if(discountDTO != null) {
-
+            DiscountDTO discountDTO = getDiscountByID(itemDTO.getItemID());
+            if(discountDTO != null)
+            {
+                sum += discountDTO.getDiscountValue();
             }
-        }
-        */
-
-        return discountDTO;
-
+        }  
+        return sum;
     }
 
     /**

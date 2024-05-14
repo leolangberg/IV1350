@@ -26,7 +26,7 @@ public class salesHandlerTest {
     private static ExternalDiscountSys externalDiscountSys;
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
-    private static cashRegister cashRegister;
+    private static CashRegister cashRegister;
     private static SalesHandler salesHandler;
 
     private int saleID = 1;
@@ -41,7 +41,7 @@ public class salesHandlerTest {
         externalDiscountSys = new ExternalDiscountSys();
         externalInventorySys = new ExternalInventorySys();
         printer = new Printer();
-        cashRegister = new cashRegister();
+        cashRegister = new CashRegister();
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, printer, cashRegister);
 
@@ -90,12 +90,11 @@ public class salesHandlerTest {
      * Test case for when the sale is not completed
      */
     @Test
-    public void testTransaction() {
+    public void testTransaction() throws TransactionFailedException {
         PaymentDTO paymentDTO = new PaymentDTO(1, PaymentType.CASH, 100.0, 10.0, 20.0, 120.0);
 
-        boolean transactionResult = salesHandler.transaction(paymentDTO);
+        salesHandler.transaction(paymentDTO);
 
-        assertTrue(transactionResult);
         assertEquals(paymentDTO, salesHandler.getPaymentDTO());
         assertNotNull(salesHandler.getReceiptDTO());
     }
@@ -103,13 +102,12 @@ public class salesHandlerTest {
     /*
      * Test case for when the payment is not enough
      */
-    @Test
-    public void testTransactionNotEnoughMoney() {
+    @Test(expected = TransactionFailedException.class)
+    public void testTransactionNotEnoughMoney() throws TransactionFailedException{
         PaymentDTO paymentDTO = new PaymentDTO(1, PaymentType.CASH, 200.0, 10.0, 20.0, 120.0);
 
-        boolean transactionResult = salesHandler.transaction(paymentDTO);
+        salesHandler.transaction(paymentDTO);
 
-        assertFalse(transactionResult);
         assertNull(salesHandler.getPaymentDTO());
         assertNull(salesHandler.getReceiptDTO());
     }

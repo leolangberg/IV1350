@@ -71,40 +71,28 @@ public class PaymentDTO {
      * 
      * @return The paymentID of this PaymentDTO.
      */
-    public int getPaymentID() {
-
-        return paymentID;
-    }
+    public int getPaymentID() {  return paymentID; }
 
     /**
      * Retrieves PaymentType.
      * 
      * @return The enumType of this PaymentDTO.
      */
-    public PaymentType getPaymentType() {
-
-        return enumType;
-    }
+    public PaymentType getPaymentType() { return enumType; }
 
     /**
      * Retrieves Total Price.
      * 
      * @return The totalPrice of this PaymentDTO.
      */
-    public double getPaymentPrice() {
-
-        return totalPrice;
-    }
+    public double getPaymentPrice() { return totalPrice; }
 
     /**
      * Retrieves the discount applied.
      * 
      * @return The discountApplied of this PaymentDTO.
      */
-    public double getPaymentDiscount() {
-
-        return discountApplied;
-    }
+    public double getPaymentDiscount() { return discountApplied; }
 
     
     /**
@@ -112,27 +100,21 @@ public class PaymentDTO {
      * 
      * @return The totalVAT of this PaymentDTO.
      */
-    public double getPaymentVAT() {
-        return totalVAT;
-    }
+    public double getPaymentVAT() { return totalVAT; }
 
     /**
      * Retrieves Amount Paid.
      * 
      * @return The amountPaid of this PaymentDTO.
      */
-    public double getPaymentPaid() {
-        return amountPaid;
-    }
+    public double getPaymentPaid() { return amountPaid; }
 
     /**
      * Retrieves payment Change.
      * 
      * @return The change of this PaymentDTO.
      */
-    public double getPaymentChange() {
-        return change;
-    }
+    public double getPaymentChange() { return change; }
 
 }
 

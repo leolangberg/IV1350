@@ -1,6 +1,7 @@
 package se.kth.IV1350.progExe.view;
 
 import se.kth.IV1350.progExe.controller.Controller;
+import se.kth.IV1350.progExe.controller.OperationFailedException;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
 
@@ -9,10 +10,14 @@ import se.kth.IV1350.progExe.model.ENUM.PaymentType;
  * 
  * This class contains methods for initiating: 
  * new sale, scanning items, ending a sale, applying discounts, and processing payments.
+ * 
+ * @Controller instance directing and performing tasks.
+ * @Logger Error-message handler. 
  */
 public class View {
 
     private Controller ctrl;
+    private StringHandler stringHandler;
 
     /**
      * View Constructor.
@@ -20,7 +25,9 @@ public class View {
      */
     public View(Controller ctrl) {
 
+        this.stringHandler = new StringHandler();
         this.ctrl = ctrl;
+        this.stringHandler = new StringHandler();
     }
 
     /**
@@ -41,7 +48,7 @@ public class View {
      */
     public void endSale() {
 
-        System.out.println(ctrl.endSale());
+        stringHandler.EndSaleInfo(ctrl.endSale());
 
     }
 
@@ -56,22 +63,31 @@ public class View {
      */
     public void scanItem(int itemID) {
 
-        System.out.println(ctrl.getItem(itemID));
+        try {
+            stringHandler.itemPackageInfo(ctrl.getItem(itemID)); 
+
+        } catch(OperationFailedException ope) {
+            stringHandler.log(ope.getMessage());
+        }
 
     }
 
     /**
      * Scans an item and specifies a quantity.
      * 
-     * This method tells the controller to get an item with the provided itemID and quantity. If the item cannot be found, it returns false.
+     * This method tells the controller to get an item with the provided itemID and quantity. 
+     * If the item cannot be found, an Exception is thrown.
      * 
      * @param itemID The ID of the item to be scanned.
      * @param quantity The quantity of the item to be scanned.
-     * @return True if the item was found, false otherwise.
      */
     public void scanItem(int itemID, int quantity) {
+        try {
+            stringHandler.itemPackageInfo(ctrl.getItem(itemID, quantity)); 
 
-        System.out.println(ctrl.getItem(itemID, quantity));
+        } catch(OperationFailedException ope) {
+            stringHandler.log(ope.getMessage());
+        }
     }
 
 
@@ -86,8 +102,13 @@ public class View {
      */
     public void payment(PaymentType enumType, double amountPaid) {
 
-        System.out.println("Customer pays: " + amountPaid + " SEK");
-        System.out.println(ctrl.Payment(enumType, amountPaid));
+        stringHandler.log("Customer pays: " + amountPaid + " SEK");
+        try {
+            stringHandler.paymentSuccess(ctrl.Payment(enumType, amountPaid));
+
+        } catch (OperationFailedException ope) {
+            stringHandler.log(ope.getMessage());
+        }
     }
 
 
@@ -100,8 +121,8 @@ public class View {
      * @param customerID The ID of the customer for whom the discount is to be applied.
      * @return True if the discount was applied, false otherwise.
      */
-    public boolean getPersonalDiscount(int customerID) {
+    public void getPersonalDiscount(int customerID) {
 
-        return ctrl.getDiscountFromID(customerID);
+        ctrl.getDiscountFromID(customerID);
     }
 }

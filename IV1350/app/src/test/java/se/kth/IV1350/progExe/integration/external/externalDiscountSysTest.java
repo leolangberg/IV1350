@@ -23,7 +23,7 @@ public class externalDiscountSysTest {
     private static ExternalDiscountSys externalDiscountSys;
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
-    private static cashRegister cashRegister;
+    private static CashRegister cashRegister;
 
     ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
     ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
@@ -35,7 +35,7 @@ public class externalDiscountSysTest {
         externalDiscountSys = new ExternalDiscountSys();
         externalInventorySys = new ExternalInventorySys();
         printer = new Printer();
-        cashRegister = new cashRegister();
+        cashRegister = new CashRegister();
 
         ctrl = new Controller(externalAccountingSys, externalInventorySys, externalDiscountSys, printer, cashRegister);
 
@@ -66,7 +66,7 @@ public class externalDiscountSysTest {
 
         DiscountDTO dummy = new DiscountDTO(DiscountType.NUMERAL, 10.0, 1);
 
-        DiscountDTO test = externalDiscountSys.getDiscount(1);
+        DiscountDTO test = externalDiscountSys.getDiscountByID(1);
 
         double expected = dummy.getDiscountValue();
 
@@ -81,7 +81,7 @@ public class externalDiscountSysTest {
     @Test
     public void GetDiscountByTotalPriceTest() {
 
-        double result = externalDiscountSys.getDiscount(100.0);
+        double result = externalDiscountSys.getDiscountByTotalPrice(100.0);
         assertEquals(0.0, result, 0.01);
     }
 
@@ -95,11 +95,8 @@ public class externalDiscountSysTest {
         Map<ItemDTO, Integer> itemList = new HashMap<>();
         itemList.put(testItemDTO, 1);
 
-        DiscountDTO testresult = externalDiscountSys.getDiscount(itemList);
-
-        assertEquals(0, testresult.getDiscountValue(), 0.01);
-        assertEquals(DiscountType.NUMERAL, testresult.getDiscountType());
-        assertEquals(50, testresult.getDiscountID());
+        Double testresult = externalDiscountSys.getDiscountByItemList(itemList);
+        assertEquals(0.0, testresult, 0.01);
 
     }
 
