@@ -12,7 +12,7 @@ import se.kth.IV1350.progExe.model.ENUM.PaymentType;
  * new sale, scanning items, ending a sale, applying discounts, and processing payments.
  * 
  * @Controller instance directing and performing tasks.
- * @Logger Error-message handler. 
+ * @StringHandler Error-message handler. 
  */
 public class View {
 
@@ -35,9 +35,11 @@ public class View {
      * This method tells the controller to start a new sale.
      */
     public void newSale() {
-
-        ctrl.newSale();
-
+        try{
+            ctrl.newSale(); 
+        } catch(OperationFailedException ope) {
+            stringHandler.log(ope.getMessage());
+        }
     }
 
     /**

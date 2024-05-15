@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import se.kth.IV1350.progExe.controller.Controller;
+import se.kth.IV1350.progExe.controller.OperationFailedException;
 import se.kth.IV1350.progExe.integration.external.ExternalAccountingSys;
 import se.kth.IV1350.progExe.integration.external.ExternalDiscountSys;
 import se.kth.IV1350.progExe.integration.external.ExternalInventorySys;
@@ -23,9 +24,6 @@ public class cashRegisterTest {
     private static ExternalDiscountSys externalDiscountSys;
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
-
-    ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
-    ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
 
     @BeforeClass
     public static void initProgExe() {
@@ -41,7 +39,7 @@ public class cashRegisterTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws OperationFailedException {
 
         ctrl.newSale();
         externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 5);

@@ -1,7 +1,7 @@
 package se.kth.IV1350.progExe.integration.external;
 
 import se.kth.IV1350.progExe.integration.*;
-import se.kth.IV1350.progExe.model.SalesHandler;
+import se.kth.IV1350.progExe.integration.external.Exceptions.*;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
@@ -26,11 +26,7 @@ public class externalAccountingSysTest {
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
     private static CashRegister cashRegister;
-    private static SalesHandler salesHandler;
     private static ReceiptDTO receiptDTO;
-
-    ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
-    ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
 
     @BeforeClass
     public static void initProgExe() {
@@ -55,7 +51,7 @@ public class externalAccountingSysTest {
         itemList.put(itemDTO, 1);
 
         externalInventorySys.database.addItem(itemDTO, 1);
-
+    
         SaleDTO saleDTO = new SaleDTO(1, itemList, 100.0, 20.0, 10.0);
 
         PaymentDTO paymentDTO = new PaymentDTO(1, PaymentType.CASH, 100.0, 10.0, 20.0, 120.0);
@@ -81,23 +77,23 @@ public class externalAccountingSysTest {
      * same.
      */
     @Test
-    public void logReceiptTest() {
+    public void logReceiptTest() throws DatabaseException {
 
         externalAccountingSys.logReceipt(receiptDTO);
-
-        ReceiptDTO loggedReceipt = externalAccountingSys.database.receiptlog
-                .lookup(receiptDTO.getReceiptSale().getSaleID());
+        ReceiptDTO loggedReceipt = ExternalAccountingSys.databaseInstance().lookupReceipt(receiptDTO.getReceiptSale().getSaleID());
 
         assertEquals(receiptDTO, loggedReceipt);
     }
 
     /*
      * Test of newID method
+     * (Once a receipt is logged a new original ID shall be returned)
      */
     @Test
-    public void newIDTest() {
+    public void newIDTest() throws DatabaseException {
 
         int id1 = externalAccountingSys.newID();
+        externalAccountingSys.logReceipt(receiptDTO);
         int id2 = externalAccountingSys.newID();
 
         assertNotEquals(id1, id2);

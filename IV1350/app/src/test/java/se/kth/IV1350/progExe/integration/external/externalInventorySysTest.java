@@ -28,7 +28,7 @@ public class externalInventorySysTest {
     private static Printer printer;
     private static CashRegister cashRegister;
 
-    ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
+    ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.databaseInstance();
     ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
 
     @BeforeClass

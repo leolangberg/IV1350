@@ -2,6 +2,7 @@ package se.kth.IV1350.progExe.controller;
 
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.integration.external.*;
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 import se.kth.IV1350.progExe.model.SalesHandler;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
@@ -25,7 +26,6 @@ public class controllerTest {
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
     private static CashRegister cashRegister;
-    private static StringHandler stringHandler;
     private static SalesHandler salesHandler;
 
     @BeforeClass
@@ -34,7 +34,6 @@ public class controllerTest {
         externalAccountingSys = new ExternalAccountingSys();
         externalDiscountSys = new ExternalDiscountSys();
         externalInventorySys = new ExternalInventorySys();
-        stringHandler = new StringHandler();
         printer = new Printer();
         cashRegister = new CashRegister();
         salesHandler = new SalesHandler(5);
@@ -43,7 +42,7 @@ public class controllerTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws OperationFailedException {
 
         ctrl.newSale();
         externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 1);
@@ -66,7 +65,7 @@ public class controllerTest {
      * ID 1 is already created in setUp()
      */
     @Test
-    public void newSaleIdTest() {
+    public void newSaleIdTest() throws DatabaseException {
 
         int expResult = 2; // 1 is already created in setUp()
         int result = externalAccountingSys.newID();

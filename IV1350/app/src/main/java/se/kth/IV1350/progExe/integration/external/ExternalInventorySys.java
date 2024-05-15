@@ -5,9 +5,7 @@ import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 import se.kth.IV1350.progExe.integration.external.Exceptions.InvalidIdentifierException;
 import se.kth.IV1350.progExe.integration.external.Exceptions.InvalidQuantityException;
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
-
-
-import java.util.*;
+import java.util.Map;
 
 
 /**
@@ -16,16 +14,28 @@ import java.util.*;
  */
 public class ExternalInventorySys {
 
-    public InventorySysDatabase database;
+     /**
+     * Uses GoF 'Singleton' Pattern to create a singular static instance
+     * of the AccountingSystem Database.
+     */
+    private static final InventorySysDatabase DATABASE = new InventorySysDatabase();
+
+    /**
+     * The call method for using the 'Singleton' database.
+     * @return Database Instance (singleton).
+     * @throws DatabaseConnectionException in case connection to database fails.
+     */
+    public static InventorySysDatabase databaseInstance() throws DatabaseConnectionException { 
+        if(DATABASE.databaseConnection != true) {
+            throw new DatabaseConnectionException("No connection to Database.");
+        }
+        return DATABASE; 
+    }
 
     /**
      * Constructs a new ExternalInventorySys object.
-     * 
-     * This constructor initializes the ExternalInventorySys with a new InventorySysDatabase.
      */
-    public ExternalInventorySys() {
-        database = new InventorySysDatabase();
-    }
+    public ExternalInventorySys() {}
 
     /**
      * Retrieves an item based on the provided item ID.
@@ -36,7 +46,7 @@ public class ExternalInventorySys {
      */
     public ItemDTO getItem(int itemID, int quantity) throws DatabaseException {
         try {
-            return database.getItem(itemID, quantity);
+            return databaseInstance().getItem(itemID, quantity);
 
         } catch (DatabaseException dbe) {
             throw new DatabaseException(dbe.getMessage(), dbe);
@@ -47,13 +57,18 @@ public class ExternalInventorySys {
      * Updates the quantity of items in the inventory.
      *
      * @param itemList A map of ItemDTOs and their quantities to be updated in the inventory.
+     * @throws DatabaseException in case call to database fails.
      */
-    public void updateItemQuantity(Map<ItemDTO, Integer> itemList) {
-  
-        for (Map.Entry<ItemDTO, Integer> entry : itemList.entrySet()) {
-            ItemDTO itemDTO = entry.getKey();
-            int quantity = entry.getValue();
-            database.updateItemQuantity(itemDTO, quantity);
+    public void updateItemQuantity(Map<ItemDTO, Integer> itemList) throws DatabaseException {
+        
+        try{
+            for (Map.Entry<ItemDTO, Integer> entry : itemList.entrySet()) {
+                ItemDTO itemDTO = entry.getKey();
+                int quantity = entry.getValue();
+                databaseInstance().updateItemQuantity(itemDTO, quantity);
+            }
+        } catch(DatabaseConnectionException dce) {
+            throw new DatabaseException(dce.getMessage(), dce);
         }
     }
 
@@ -68,24 +83,22 @@ public class ExternalInventorySys {
     */
     public int getItemQuantity(int itemID) throws DatabaseException {
         try {
-            return database.getItemQuantity(itemID);
+            return databaseInstance().getItemQuantity(itemID);
         } catch (DatabaseException dbe) {
             throw new DatabaseException(dbe.getMessage(), dbe);
         }
     }
 
     /**
-     * DATABASE
+     * Inventory System Database ('singleton', thus 'static').
      */
-    public class InventorySysDatabase {
+    public static class InventorySysDatabase {
     
         private Shelf[] inventory;
         private boolean databaseConnection;
     
         /**
         * Constructs a new InventorySysDatabase object.
-        * 
-        * This constructor initializes the InventorySysDatabase with a new Shelf array and fills it with inventory scripts.
         */
         public InventorySysDatabase() {
     
@@ -101,10 +114,7 @@ public class ExternalInventorySys {
                 int quantity;
     
                 /**
-                 * Constructs a new Shelf object.
-                 * 
-                 * This constructor initializes the Shelf with the provided itemDTO and quantity.
-                 *
+                 * This constructor initializes a Shelf with the provided itemDTO and quantity.
                  * @param itemDTO The itemDTO to be stored in the shelf.
                  * @param quantity The quantity of the item on the shelf.
                  */
@@ -117,8 +127,6 @@ public class ExternalInventorySys {
     
         /**
         * Adds an item to the inventory.
-        * 
-        * This method creates a new Shelf with the provided itemDTO and quantity and adds it to the inventory at the index corresponding to the item ID.
         *
         * @param itemDTO The itemDTO to be added to the inventory.
         * @param quantity The quantity of the item to be added.
@@ -143,11 +151,7 @@ public class ExternalInventorySys {
         * @throws InvalidQuantityExcpetion if Quantity is invalid.
         * @throws DatabaseConnectionExcpetion if connection to database is not established. 
         */
-        public ItemDTO getItem(int itemID, int quantity) throws InvalidIdentifierException, InvalidQuantityException, DatabaseConnectionException {
-
-            if(this.databaseConnection != true) {
-                throw new DatabaseConnectionException("No connection to Database.");
-            }
+        public ItemDTO getItem(int itemID, int quantity) throws InvalidIdentifierException, InvalidQuantityException {
 
             if(itemID < 0 || itemID > inventory.length) {
                 throw new InvalidIdentifierException("ItemID: " + itemID + " is invalid.");

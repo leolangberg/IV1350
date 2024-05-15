@@ -6,14 +6,14 @@ import se.kth.IV1350.progExe.model.DTO.PaymentDTO;
 import se.kth.IV1350.progExe.model.DTO.SaleDTO;
 
 /**
- * Prints log messages to <code>System.out</code>.
+ * Prints log messages to console (equivalent to ConsoleLogger from book).
  */
 public class StringHandler {
     
     /**
-     * Prints the specified string to <code>System.out</code>.
+     * Prints the specified string to console.
      * 
-     * @param message The string that will be printed to <code>System.out</code>.
+     * @param message The string that is to be printed.
      */
     public void log(String message) {
         System.out.println(message);
