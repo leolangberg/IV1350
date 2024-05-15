@@ -1,6 +1,7 @@
 package se.kth.IV1350.progExe.integration.external;
 
 import se.kth.IV1350.progExe.integration.*;
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.ENUM.DiscountType;
 
@@ -15,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import se.kth.IV1350.progExe.controller.Controller;
+import se.kth.IV1350.progExe.controller.OperationFailedException;
 
 public class externalDiscountSysTest {
 
@@ -24,9 +26,6 @@ public class externalDiscountSysTest {
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
     private static CashRegister cashRegister;
-
-    ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
-    ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
 
     @BeforeClass
     public static void initProgExe() {
@@ -42,15 +41,15 @@ public class externalDiscountSysTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws OperationFailedException {
 
         ctrl.newSale();
 
     }
 
     @After
-    public void tearDown() {
-        externalInventorySys.database.clear();
+    public void tearDown() throws DatabaseException{
+        ExternalInventorySys.databaseInstance().clear();
     }
 
     @AfterClass
@@ -62,7 +61,7 @@ public class externalDiscountSysTest {
      * Test of getDiscount by id method
      */
     @Test
-    public void GetDiscountByIdTest() {
+    public void GetDiscountByIdTest() throws DatabaseException {
 
         DiscountDTO dummy = new DiscountDTO(DiscountType.NUMERAL, 10.0, 1);
 
@@ -89,7 +88,7 @@ public class externalDiscountSysTest {
      * Test of getDiscount by item list method
      */
     @Test
-    public void getDiscountTest() {
+    public void getDiscountTest() throws DatabaseException {
 
         ItemDTO testItemDTO = new ItemDTO(15, "pear", "green", 50.00, 0.12);
         Map<ItemDTO, Integer> itemList = new HashMap<>();

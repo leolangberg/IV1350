@@ -17,6 +17,7 @@ import org.junit.BeforeClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import se.kth.IV1350.progExe.controller.Controller;
+import se.kth.IV1350.progExe.controller.OperationFailedException;
 
 public class externalAccountingSysTest {
 
@@ -42,7 +43,7 @@ public class externalAccountingSysTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws OperationFailedException, DatabaseException {
 
         ctrl.newSale();
 
@@ -50,7 +51,7 @@ public class externalAccountingSysTest {
         Map<ItemDTO, Integer> itemList = new HashMap<>();
         itemList.put(itemDTO, 1);
 
-        externalInventorySys.database.addItem(itemDTO, 1);
+        ExternalInventorySys.databaseInstance().addItem(itemDTO, 1);
     
         SaleDTO saleDTO = new SaleDTO(1, itemList, 100.0, 20.0, 10.0);
 
@@ -61,8 +62,8 @@ public class externalAccountingSysTest {
     }
 
     @After
-    public void tearDown() {
-        externalInventorySys.database.clear();
+    public void tearDown() throws DatabaseException{
+        ExternalInventorySys.databaseInstance().clear();
     }
 
     @AfterClass

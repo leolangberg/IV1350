@@ -42,16 +42,16 @@ public class controllerTest {
     }
 
     @Before
-    public void setUp() throws OperationFailedException {
+    public void setUp() throws OperationFailedException, DatabaseException  {
 
         ctrl.newSale();
-        externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 1);
+        ExternalInventorySys.databaseInstance().addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 1);
 
     }
 
     @After
-    public void tearDown() {
-        externalInventorySys.database.clear();
+    public void tearDown() throws DatabaseException {
+        ExternalInventorySys.databaseInstance().clear();
         ctrl.endSale();
     }
 

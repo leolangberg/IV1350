@@ -3,7 +3,7 @@ package se.kth.IV1350.progExe.model;
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.integration.external.*;
-
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.Before;
@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import se.kth.IV1350.progExe.controller.Controller;
+import se.kth.IV1350.progExe.controller.OperationFailedException;
 
 public class saleTest {
 
@@ -21,9 +22,6 @@ public class saleTest {
     private static Printer printer;
     private static CashRegister cashRegister;
     private static Sale sale;
-
-    ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
-    ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
 
     @BeforeClass
     public static void initProgExe() {
@@ -39,17 +37,17 @@ public class saleTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws OperationFailedException, DatabaseException {
 
         ctrl.newSale();
-        externalInventorySys.database.addItem(new ItemDTO(15, "pear", "green", 5.00, 0.12), 5);
+        ExternalInventorySys.databaseInstance().addItem(new ItemDTO(15, "pear", "green", 5.00, 0.12), 5);
         sale = new Sale(1);
 
     }
 
     @After
-    public void tearDown() {
-        externalInventorySys.database.clear();
+    public void tearDown() throws DatabaseException{
+        ExternalInventorySys.databaseInstance().clear();
     }
 
     @AfterClass

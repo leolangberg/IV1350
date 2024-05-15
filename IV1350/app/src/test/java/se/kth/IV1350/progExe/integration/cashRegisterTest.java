@@ -15,6 +15,7 @@ import se.kth.IV1350.progExe.controller.OperationFailedException;
 import se.kth.IV1350.progExe.integration.external.ExternalAccountingSys;
 import se.kth.IV1350.progExe.integration.external.ExternalDiscountSys;
 import se.kth.IV1350.progExe.integration.external.ExternalInventorySys;
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 
 public class cashRegisterTest {
 
@@ -39,16 +40,16 @@ public class cashRegisterTest {
     }
 
     @Before
-    public void setUp() throws OperationFailedException {
+    public void setUp() throws OperationFailedException, DatabaseException {
 
         ctrl.newSale();
-        externalInventorySys.database.addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 5);
+        ExternalInventorySys.databaseInstance().addItem(new ItemDTO(10, "pear", "green", 5.00, 0.12), 5);
 
     }
 
     @After
-    public void tearDown() {
-        externalInventorySys.database.clear();
+    public void tearDown() throws DatabaseException {
+        ExternalInventorySys.databaseInstance().clear();
     }
 
     @AfterClass
