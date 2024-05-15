@@ -1,5 +1,8 @@
 package se.kth.IV1350.progExe.integration.external;
 
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseConnectionException;
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
+import se.kth.IV1350.progExe.integration.external.Exceptions.InvalidIdentifierException;
 import se.kth.IV1350.progExe.model.DTO.ReceiptDTO;
 
 /**
@@ -11,107 +14,141 @@ import se.kth.IV1350.progExe.model.DTO.ReceiptDTO;
  */
 public class ExternalAccountingSys {
 
-    public AccountingSysDatabase database;
-    private int lastIndex = 0;
+    /**
+     * Uses GoF 'Singleton' Pattern to create a singular static instance
+     * of the AccountingSystem Database.
+     */
+    private static final AccountingSysDatabase DATABASE = new AccountingSysDatabase();
+
+    /**
+     * The call method for using the 'Singleton' database.
+     * @return Database Instance (singleton).
+     * @throws DatabaseConnectionException in case connection to database fails.
+     */
+    public static AccountingSysDatabase databaseInstance() throws DatabaseConnectionException { 
+        if(DATABASE.databaseConnection != true) {
+            throw new DatabaseConnectionException("No connection to Database.");
+        }
+        return DATABASE; 
+    }
 
     /**
      * Constructs a new ExternalAccountingSys object.
-     * 
-     * This constructor initializes the ExternalAccountingSys with a new
-     * AccountingSysDatabase.
      */
-    public ExternalAccountingSys() {
-        this.database = new AccountingSysDatabase();
-    }
+    public ExternalAccountingSys() {}
 
     /**
      * Generates a new unique ID for a sale.
-     * 
-     * This method retrieves a new unique index from the accounting system database.
      *
+     * This method retrieves a new unique index from the accounting system database.
      * @return An integer representing the new unique ID.
+     * @throws DatabaseExcpetion in case call to database fails.
      */
-    public int newID() {
-
-        return database.newIndex();
+    public int newID() throws DatabaseException { 
+        try{
+            return databaseInstance().newIndex(); 
+        } catch(DatabaseException dbe) {
+            throw new DatabaseException(dbe.getMessage(), dbe);
+        }
     }
-
+    
     /**
      * Logs a receipt in the accounting system.
      * 
      * This method adds a receipt to the accounting system database.
-     *
      * @param receiptDTO The receipt to be logged.
+     * @throws DatabaseExcpetion in case call to database fails.
      */
-    public void logReceipt(ReceiptDTO receiptDTO) {
-        database.addReceipt(receiptDTO);
+    public void logReceipt(ReceiptDTO receiptDTO) throws DatabaseException { 
+        try{
+            databaseInstance().addReceipt(receiptDTO); 
+        } catch(DatabaseConnectionException dbe) {
+            throw new DatabaseException(dbe.getMessage(), dbe);
+        }
     }
 
+
+
+
+    
     /**
-     * ACCOUNTING SYSTEM DATABASE
+     * Accounting System Database ('singleton', thus 'static').
      */
-    public class AccountingSysDatabase {
+    public static class AccountingSysDatabase {
 
         public linkedListStruct receiptlog;
+        private boolean databaseConnection;
 
         /**
-         * Constructs a new AccountingSysDatabase object.
-         * 
          * This constructor initializes the AccountingSysDatabase with a new
-         * linkedListStruct for the receipt log.
+         * linkedListStruct for holding the Receipts.
          */
         public AccountingSysDatabase() {
-            this.receiptlog = new linkedListStruct();
+            this.receiptlog = new linkedListStruct(); 
+            this.databaseConnection = true;
         }
 
         /**
          * Generates a new unique index for a receipt.
-         * 
-         * This method retrieves the length of the receipt log and adds 1 to generate a
-         * new unique index.
-         *
          * @return An integer representing the new unique index.
          */
-        public int newIndex() {
-            lastIndex++;
-            receiptlog.length();
-            return lastIndex;
-        }
+        public int newIndex() { return receiptlog.amountOfReceipts + 1; }
 
         /**
          * Adds a receipt to the receipt log.
          * 
          * This method adds a receipt to the receipt log using the sale ID from the
          * receipt sale as the key.
-         *
          * @param receiptDTO The receipt to be added to the log.
          */
         public void addReceipt(ReceiptDTO receiptDTO) {
             receiptlog.add(receiptDTO.getReceiptSale().getSaleID(), receiptDTO);
         }
 
+         /**
+         * Finds specific ReceiptDTO based on index.
+         * 
+         * @param index of ReceiptDTO inside database.
+         * @return ReceiptDTO stored.
+         * @throws DatabaseException if database call fails.
+         */
+        public ReceiptDTO lookupReceipt(int index) throws InvalidIdentifierException {
+            try {
+                return receiptlog.lookup(index);
+            } catch(InvalidIdentifierException ide) {
+                throw new InvalidIdentifierException(ide.getMessage(), ide);
+            }
+        }
+
+          /**
+         * Changes state of connectivity to database. (For testing purposes, see Seminar Task 4)
+         * @param connection true or false.
+         */
+        public void setDatabaseConnection(boolean connection) {
+            this.databaseConnection = connection;
+        }
+
         /**
-         * UTILITY LINKED LIST STRUCT
+         * Utility Linked List Struct
+         * 
+         * Designed as a simple Linked List data structure for dynamically
+         * storing receipts.
          */
         public class linkedListStruct {
 
+            int amountOfReceipts;
             Node first;
 
             /**
-             * Constructs a new linkedListStruct object.
-             * 
              * This constructor initializes the linkedListStruct with a null first node.
              */
             public linkedListStruct() {
+                amountOfReceipts = 0;
                 first = null;
             }
 
             /**
              * Retrieves the length of the linked list.
-             * 
-             * This method checks if the first node is null. If it is, it returns 0.
-             * Otherwise, it returns the index of the first node.
-             *
              * @return An integer representing the length of the linked list.
              */
             public int length() {
@@ -124,6 +161,9 @@ public class ExternalAccountingSys {
                 return length;
             }
 
+            /**
+             * Node class represents the Objects stored inside the Linked List.
+             */
             private class Node {
 
                 int index;
@@ -165,6 +205,8 @@ public class ExternalAccountingSys {
 
                 n.next = first;
                 first = n;
+
+                amountOfReceipts++;
             }
 
             /**
@@ -173,13 +215,14 @@ public class ExternalAccountingSys {
              * @param index The index of the node to find.
              * @return The receiptDTO stored in the found node, or null if the index was not
              *         found.
+             * @throws InvalidIdentifierException in case there is no object on given index.
              */
-            public ReceiptDTO lookup(int index) {
+            public ReceiptDTO lookup(int index) throws InvalidIdentifierException {
 
                 Node n = first;
                 while (n.index != index) {
                     if (n.next == null) {
-                        return null;
+                        throw new InvalidIdentifierException("object on index: " + index + " does not exist in database");
                     }
                     n = n.next;
                 }

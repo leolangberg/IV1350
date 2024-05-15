@@ -1,9 +1,12 @@
 package se.kth.IV1350.progExe.integration.external;
 
-import se.kth.IV1350.progExe.model.DTO.*;
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseConnectionException;
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
+import se.kth.IV1350.progExe.integration.external.Exceptions.InvalidIdentifierException;
+import se.kth.IV1350.progExe.model.DTO.DiscountDTO;
+import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 import se.kth.IV1350.progExe.model.ENUM.DiscountType;
-
-import java.util.*;
+import java.util.Map;
 
 /**
  * The ExternalDiscountSys class is responsible for handling all communication
@@ -13,26 +16,45 @@ import java.util.*;
  */
 public class ExternalDiscountSys {
 
-    public DiscountSysDatabase database;
+     /**
+     * Uses GoF 'Singleton' Pattern to create a singular static instance
+     * of the AccountingSystem Database.
+     */
+    private static final DiscountSysDatabase DATABASE = new DiscountSysDatabase();
 
     /**
-     * Constructs a new ExternalDiscountSys object.
-     * 
-     * This constructor initializes the ExternalDiscountSys with a new DiscountSysDatabase.
+     * The call method for using the 'Singleton' database.
+     * @return Database Instance (singleton).
+     * @throws DatabaseConnectionException in case connection to database fails.
      */
-    public ExternalDiscountSys() {
-        this.database = new DiscountSysDatabase();
+    public static DiscountSysDatabase databaseInstance() throws DatabaseConnectionException { 
+        if(DATABASE.databaseConnection != true) {
+            throw new DatabaseConnectionException("No connection to Database.");
+        }
+        return DATABASE; 
     }
 
     /**
+     * Constructs a new ExternalDiscountSys object.
+     */
+    public ExternalDiscountSys() {}
+
+    /**
      * Retrieves a discount based on the provided discount ID.
+     * 
+     * 'When passed the customer id, it tells a percentage to be reduced from the
+     * total cost of the entire sale. The percentage is zero if there’s no discount.'
      *
      * @param discountID The ID of the discount to retrieve.
-     * @return A DiscountDTO representing the discount, or null if the discount does
-     *         not exist.
+     * @return DiscountDTO representing the discount.
+     * @throws DatabaseException if call to database fails.
      */
-    public DiscountDTO getDiscountByID(int discountID) {
-        return database.findDiscount(discountID);
+    public DiscountDTO getDiscountByID(int discountID) throws DatabaseException {
+        try{
+            return databaseInstance().findDiscount(discountID);
+        } catch(DatabaseConnectionException | InvalidIdentifierException dbe) {
+            throw new DatabaseException(dbe.getMessage(), dbe);
+        }
     }
 
     /**
@@ -51,28 +73,34 @@ public class ExternalDiscountSys {
      * total cost of the entire sale by matching each ItemID to potential DiscountID. 
      * Returns discount of 0 if there’s no discount.
      */
-    public double getDiscountByItemList(Map<ItemDTO, Integer> itemList) {
+    public double getDiscountByItemList(Map<ItemDTO, Integer> itemList) throws DatabaseException {
 
         double sum = 0;
 
-        for (Map.Entry<ItemDTO, Integer> entry : itemList.entrySet()) {
+        try{
+            for (Map.Entry<ItemDTO, Integer> entry : itemList.entrySet()) {
 
-            ItemDTO itemDTO = entry.getKey();
-            DiscountDTO discountDTO = getDiscountByID(itemDTO.getItemID());
-            if(discountDTO != null)
-            {
-                sum += discountDTO.getDiscountValue();
-            }
-        }  
-        return sum;
+                ItemDTO itemDTO = entry.getKey();
+                DiscountDTO discountDTO = getDiscountByID(itemDTO.getItemID());
+                if(discountDTO != null)
+                {
+                    sum += discountDTO.getDiscountValue();
+                }
+            }  
+            return sum;
+        } 
+        catch (DatabaseException dbe) {
+            throw new DatabaseException(dbe.getMessage(), dbe);
+        }
     }
 
     /**
-     * DISCOUNT DATABASE
+     * Discount System Database ('singleton', thus 'static').
      */
-    public class DiscountSysDatabase {
+    public static class DiscountSysDatabase {
 
         private DiscountDTO[] discountDatabase;
+        private boolean databaseConnection;
 
         /**
          * Constructs a new DiscountSysDatabase object.
@@ -87,8 +115,6 @@ public class ExternalDiscountSys {
 
         /**
          * Fills the discount database with discount scripts.
-         * 
-         * This method currently adds two discount scripts to the discount database.
          */
         private void fillDiscountScript() {
             discountDatabase[1] = new DiscountDTO(DiscountType.NUMERAL, 10.00, 1);
@@ -100,16 +126,22 @@ public class ExternalDiscountSys {
          * Retrieves a discount based on the provided discount ID.
          *
          * @param discountID The ID of the discount to retrieve.
-         * @return A DiscountDTO representing the discount, or null if the discount does
-         *         not exist.
+         * @return A DiscountDTO representing the discount.
+         * @throws InvalidIdentifierException in case ID is invalid.
          */
-        public DiscountDTO findDiscount(int discountID) {
+        public DiscountDTO findDiscount(int discountID) throws InvalidIdentifierException {
             if (discountDatabase[discountID] == null) {
-                return null;
+                throw new InvalidIdentifierException("discountID: " + discountID + " is invalid.");
             }
             return discountDatabase[discountID];
         }
 
+        /**
+         * Changes state of connectivity to database. (For testing purposes, see Seminar Task 4)
+         * @param connection true or false.
+         */
+        public void setDatabaseConnection(boolean connection) {
+            this.databaseConnection = connection;
+        }
     }
-
 }

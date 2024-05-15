@@ -18,6 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import se.kth.IV1350.progExe.controller.Controller;
+import se.kth.IV1350.progExe.controller.OperationFailedException;
 
 public class externalInventorySysTest {
 
@@ -27,9 +28,6 @@ public class externalInventorySysTest {
     private static ExternalInventorySys externalInventorySys;
     private static Printer printer;
     private static CashRegister cashRegister;
-
-    ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
-    ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
 
     @BeforeClass
     public static void initProgExe() {
@@ -45,16 +43,16 @@ public class externalInventorySysTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws OperationFailedException, DatabaseException {
 
         ctrl.newSale();
-        externalInventorySys.database.addItem(new ItemDTO(15, "pear", "green", 5.00, 0.12), 5);
+        ExternalInventorySys.databaseInstance().addItem(new ItemDTO(15, "pear", "green", 5.00, 0.12), 5);
 
     }
 
     @After
-    public void tearDown() {
-        externalInventorySys.database.clear();
+    public void tearDown() throws DatabaseException{
+        ExternalInventorySys.databaseInstance().clear();
     }
 
     @AfterClass
@@ -86,7 +84,7 @@ public class externalInventorySysTest {
     @Test
     public void getItemTest() throws InvalidIdentifierException, InvalidQuantityException, DatabaseConnectionException {
 
-        ItemDTO result = externalInventorySys.database.getItem(15, 1);
+        ItemDTO result = ExternalInventorySys.databaseInstance().getItem(15, 1);
 
         ItemDTO expResult = new ItemDTO(15, "pear", "green", 5.00, 0.12);
 

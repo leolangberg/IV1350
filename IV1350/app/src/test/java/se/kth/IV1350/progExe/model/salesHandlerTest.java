@@ -6,7 +6,7 @@ import se.kth.IV1350.progExe.model.ENUM.DiscountType;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 import se.kth.IV1350.progExe.model.Exceptions.TransactionFailedException;
 import se.kth.IV1350.progExe.integration.external.*;
-
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -32,8 +32,6 @@ public class salesHandlerTest {
 
     private int saleID = 1;
 
-    ExternalAccountingSys.AccountingSysDatabase database = externalAccountingSys.database;
-    ExternalAccountingSys.AccountingSysDatabase.linkedListStruct linkedList = database.receiptlog;
 
     @BeforeClass
     public static void initProgExe() {
@@ -56,8 +54,8 @@ public class salesHandlerTest {
     }
 
     @After
-    public void tearDown() {
-        externalInventorySys.database.clear();
+    public void tearDown() throws DatabaseException{
+        ExternalInventorySys.databaseInstance().clear();
     }
 
     @AfterClass
