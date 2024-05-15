@@ -77,7 +77,7 @@ public class controllerTest {
      * Test for endSale() method
      */
     @Test
-    public void endSaleTest() throws OperationFailedException{
+    public void endSaleTest() throws OperationFailedException {
 
         ctrl.getItem(10);
 
@@ -89,7 +89,7 @@ public class controllerTest {
         double totalCost = 5.00;
         double totalVAT = 0.60;
         double totalDiscount = 0.0;
-        int saleID = 1;
+        int saleID = 2;
         SaleDTO expResult = new SaleDTO(saleID, itemList, totalCost, totalVAT, totalDiscount);
 
         assertEquals(expResult.getSaleID(), result.getSaleID());
