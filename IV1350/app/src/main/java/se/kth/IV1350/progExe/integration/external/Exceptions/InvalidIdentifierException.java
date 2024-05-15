@@ -1,11 +1,12 @@
-package se.kth.IV1350.progExe.integration.external;
+package se.kth.IV1350.progExe.integration.external.Exceptions;
 
 /**
  * Thrown when database is presented with Invalid Id.
  */
-public class InvalidIdentifierException extends Exception {
+public class InvalidIdentifierException extends DatabaseException {
 
     /**
+     * Throws Exception.
      * 
      * @param reason why Exception was thrown.
      */
@@ -14,7 +15,7 @@ public class InvalidIdentifierException extends Exception {
     }
 
     /**
-     * 
+     * Throws Excpetion together with the root cause behind it.
      * 
      * @param reason Why exception was thrown.
      * @param rootCause The root Exception that caused this exception to thrown.

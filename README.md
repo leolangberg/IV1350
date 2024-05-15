@@ -6,14 +6,6 @@
 <h2>Notes</h2>
 <h6>
   <ul>
-<<<<<<< HEAD
-    <li> Add Unit Test to prove 1. <li>
-    <li>"reference to same itemList" meaning that to create new instance or to just lock it?</li>
-  </ul>
-</h6>
-<h2>Questions</h2>
-<h3>Appropriate response regarding task3 feedback:</h3>
-=======
     <li>Update Tests to work with Exceptions.</li>
   </ul>
 </h6>
@@ -33,13 +25,11 @@
 <h2>Questions Seminar 4</h2>
 <h6>
   <ul>
-    <li>Logger in View Layer?</li>
-    <li>Exception polymorphism & how to handle longer exception catching?</li>
-    <li>How do Junit tests work with Exceptions?</li>
+    <li>Exception polymorphism?</li>
+    <li>Exceptions all in one folder? (do Excpetions have to be in same package folder?)<li>
   </ul>
 </h6>
 <!-- <h3>Appropriate response regarding task2 feedback:</h3>
->>>>>>> origin/leo
 <ul>
   <li>1. DTO must be read only. SaleDTO has reference to the same itemList created by Sale. This violates MVC, since it means the controller can update itemList without going through the Sale Class.</li>
   <h6>

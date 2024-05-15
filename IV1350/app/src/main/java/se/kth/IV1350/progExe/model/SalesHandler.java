@@ -1,6 +1,8 @@
 package se.kth.IV1350.progExe.model;
 
 import se.kth.IV1350.progExe.model.DTO.*;
+import se.kth.IV1350.progExe.model.Exceptions.InvalidAddItemCallException;
+import se.kth.IV1350.progExe.model.Exceptions.TransactionFailedException;
 
 /**
  * The SalesHandler class is responsible for handling sales.

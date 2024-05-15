@@ -1,10 +1,20 @@
 package se.kth.IV1350.progExe.controller;
 
-import se.kth.IV1350.progExe.integration.*;
-import se.kth.IV1350.progExe.integration.external.*;
-import se.kth.IV1350.progExe.model.*;
-import se.kth.IV1350.progExe.model.DTO.*;
-import se.kth.IV1350.progExe.model.ENUM.*;
+import se.kth.IV1350.progExe.integration.CashRegister;
+import se.kth.IV1350.progExe.integration.Printer;
+import se.kth.IV1350.progExe.integration.external.ExternalAccountingSys;
+import se.kth.IV1350.progExe.integration.external.ExternalDiscountSys;
+import se.kth.IV1350.progExe.integration.external.ExternalInventorySys;
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
+
+import se.kth.IV1350.progExe.model.SalesHandler;
+import se.kth.IV1350.progExe.model.DTO.ItemDTO;
+import se.kth.IV1350.progExe.model.DTO.ItemPackageDTO;
+import se.kth.IV1350.progExe.model.DTO.PaymentDTO;
+import se.kth.IV1350.progExe.model.DTO.ReceiptDTO;
+import se.kth.IV1350.progExe.model.DTO.SaleDTO;
+import se.kth.IV1350.progExe.model.Exceptions.SaleException;
+import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
 /**
  * The Controller class is responsible for handling all communication between
@@ -68,6 +78,8 @@ public class Controller {
      * @param itemID The ID of the item to fetch.
      * @return ItemPackageDTO contaning all relevant View Layer information
      *         (ItemDTO, Quantity, runningTotalCost, runningTotalVAT).
+     * @throws OperationsFailedException in case an Excpetion is catched regarding either
+     *                                   database calls or ongoing Sale.
      */
     public ItemPackageDTO getItem(int itemID) throws OperationFailedException {
 
@@ -85,6 +97,8 @@ public class Controller {
      * @param quantity The quantity of the item to fetch.
      * @return ItemPackageDTO contaning all relevant View Layer information
      *         (ItemDTO, Quantity, runningTotalCost, runningTotalVAT).
+     * @throws OperationsFailedException in case an Excpetion is catched regarding either
+     *                                   database calls or ongoing Sale.
      */
     public ItemPackageDTO getItem(int itemID, int quantity) throws OperationFailedException {
 
@@ -96,14 +110,8 @@ public class Controller {
             ItemPackageDTO salePackageDTO = new ItemPackageDTO(itemDTO, quantity, saleDTO.getSalePrice(), saleDTO.getSaleVAT());
             return salePackageDTO;
 
-        } catch (DatabaseConnectionException dbce) {
-            throw new OperationFailedException(dbce.getMessage(), dbce);
-        } catch (InvalidIdentifierException ide) {
-            throw new OperationFailedException(ide.getMessage(), ide);
-        } catch (InvalidQuantityException iqe) {
-            throw new OperationFailedException(iqe.getMessage(), iqe);
-        } catch (InvalidAddItemCallException iae) {
-            throw new OperationFailedException(iae.getMessage(), iae);
+        } catch (DatabaseException | SaleException exc ) {
+            throw new OperationFailedException(exc.getMessage(), exc);
         }
     }
 
@@ -135,18 +143,18 @@ public class Controller {
      * @param enumType The type of payment.
      * @param amountPaid The amount paid by the customer.
      * @return PaymentDTO.
+     * @throws OperationFailedException in case payment is invalid.
      */
     public PaymentDTO Payment(PaymentType enumType, double amountPaid) throws OperationFailedException {
-
+        
         PaymentDTO paymentDTO = new PaymentDTO(amountPaid, enumType, salesHandler.getSaleDTO());
-
         try {
             salesHandler.transaction(paymentDTO);
             updateSaleSystem();
             return paymentDTO;
         }
-        catch (TransactionFailedException tfe) {
-            throw new OperationFailedException(tfe.getMessage(), tfe);
+        catch (SaleException sae) {
+            throw new OperationFailedException(sae.getMessage(), sae);
         }
     }
 

@@ -1,6 +1,10 @@
 package se.kth.IV1350.progExe.integration.external;
 
 import se.kth.IV1350.progExe.integration.*;
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseConnectionException;
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
+import se.kth.IV1350.progExe.integration.external.Exceptions.InvalidIdentifierException;
+import se.kth.IV1350.progExe.integration.external.Exceptions.InvalidQuantityException;
 import se.kth.IV1350.progExe.model.DTO.*;
 
 import static org.junit.Assert.assertEquals;
@@ -62,7 +66,7 @@ public class externalInventorySysTest {
      * Test of updateItemQuantity method
      */
     @Test
-    public void updateItemQuantityTest() throws InvalidIdentifierException, DatabaseConnectionException {
+    public void updateItemQuantityTest() throws DatabaseException {
 
         ItemDTO testItemDTO = new ItemDTO(15, "pear", "green", 50.00, 0.12);
         Map<ItemDTO, Integer> itemList = new HashMap<>();

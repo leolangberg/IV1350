@@ -1,13 +1,12 @@
-package se.kth.IV1350.progExe.model;
+package se.kth.IV1350.progExe.model.Exceptions;
 
-public class InvalidAddItemCallException extends Exception {
+public class TransactionFailedException extends SaleException {
     
-      
     /**
      * 
      * @param reason why Exception was thrown.
      */
-    public InvalidAddItemCallException(String reason) {
+    public TransactionFailedException(String reason) {
         super(reason);
     }
 
@@ -17,7 +16,8 @@ public class InvalidAddItemCallException extends Exception {
      * @param reason Why exception was thrown.
      * @param rootCause The root Exception that caused this exception to thrown.
      */
-    public InvalidAddItemCallException(String reason, Throwable rootCause) {
+    public TransactionFailedException(String reason, Throwable rootCause) {
         super(reason, rootCause);
     }
+    
 }

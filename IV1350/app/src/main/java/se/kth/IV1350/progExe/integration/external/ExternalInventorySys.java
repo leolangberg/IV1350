@@ -1,5 +1,9 @@
 package se.kth.IV1350.progExe.integration.external;
 
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseConnectionException;
+import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
+import se.kth.IV1350.progExe.integration.external.Exceptions.InvalidIdentifierException;
+import se.kth.IV1350.progExe.integration.external.Exceptions.InvalidQuantityException;
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 
 
@@ -28,18 +32,14 @@ public class ExternalInventorySys {
      *
      * @param itemID The ID of the item to retrieve.
      * @return An ItemDTO representing the item, or throw error if null.
+     * @throws DatabaseExcpetion in case an Excpetion is catched regarding database calls.
      */
-    public ItemDTO getItem(int itemID, int quantity) throws InvalidIdentifierException, InvalidQuantityException, DatabaseConnectionException {
+    public ItemDTO getItem(int itemID, int quantity) throws DatabaseException {
         try {
-
             return database.getItem(itemID, quantity);
 
-        } catch (DatabaseConnectionException dbce) {
-            throw new DatabaseConnectionException(dbce.getMessage(), dbce);
-        } catch (InvalidIdentifierException ide) {
-            throw new InvalidIdentifierException(ide.getMessage(), ide);
-        } catch (InvalidQuantityException iqe) {
-            throw new InvalidQuantityException(iqe.getMessage(), iqe);
+        } catch (DatabaseException dbe) {
+            throw new DatabaseException(dbe.getMessage(), dbe);
         }
     }
 
@@ -64,14 +64,13 @@ public class ExternalInventorySys {
     * 
     * @param itemID The ID of the item to retrieve the quantity for.
     * @return The quantity of the item, or throw error if itemID does not exist.
+    * @throws DatabaseExcpetion in case an Excpetion is catched regarding database calls.
     */
-    public int getItemQuantity(int itemID) throws InvalidIdentifierException, DatabaseConnectionException {
+    public int getItemQuantity(int itemID) throws DatabaseException {
         try {
             return database.getItemQuantity(itemID);
-        } catch (DatabaseConnectionException dbce) {
-            throw new DatabaseConnectionException(dbce.getMessage(), dbce);
-        } catch (InvalidIdentifierException ide) {
-            throw new InvalidIdentifierException(ide.getMessage(), ide);
+        } catch (DatabaseException dbe) {
+            throw new DatabaseException(dbe.getMessage(), dbe);
         }
     }
 
@@ -140,6 +139,9 @@ public class ExternalInventorySys {
         *
         * @param itemID The ID of the item to retrieve.
         * @return An ItemDTO representing the item, or null if the item does not exist or the quantity is 0.
+        * @throws InvalidIdentiferException if ID is invalid.
+        * @throws InvalidQuantityExcpetion if Quantity is invalid.
+        * @throws DatabaseConnectionExcpetion if connection to database is not established. 
         */
         public ItemDTO getItem(int itemID, int quantity) throws InvalidIdentifierException, InvalidQuantityException, DatabaseConnectionException {
 
@@ -212,6 +214,8 @@ public class ExternalInventorySys {
         * 
         * @param itemID The ID of the item to retrieve the quantity for.
         * @return The quantity of the item, or throw error if it itemID does not exist.
+        * @throws InvalidQuantityExcpetion if Quantity is invalid.
+        * @throws DatabaseConnectionExcpetion if connection to database is not established. 
         */
         public int getItemQuantity(int itemID) throws InvalidIdentifierException, DatabaseConnectionException {
             if(itemID < 0 || itemID >= inventory.length || inventory[itemID] == null) {
