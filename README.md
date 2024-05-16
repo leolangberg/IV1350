@@ -8,7 +8,8 @@
   <ul>
     <li>Update Tests to work with Exceptions.</li>
     <li>GoF 'Singleton' used for databases.</li>
-    <li>GoF 'Strategy' for Exception Polymorphism??</li>
+    <li>GoF 'Strategy' & 'Composite' used for Discounts.</li>
+    <li>Bug where you can pay multiple times in one sale.</li>
   </ul>
 </h6>
 <!--
