@@ -7,6 +7,8 @@
 <h6>
   <ul>
     <li>Update Tests to work with Exceptions.</li>
+    <li>GoF 'Singleton' used for databases.</li>
+    <li>GoF 'Strategy' for Exception Polymorphism??</li>
   </ul>
 </h6>
 <!--

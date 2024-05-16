@@ -1,9 +1,10 @@
 package se.kth.IV1350.progExe.model.Exceptions;
 
 /**
- * Exception thrown when an Item is added to an already ended Sale.
+ * Exception thrown when an call to a specific method is invalid.
+ * (e.g Item is added to an already ended Sale.)
  */
-public class InvalidAddItemCallException extends SaleException {
+public class InvalidCallException extends SaleException {
     
       
     /**
@@ -11,7 +12,7 @@ public class InvalidAddItemCallException extends SaleException {
      * 
      * @param reason why Exception was thrown.
      */
-    public InvalidAddItemCallException(String reason) {
+    public InvalidCallException(String reason) {
         super(reason);
     }
 
@@ -21,7 +22,7 @@ public class InvalidAddItemCallException extends SaleException {
      * @param reason Why exception was thrown.
      * @param rootCause The root Exception that caused this exception to thrown.
      */
-    public InvalidAddItemCallException(String reason, Throwable rootCause) {
+    public InvalidCallException(String reason, Throwable rootCause) {
         super(reason, rootCause);
     }
 }

@@ -1,7 +1,9 @@
 package se.kth.IV1350.progExe.model;
 
 import se.kth.IV1350.progExe.model.DTO.*;
-import se.kth.IV1350.progExe.model.Exceptions.InvalidAddItemCallException;
+import se.kth.IV1350.progExe.model.discount.CompositeDiscount;
+import se.kth.IV1350.progExe.model.discount.Discount;
+import se.kth.IV1350.progExe.model.Exceptions.InvalidCallException;
 import se.kth.IV1350.progExe.model.Exceptions.TransactionFailedException;
 
 /**
@@ -19,6 +21,8 @@ public class SalesHandler {
     private PaymentDTO currentPayment;
     private ReceiptDTO currentReceipt;
 
+    private static final CompositeDiscount COMPOSITE_DISCOUNT = new CompositeDiscount();
+
     private boolean saleCompleted;
 
     /**
@@ -35,15 +39,19 @@ public class SalesHandler {
         saleCompleted = false;
     }
 
+    public CompositeDiscount compositeDiscountInstance() {
+        return COMPOSITE_DISCOUNT;
+    }
+
     /**
      * Adds an item to the current sale if the sale is not completed.
      * 
      * @param itemDTO The item to be added to the sale.
      * @throws InvalidAddItemCallException is thrown if item is added to completed Sale.
      */
-    public void addItem(ItemDTO itemDTO, int quantity) throws InvalidAddItemCallException {
+    public void addItem(ItemDTO itemDTO, int quantity) throws InvalidCallException {
         if (saleCompleted) {
-            throw new InvalidAddItemCallException("Cannot Add Items to a completed Sale.");
+            throw new InvalidCallException("Cannot Add Items to a completed Sale.");
         }
 
         currentSale.addItem(itemDTO, quantity);
@@ -80,34 +88,12 @@ public class SalesHandler {
         currentReceipt = new ReceiptDTO(getSaleDTO(), paymentDTO);
     }
 
-    /**
-     * Applies a discount to the current sale.
-     * 
-     * This method applies a discount to the current sale based on the provided
-     * DiscountDTO.
-     * 
-     * @param discountDTO The discount to be applied.
-     * @return True if the discount was applied, false otherwise.
-     */
-    public boolean applyDiscount(DiscountDTO discountDTO) {
-
-        if (discountDTO == null) {
-            return false; 
-        }
-
-        switch (discountDTO.getDiscountType()) {
-            case PERCENTAGE:
-                currentSale.applyPercentageDiscount(discountDTO.getDiscountValue());
-                break;
-            case NUMERAL:
-                currentSale.applyNumeralDiscount(discountDTO.getDiscountValue());
-                break;
-
-            default:
-                return false;
-        }
-
-        return true;
+  
+    public void applyDiscount() {
+        
+        double reducedTotalPrice = compositeDiscountInstance().applyDiscount(this.currentSale.getSalePrice());
+        this.currentSale.setSalePrice(reducedTotalPrice);
+        this.currentSale.setSaleDiscount(this.currentSale.getSalePrice() - reducedTotalPrice);
     }
 
     /**
@@ -137,4 +123,5 @@ public class SalesHandler {
      * @return True if the sale is completed, false otherwise.
      */
     public boolean isSaleCompleted() { return saleCompleted; }
+
 }

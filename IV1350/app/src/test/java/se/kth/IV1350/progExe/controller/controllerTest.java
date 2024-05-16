@@ -6,7 +6,6 @@ import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 import se.kth.IV1350.progExe.model.SalesHandler;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
-import se.kth.IV1350.progExe.view.StringHandler;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
@@ -50,7 +49,7 @@ public class controllerTest {
     }
 
     @After
-    public void tearDown() throws DatabaseException {
+    public void tearDown() throws DatabaseException, OperationFailedException {
         ExternalInventorySys.databaseInstance().clear();
         ctrl.endSale();
     }

@@ -48,9 +48,11 @@ public class View {
      * This method tells the controller to end the current sale.
      */
     public void endSale() {
-
-        stringHandler.EndSaleInfo(ctrl.endSale());
-
+        try{
+            stringHandler.EndSaleInfo(ctrl.endSale());
+        } catch (OperationFailedException ope) {
+            stringHandler.log(ope.getMessage());
+        }
     }
 
      /**
@@ -122,8 +124,12 @@ public class View {
      * @param customerID The ID of the customer for whom the discount is to be applied.
      * @return True if the discount was applied, false otherwise.
      */
-    public void getPersonalDiscount(int customerID) {
+    public void getCustomerDiscount(int customerID) {
 
-        ctrl.getDiscountFromID(customerID);
+        try{
+            stringHandler.CustomerDiscountInfo(ctrl.getCustomerDiscount(customerID));
+        } catch(OperationFailedException ope) {
+            stringHandler.log(ope.getMessage());
+        }
     }
 }

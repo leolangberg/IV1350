@@ -13,6 +13,9 @@ import se.kth.IV1350.progExe.model.DTO.ItemPackageDTO;
 import se.kth.IV1350.progExe.model.DTO.PaymentDTO;
 import se.kth.IV1350.progExe.model.DTO.ReceiptDTO;
 import se.kth.IV1350.progExe.model.DTO.SaleDTO;
+import se.kth.IV1350.progExe.model.discount.CompositeDiscount;
+import se.kth.IV1350.progExe.model.discount.Discount;
+import se.kth.IV1350.progExe.model.Exceptions.InvalidCallException;
 import se.kth.IV1350.progExe.model.Exceptions.SaleException;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
@@ -128,11 +131,12 @@ public class Controller {
      * A new updated saleDTO is then returned.
      * 
      * @return saleDTO.
+     * @throws OperationFailedException catched from discountSystem.
      */
-    public SaleDTO endSale() {
+    public SaleDTO endSale() throws OperationFailedException {
 
         SaleDTO saleDTO = salesHandler.endSale();
-        findDiscount(saleDTO);
+        getSaleDiscount(saleDTO);
         SaleDTO updatedSaleDTO = salesHandler.getSaleDTO();
         return updatedSaleDTO;
 
@@ -166,6 +170,7 @@ public class Controller {
 
     /**
      * Updates External Systems and logs Receipt.
+     * @throws DatabaseException in case call to database fails.
      */
     private void updateSaleSystem() throws DatabaseException {
 
@@ -173,38 +178,33 @@ public class Controller {
         PaymentDTO paymentDTO = receiptDTO.getReceiptPayment();
         SaleDTO saleDTO = receiptDTO.getReceiptSale();
 
+        cashRegister.updateCashRegister(paymentDTO);
+        externalAccountingSys.logReceipt(receiptDTO);
+        externalInventorySys.updateItemQuantity(saleDTO.getSaleItemList());
+        printer.printReceipt(receiptDTO);
+
+    }
+
+    public Discount getCustomerDiscount(int customerID) throws OperationFailedException {
         try {
-            cashRegister.updateCashRegister(paymentDTO);
-            externalAccountingSys.logReceipt(receiptDTO);
-            externalInventorySys.updateItemQuantity(saleDTO.getSaleItemList());
-            printer.printReceipt(receiptDTO);
+            Discount discount = externalDiscountSys.getCustomerDiscount(customerID);
+            salesHandler.compositeDiscountInstance().addDiscount(discount);
+            return discount;
 
         } catch(DatabaseException dbe) {
-            throw new DatabaseException(dbe.getMessage(), dbe);
+            throw new OperationFailedException(dbe.getMessage(), dbe);
         }
     }
 
-    /**
-     * Tries to find and apply discount if it exists.
-     * 
-     * @param saleDTO
-     */
-    private void findDiscount(SaleDTO saleDTO) {
-        // DiscountDTO discountDTO = externalDiscountSys.getDiscountByItemList(saleDTO.getSaleItemList());
-        // salesHandler.applyDiscount(discountDTO);
-    }
 
-    /**
-     * Retrieves and applies a discount based on the provided discount ID.
-     *
-     * @param discountID The ID of the discount to retrieve and apply.
-     * @return indicating whether the discount was successfully retrieved and
-     *         applied.
-     */
-    public void getDiscountFromID(int discountID) {
-
-        // DiscountDTO discountDTO = externalDiscountSys.getDiscount(discountID);
-        // boolean discountExists = salesHandler.applyDiscount(discountDTO);
-
+    private void getSaleDiscount(SaleDTO saleDTO) throws OperationFailedException {
+        try{
+            CompositeDiscount compositeDiscount = externalDiscountSys.collectSaleDiscounts(saleDTO);
+            salesHandler.compositeDiscountInstance().addDiscount(compositeDiscount);
+            salesHandler.applyDiscount();
+        } 
+        catch(DatabaseException | SaleException dbe) {
+            throw new OperationFailedException(dbe.getMessage(), dbe);
+        }
     }
 }

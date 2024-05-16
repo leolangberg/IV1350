@@ -4,6 +4,7 @@ import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 import se.kth.IV1350.progExe.model.DTO.ItemPackageDTO;
 import se.kth.IV1350.progExe.model.DTO.PaymentDTO;
 import se.kth.IV1350.progExe.model.DTO.SaleDTO;
+import se.kth.IV1350.progExe.model.discount.Discount;
 
 /**
  * Prints log messages to console (equivalent to ConsoleLogger from book).
@@ -70,7 +71,7 @@ public class StringHandler {
      */
     public void EndSaleInfo(SaleDTO saleDTO) {
 
-        String header = "End Sale:\n";
+        String header = "End Sale:";
         log(header);
         saleInfo(saleDTO.getSalePrice(), saleDTO.getSaleVAT());
     }
@@ -98,5 +99,12 @@ public class StringHandler {
         String cost = "Total cost (incl VAT): " + paymentDTO.getPaymentPrice() + " SEK" + "\n";
         String amountpaid = "Amount Paid: " + paymentDTO.getPaymentPaid() + " SEK" + "\n";
         log(transaction + cost + amountpaid);
+    }
+
+    public void CustomerDiscountInfo(Discount discount) {
+        
+        String disc = "Discount for customerID: " + discount.getDiscountID() + " is valid:";
+        String discPercentage =  " (" + (int) (discount.getDiscountValue() * 100) + "%)\n" ;
+        log(disc + discPercentage);
     }
 }
