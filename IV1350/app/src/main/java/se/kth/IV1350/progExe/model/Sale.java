@@ -1,6 +1,7 @@
 package se.kth.IV1350.progExe.model;
 
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
+import se.kth.IV1350.progExe.model.discount.Discount;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,6 +73,10 @@ public class Sale {
      */
     public double getSaleDiscount() { return totalDiscount; }
 
+    public void setSalePrice(double price) { this.totalPrice = price; }
+
+    public void setSaleDiscount(double discountAmount) { this.totalDiscount = discountAmount; }
+
     /**
      * Adds ItemDTO to Sale.
      * Retrieves and updates current quantity of said ItemDTO in Sale.
@@ -89,25 +94,9 @@ public class Sale {
 
     }
 
-    /**
-     * Applies a numeral discount to the total price and total discount.
-     * 
-     * @param numeral The numeral discount to be applied.
-     */
-    public void applyNumeralDiscount(double numeral) {
-
-        this.totalDiscount += numeral;
-        this.totalPrice = this.totalPrice - numeral;
-    }
-
-    /**
-     * Applies a percentage discount to the total price and updates the total discount.
-     * 
-     * @param percentage The percentage discount to be applied.
-     */
-    public void applyPercentageDiscount(double percentage) {
-        double discountAmount = this.totalPrice * percentage;
+    public void applyDiscount(double newTotalPrice) {
+        double discountAmount = this.totalPrice - newTotalPrice;
         this.totalDiscount += discountAmount;
-        this.totalPrice -= discountAmount;
+        this.totalPrice = newTotalPrice;
     }
 }
