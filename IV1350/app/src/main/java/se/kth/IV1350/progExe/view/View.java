@@ -27,7 +27,6 @@ public class View {
 
         this.stringHandler = new StringHandler();
         this.ctrl = ctrl;
-        this.stringHandler = new StringHandler();
     }
 
     /**

@@ -33,6 +33,10 @@ public class SalesHandler {
         saleCompleted = false;
     }
 
+    public void addObserver(RevenueObserver observer) {
+        currentSale.addObserver(observer);
+    }
+
     /**
      * Adds an item to the current sale if the sale is not completed.
      * 
@@ -128,6 +132,11 @@ public class SalesHandler {
      * @return The currentReceipt of this SalesHandler.
      */
     public ReceiptDTO getReceiptDTO() { return currentReceipt; }
+
+
+    public void completeSale() {
+        currentSale.completeSale(getSaleDTO().getSalePrice());
+    }
 
     /**
      * Checks if the sale is completed.

@@ -1,7 +1,10 @@
 package se.kth.IV1350.progExe.model;
 
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -22,6 +25,9 @@ public class Sale {
     private double totalPrice;
     private double totalVAT; 
     private double totalDiscount;
+
+    private List<RevenueObserver> observers = new ArrayList<>();
+    private double revenue;
 
     /**
      * Constructs a new Sale object.
@@ -110,4 +116,21 @@ public class Sale {
         this.totalDiscount += discountAmount;
         this.totalPrice -= discountAmount;
     }
+
+    public void addObserver(RevenueObserver observer) {
+        observers.add(observer);
+    }
+
+    public void completeSale(double amount) {
+        revenue += amount;
+        notifyObservers(amount);
+    }
+
+    private void notifyObservers(double amount) {
+        for (RevenueObserver observer : observers) {
+            observer.newRevenue(amount);
+        }
+    }
+
+
 }

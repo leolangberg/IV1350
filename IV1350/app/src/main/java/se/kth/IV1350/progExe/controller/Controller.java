@@ -1,5 +1,8 @@
 package se.kth.IV1350.progExe.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.model.*;
@@ -22,6 +25,8 @@ public class Controller {
     private SalesHandler salesHandler;
     private CashRegister cashRegister;
     private Printer printer;
+
+    private List<RevenueObserver> observers = new ArrayList<>();
 
     /**
      * Constructs a new Controller object.
@@ -58,9 +63,20 @@ public class Controller {
      * the external accounting system.
      */
     public void newSale() {
-
         salesHandler = new SalesHandler(externalAccountingSys.newID());
+        for (RevenueObserver observer : observers) {
+            salesHandler.addObserver(observer);
+        }
     }
+
+
+    public void addObserver(RevenueObserver observer) {
+        observers.add(observer);
+        if (salesHandler != null) {
+            salesHandler.addObserver(observer);
+        }
+    }
+
 
     /**
      * Fetches an item based on the provided item ID.
@@ -143,6 +159,7 @@ public class Controller {
         try {
             salesHandler.transaction(paymentDTO);
             updateSaleSystem();
+            salesHandler.completeSale();
             return paymentDTO;
         }
         catch (TransactionFailedException tfe) {
