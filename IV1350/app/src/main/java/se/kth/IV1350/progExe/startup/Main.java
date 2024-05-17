@@ -38,7 +38,6 @@ public class Main {
                 new CashRegister()
             );
 
-            // Create and register observers
             TotalRevenueView revenueView = new TotalRevenueView();
             TotalRevenueFileOutput fileOutput = new TotalRevenueFileOutput();
             controller.addObserver(revenueView);

@@ -33,6 +33,11 @@ public class SalesHandler {
         saleCompleted = false;
     }
 
+    /**
+     * Adds an observer to the current sale.
+     * 
+     * @param observer The observer to be added.
+     */
     public void addObserver(RevenueObserver observer) {
         currentSale.addObserver(observer);
     }
@@ -134,6 +139,9 @@ public class SalesHandler {
     public ReceiptDTO getReceiptDTO() { return currentReceipt; }
 
 
+    /**
+     * Completes the sale.
+     */
     public void completeSale() {
         currentSale.completeSale(getSaleDTO().getSalePrice());
     }

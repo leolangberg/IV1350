@@ -117,15 +117,30 @@ public class Sale {
         this.totalPrice -= discountAmount;
     }
 
+    /**
+     * Adds a new observer to the list of observers.
+     * 
+     * @param observer The observer to be added.
+     */
     public void addObserver(RevenueObserver observer) {
         observers.add(observer);
     }
 
+    /**
+     * Completes the sale by adding the amount to the total revenue and notifying the observers.
+     * 
+     * @param amount The amount to be added to the total revenue.
+     */
     public void completeSale(double amount) {
         revenue += amount;
         notifyObservers(amount);
     }
 
+    /**
+     * Notifies all observers about the new revenue.
+     * 
+     * @param amount The amount of the new revenue.
+     */
     private void notifyObservers(double amount) {
         for (RevenueObserver observer : observers) {
             observer.newRevenue(amount);

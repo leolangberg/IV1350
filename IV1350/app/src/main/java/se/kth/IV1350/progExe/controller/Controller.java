@@ -69,7 +69,11 @@ public class Controller {
         }
     }
 
-
+    /**
+     * Adds an observer to the list of observers.
+     * 
+     * @param observer The observer to be added.
+     */
     public void addObserver(RevenueObserver observer) {
         observers.add(observer);
         if (salesHandler != null) {
