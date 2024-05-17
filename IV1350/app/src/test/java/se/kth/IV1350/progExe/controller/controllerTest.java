@@ -138,10 +138,10 @@ public class controllerTest {
 
     }
 
+    @Test(expected =  OperationFailedException.class)
     /**
      * Tries to fetch more instances of same Item than there exists in database.
      */
-
     public void scanItemNoQuantityInDatabase() throws OperationFailedException {
         int itemID = 10;
         int quantity = 2;

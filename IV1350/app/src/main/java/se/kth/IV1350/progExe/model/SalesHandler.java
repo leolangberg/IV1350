@@ -2,7 +2,6 @@ package se.kth.IV1350.progExe.model;
 
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.discount.CompositeDiscount;
-import se.kth.IV1350.progExe.model.discount.Discount;
 import se.kth.IV1350.progExe.model.Exceptions.InvalidCallException;
 import se.kth.IV1350.progExe.model.Exceptions.TransactionFailedException;
 
@@ -88,7 +87,9 @@ public class SalesHandler {
         currentReceipt = new ReceiptDTO(getSaleDTO(), paymentDTO);
     }
 
-  
+    /**
+     * Applies Discounts onto the ongoing Sales total price.
+     */
     public void applyDiscount() {
         
         double reducedTotalPrice = compositeDiscountInstance().applyDiscount(this.currentSale.getSalePrice());

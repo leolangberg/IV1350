@@ -1,11 +1,8 @@
 package se.kth.IV1350.progExe.model;
 
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
-import se.kth.IV1350.progExe.model.discount.Discount;
 import java.util.HashMap;
 import java.util.Map;
-
-
 
 /**
  * The Sale class represents a Sale of Items.
@@ -28,7 +25,6 @@ public class Sale {
      * Constructs a new Sale object.
      * 
      * This constructor initializes the Sale with the provided sale_id and an empty itemList.
-     *
      * @param saleID The ID of the sale.
      */
     public Sale(int saleID) {
@@ -37,6 +33,37 @@ public class Sale {
         this.itemList = new HashMap<>();
 
     };
+
+     /**
+     * Adds ItemDTO to Sale.
+     * Retrieves and updates current quantity of said ItemDTO in Sale.
+     * 
+     * Function also updates totalPrice & totalVat accordingly. 
+     * (Note that totalVAT is numeral while ItemDTO.VAT is percentage). 
+     * @param itemDTO Item to be added.
+     * @param quantity quantity of said Item.
+     */
+    public void addItem(ItemDTO itemDTO, int quantity) {
+
+        int CurrentQuantity = itemList.getOrDefault(itemDTO, 0);
+        itemList.put(itemDTO, (CurrentQuantity + quantity));
+
+        totalPrice += itemDTO.getItemPrice() * quantity;
+        totalVAT += (itemDTO.getItemVAT() * itemDTO.getItemPrice()) * quantity;
+
+    }
+
+    /**
+     * Sets a new Sale price.
+     * @param price new Sale price.
+     */
+    public void setSalePrice(double price) { this.totalPrice = price; }
+
+    /**
+     * Sets a new Sale discount (Amount).
+     * @param discountAmount total amount of discounts.
+     */
+    public void setSaleDiscount(double discountAmount) { this.totalDiscount = discountAmount; }
 
     /**
      * Retrieves the sale ID of this Sale.
@@ -72,31 +99,4 @@ public class Sale {
      * @return The totalDiscount of this Sale.
      */
     public double getSaleDiscount() { return totalDiscount; }
-
-    public void setSalePrice(double price) { this.totalPrice = price; }
-
-    public void setSaleDiscount(double discountAmount) { this.totalDiscount = discountAmount; }
-
-    /**
-     * Adds ItemDTO to Sale.
-     * Retrieves and updates current quantity of said ItemDTO in Sale.
-     * 
-     * Function also updates totalPrice & totalVat accordingly. 
-     * (Note that totalVAT is numeral while ItemDTO.VAT is percentage). 
-     */
-    public void addItem(ItemDTO itemDTO, int quantity) {
-
-        int CurrentQuantity = itemList.getOrDefault(itemDTO, 0);
-        itemList.put(itemDTO, (CurrentQuantity + quantity));
-
-        totalPrice += itemDTO.getItemPrice() * quantity;
-        totalVAT += (itemDTO.getItemVAT() * itemDTO.getItemPrice()) * quantity;
-
-    }
-
-    public void applyDiscount(double newTotalPrice) {
-        double discountAmount = this.totalPrice - newTotalPrice;
-        this.totalDiscount += discountAmount;
-        this.totalPrice = newTotalPrice;
-    }
 }

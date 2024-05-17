@@ -4,6 +4,7 @@ import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 import se.kth.IV1350.progExe.model.DTO.ItemPackageDTO;
 import se.kth.IV1350.progExe.model.DTO.PaymentDTO;
 import se.kth.IV1350.progExe.model.DTO.SaleDTO;
+import se.kth.IV1350.progExe.model.Exceptions.InvalidCallException;
 import se.kth.IV1350.progExe.model.discount.Discount;
 
 /**
@@ -101,10 +102,18 @@ public class StringHandler {
         log(transaction + cost + amountpaid);
     }
 
+    /**
+     * Shows Customer discount Applied.
+     * @param discount discount found for Customer ID.
+     */
     public void CustomerDiscountInfo(Discount discount) {
         
-        String disc = "Discount for customerID: " + discount.getDiscountID() + " is valid:";
-        String discPercentage =  " (" + (int) (discount.getDiscountValue() * 100) + "%)\n" ;
-        log(disc + discPercentage);
+        try {
+            String disc = "Discount for customerID: " + discount.getDiscountID() + " is valid:";
+            String discPercentage =  " (" + (int) (discount.getDiscountValue() * 100) + "%)\n" ;
+            log(disc + discPercentage);
+        } catch (InvalidCallException e) {
+            //do nothing.
+        }
     }
 }
