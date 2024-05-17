@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: se.kth.IV1350.progExe.controller.controllerTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.006 s <<< FAILURE! - in se.kth.IV1350.progExe.controller.controllerTest
+endSaleTest(se.kth.IV1350.progExe.controller.controllerTest)  Time elapsed: 0.002 s  <<< FAILURE!
+java.lang.AssertionError: expected:<2> but was:<4>
+	at se.kth.IV1350.progExe.controller.controllerTest.endSaleTest(controllerTest.java:94)
+
+newSaleIdTest(se.kth.IV1350.progExe.controller.controllerTest)  Time elapsed: 0.001 s  <<< FAILURE!
+java.lang.AssertionError: expected:<2> but was:<4>
+	at se.kth.IV1350.progExe.controller.controllerTest.newSaleIdTest(controllerTest.java:71)
+

@@ -5,6 +5,7 @@ import se.kth.IV1350.progExe.view.View;
 import se.kth.IV1350.progExe.view.logger.TotalRevenueFileOutput;
 import se.kth.IV1350.progExe.controller.Controller;
 import se.kth.IV1350.progExe.integration.*;
+import se.kth.IV1350.progExe.integration.CashRegister;
 import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
@@ -61,10 +62,13 @@ public class Main {
         v.newSale();
         v.scanItem(1);
         v.scanItem(2, 5);
-        v.getCustomerDiscount(50);
         v.endSale(); 
-        v.scanItem(2,1);
-        //v.payment(PaymentType.CASH, 10);
+        v.payment(PaymentType.CASH, 100);
+        // Second sale
+        v.newSale();
+        v.scanItem(1);
+        v.scanItem(2, 5);
+        v.endSale(); 
         v.payment(PaymentType.CASH, 100);
     }
 }
