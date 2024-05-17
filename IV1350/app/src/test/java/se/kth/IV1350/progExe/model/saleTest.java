@@ -46,7 +46,7 @@ public class saleTest {
     }
 
     @After
-    public void tearDown() throws DatabaseException{
+    public void tearDown() throws DatabaseException {
         ExternalInventorySys.databaseInstance().clear();
     }
 
@@ -70,45 +70,4 @@ public class saleTest {
         assertEquals(itemDTO.getItemPrice() * quantity, sale.getSalePrice(), 0.001);
         assertEquals((itemDTO.getItemVAT() * itemDTO.getItemPrice()) * quantity, sale.getSaleVAT(), 0.001);
     }
-
-    /*
-     * Test for applying numeral discount
-     */
-    @Test
-    public void testApplyNumeralDiscount() {
-
-        ItemDTO itemDTO = new ItemDTO(20, "popcorn", "cheddar", 10.00, 0.12);
-        int quantity = 10;
-
-        sale.addItem(itemDTO, quantity);
-
-        double initialTotalPrice = 100.0;
-        double numeralDiscount = 10.0;
-
-        sale.applyNumeralDiscount(numeralDiscount);
-
-        assertEquals(initialTotalPrice - numeralDiscount, sale.getSalePrice(), 0.001);
-        assertEquals(numeralDiscount, sale.getSaleDiscount(), 0.001);
-    }
-
-    /*
-     * Test for applying percentage discount
-     */
-    @Test
-    public void testApplyPercentageDiscount() {
-
-        ItemDTO itemDTO = new ItemDTO(20, "popcorn", "cheddar", 10.00, 0.12);
-        int quantity = 10;
-
-        sale.addItem(itemDTO, quantity);
-
-        double initialTotalPrice = 100.0;
-        double percentageDiscount = 0.1;
-
-        sale.applyPercentageDiscount(percentageDiscount);
-
-        assertEquals(initialTotalPrice * (1 - percentageDiscount), sale.getSalePrice(), 0.001);
-        assertEquals(initialTotalPrice * percentageDiscount, sale.getSaleDiscount(), 0.001);
-    }
-
 }

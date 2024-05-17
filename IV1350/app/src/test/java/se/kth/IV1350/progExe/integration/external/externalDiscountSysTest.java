@@ -3,8 +3,9 @@ package se.kth.IV1350.progExe.integration.external;
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 import se.kth.IV1350.progExe.model.DTO.*;
-import se.kth.IV1350.progExe.model.ENUM.DiscountType;
-
+import se.kth.IV1350.progExe.model.Exceptions.InvalidCallException;
+import se.kth.IV1350.progExe.model.discount.Discount;
+import se.kth.IV1350.progExe.model.discount.NumericalDiscount;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
@@ -60,12 +61,13 @@ public class externalDiscountSysTest {
     /*
      * Test of getDiscount by id method
      */
-    // @Test
-    public void GetDiscountByIdTest() throws DatabaseException {
+    @Test
+    public void GetDiscountByIdTest() throws DatabaseException, InvalidCallException {
 
-        DiscountDTO dummy = new DiscountDTO(DiscountType.NUMERAL, 10.0, 1);
+        NumericalDiscount dummy = new NumericalDiscount(10, 1);
+        ExternalDiscountSys.databaseInstance().storeItemDiscount(dummy);
 
-        DiscountDTO test = externalDiscountSys.getDiscountByID(1);
+        Discount test = ExternalDiscountSys.databaseInstance().findItemDiscount(10);
 
         double expected = dummy.getDiscountValue();
 
@@ -74,28 +76,39 @@ public class externalDiscountSysTest {
         assertEquals(expected, result, 0.01);
     }
 
+    /**
+     * Test of Retrieving discount with Invalid ID.
+     */
+    @Test(expected = DatabaseException.class)
+    public void GetDiscountByInvalidIdTest() throws DatabaseException {
+
+        Discount test = ExternalDiscountSys.databaseInstance().findItemDiscount(84);
+    }
+
     /*
      * Test of getDiscount by price method
      */
     @Test
-    public void GetDiscountByTotalPriceTest() {
+    public void GetDiscountByTotalPriceTest() throws DatabaseException, InvalidCallException {
 
-        double result = externalDiscountSys.getDiscountByTotalPrice(100.0);
-        assertEquals(0.0, result, 0.01);
+        Discount result = ExternalDiscountSys.databaseInstance().findCostDiscount(100);
+        assertEquals(0.1, result.getDiscountValue(), 0.01);
     }
 
     /*
      * Test of getDiscount by item list method
      */
     //@Test
-    public void getDiscountTest() throws DatabaseException {
+    public void getDiscountTest() throws DatabaseException, InvalidCallException {
 
         ItemDTO testItemDTO = new ItemDTO(15, "pear", "green", 50.00, 0.12);
+        ExternalDiscountSys.databaseInstance().storeItemDiscount(new NumericalDiscount(15, 25));
         Map<ItemDTO, Integer> itemList = new HashMap<>();
         itemList.put(testItemDTO, 1);
 
-        Double testresult = externalDiscountSys.getDiscountByItemList(itemList);
-        assertEquals(0.0, testresult, 0.01);
+
+        Discount testresult = ExternalDiscountSys.databaseInstance().getDiscountByItemList(itemList);
+        assertEquals(25.0, testresult.getDiscountValue(), 0.01);
 
     }
 

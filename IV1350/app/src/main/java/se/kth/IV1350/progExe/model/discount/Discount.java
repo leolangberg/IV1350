@@ -20,12 +20,12 @@ public interface Discount {
      * @return the value stored in discount Object.
      *         can be either Numeral or Percentage.
      */
-    double getDiscountValue();
+    double getDiscountValue() throws InvalidCallException;
 
      /**
      * Retrieves DiscountID.
      * 
      * @return the ID of Discount object.
      */
-    int getDiscountID();
+    int getDiscountID() throws InvalidCallException;
 }

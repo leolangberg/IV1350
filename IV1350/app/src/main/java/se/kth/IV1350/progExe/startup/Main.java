@@ -46,7 +46,7 @@ public class Main {
         v.newSale();
         v.scanItem(1);
         v.scanItem(2, 5);
-        v.getCustomerDiscount(1);
+        v.getCustomerDiscount(50);
         v.endSale(); 
         v.scanItem(2,1);
         //v.payment(PaymentType.CASH, 10);

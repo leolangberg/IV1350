@@ -2,20 +2,13 @@ package se.kth.IV1350.progExe.controller;
 
 import se.kth.IV1350.progExe.integration.CashRegister;
 import se.kth.IV1350.progExe.integration.Printer;
-import se.kth.IV1350.progExe.integration.external.ExternalAccountingSys;
-import se.kth.IV1350.progExe.integration.external.ExternalDiscountSys;
-import se.kth.IV1350.progExe.integration.external.ExternalInventorySys;
+import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 
 import se.kth.IV1350.progExe.model.SalesHandler;
-import se.kth.IV1350.progExe.model.DTO.ItemDTO;
-import se.kth.IV1350.progExe.model.DTO.ItemPackageDTO;
-import se.kth.IV1350.progExe.model.DTO.PaymentDTO;
-import se.kth.IV1350.progExe.model.DTO.ReceiptDTO;
-import se.kth.IV1350.progExe.model.DTO.SaleDTO;
+import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.discount.CompositeDiscount;
 import se.kth.IV1350.progExe.model.discount.Discount;
-import se.kth.IV1350.progExe.model.Exceptions.InvalidCallException;
 import se.kth.IV1350.progExe.model.Exceptions.SaleException;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 
@@ -185,6 +178,13 @@ public class Controller {
 
     }
 
+    /**
+     * Retrieves Discount based on specific CustomerID.
+     * 
+     * @param customerID trace for possible discounts.
+     * @return Discount to be displayed.
+     * @throws OperationFailedException in case call to Database fails.
+     */
     public Discount getCustomerDiscount(int customerID) throws OperationFailedException {
         try {
             Discount discount = externalDiscountSys.getCustomerDiscount(customerID);
@@ -196,7 +196,11 @@ public class Controller {
         }
     }
 
-
+    /**
+     * 
+     * @param saleDTO
+     * @throws OperationFailedException
+     */
     private void getSaleDiscount(SaleDTO saleDTO) throws OperationFailedException {
         try{
             CompositeDiscount compositeDiscount = externalDiscountSys.collectSaleDiscounts(saleDTO);

@@ -131,7 +131,7 @@ public class ExternalDiscountSys {
          */
         public Discount findItemDiscount(int discountID) throws InvalidIdentifierException {
             if (itemDiscountDatabase[discountID] == null) {
-                throw new InvalidIdentifierException("discountID: " + discountID + " is invalid.");
+                throw new InvalidIdentifierException("discountID: " + discountID + " is invalid.\n");
             }
             return itemDiscountDatabase[discountID];
         }
@@ -145,7 +145,7 @@ public class ExternalDiscountSys {
          */
         public Discount findCustomerDiscount(int customerID) throws InvalidIdentifierException {
             if (customerDiscountDatabase[customerID] == null) {
-                throw new InvalidIdentifierException("customerID: " + customerID + " is invalid.");
+                throw new InvalidIdentifierException("customerID: " + customerID + " is invalid.\n");
             }
             return customerDiscountDatabase[customerID];
         }
@@ -228,6 +228,10 @@ public class ExternalDiscountSys {
             return compositeDiscount;
         }
 
+        public void storeItemDiscount(Discount discount) throws InvalidCallException {
+            itemDiscountDatabase[discount.getDiscountID()] = discount;
+        } 
+
         /**
          * Fills database with dummy data.
          */
@@ -239,7 +243,7 @@ public class ExternalDiscountSys {
 
             customerDiscountDatabase[1] = new PercentageDiscount(1, 0.5);
 
-            itemDiscountDatabase[1] = new PercentageDiscount(1, 0.2);
+            itemDiscountDatabase[1] = new NumericalDiscount(1, 2);
             itemDiscountDatabase[2] = new NumericalDiscount(2, 2);
         }
 
