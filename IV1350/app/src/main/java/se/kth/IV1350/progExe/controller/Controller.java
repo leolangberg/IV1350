@@ -2,9 +2,12 @@ package se.kth.IV1350.progExe.controller;
 
 import se.kth.IV1350.progExe.integration.CashRegister;
 import se.kth.IV1350.progExe.integration.Printer;
+import java.util.ArrayList;
+import java.util.List;
+
 import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
-
+import se.kth.IV1350.progExe.model.RevenueObserver;
 import se.kth.IV1350.progExe.model.SalesHandler;
 import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.model.discount.CompositeDiscount;
@@ -28,6 +31,8 @@ public class Controller {
     private SalesHandler salesHandler;
     private CashRegister cashRegister;
     private Printer printer;
+
+    private List<RevenueObserver> observers = new ArrayList<>();
 
     /**
      * Constructs a new Controller object.
@@ -68,10 +73,26 @@ public class Controller {
 
         try{
             salesHandler = new SalesHandler(externalAccountingSys.newID());
+        for (RevenueObserver observer : observers) {
+            salesHandler.addObserver(observer);
+        }
         } catch (DatabaseException dbe) {
             throw new OperationFailedException(dbe.getMessage(), dbe);
         }
     }
+
+    /**
+     * Adds an observer to the list of observers.
+     * 
+     * @param observer The observer to be added.
+     */
+    public void addObserver(RevenueObserver observer) {
+        observers.add(observer);
+        if (salesHandler != null) {
+            salesHandler.addObserver(observer);
+        }
+    }
+
 
     /**
      * Fetches an item based on the provided item ID.
@@ -154,6 +175,7 @@ public class Controller {
         try {
             salesHandler.transaction(paymentDTO);
             updateSaleSystem();
+            salesHandler.completeSale();
             return paymentDTO;
         }
         catch (DatabaseException | SaleException exc) {

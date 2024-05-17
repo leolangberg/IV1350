@@ -43,6 +43,15 @@ public class SalesHandler {
     }
 
     /**
+     * Adds an observer to the current sale.
+     * 
+     * @param observer The observer to be added.
+     */
+    public void addObserver(RevenueObserver observer) {
+        currentSale.addObserver(observer);
+    }
+
+    /**
      * Adds an item to the current sale if the sale is not completed.
      * 
      * @param itemDTO The item to be added to the sale.
@@ -117,6 +126,14 @@ public class SalesHandler {
      * @return The currentReceipt of this SalesHandler.
      */
     public ReceiptDTO getReceiptDTO() { return currentReceipt; }
+
+
+    /**
+     * Completes the sale.
+     */
+    public void completeSale() {
+        currentSale.completeSale(getSaleDTO().getSalePrice());
+    }
 
     /**
      * Checks if the sale is completed.

@@ -1,7 +1,10 @@
 package se.kth.IV1350.progExe.model;
 
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +23,9 @@ public class Sale {
     private double totalPrice;
     private double totalVAT; 
     private double totalDiscount;
+
+    private List<RevenueObserver> observers = new ArrayList<>();
+    private double revenue;
 
     /**
      * Constructs a new Sale object.
@@ -99,4 +105,58 @@ public class Sale {
      * @return The totalDiscount of this Sale.
      */
     public double getSaleDiscount() { return totalDiscount; }
+
+    /**
+     * Applies a numeral discount to the total price and total discount.
+     * 
+     * @param numeral The numeral discount to be applied.
+     */
+    public void applyNumeralDiscount(double numeral) {
+
+        this.totalDiscount += numeral;
+        this.totalPrice = this.totalPrice - numeral;
+    }
+
+    /**
+     * Applies a percentage discount to the total price and updates the total discount.
+     * 
+     * @param percentage The percentage discount to be applied.
+     */
+    public void applyPercentageDiscount(double percentage) {
+        double discountAmount = this.totalPrice * percentage;
+        this.totalDiscount += discountAmount;
+        this.totalPrice -= discountAmount;
+    }
+
+    /**
+     * Adds a new observer to the list of observers.
+     * 
+     * @param observer The observer to be added.
+     */
+    public void addObserver(RevenueObserver observer) {
+        observers.add(observer);
+    }
+
+    /**
+     * Completes the sale by adding the amount to the total revenue and notifying the observers.
+     * 
+     * @param amount The amount to be added to the total revenue.
+     */
+    public void completeSale(double amount) {
+        revenue += amount;
+        notifyObservers(amount);
+    }
+
+    /**
+     * Notifies all observers about the new revenue.
+     * 
+     * @param amount The amount of the new revenue.
+     */
+    private void notifyObservers(double amount) {
+        for (RevenueObserver observer : observers) {
+            observer.newRevenue(amount);
+        }
+    }
+
+
 }

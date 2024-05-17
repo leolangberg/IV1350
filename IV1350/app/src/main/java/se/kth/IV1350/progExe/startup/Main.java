@@ -1,6 +1,8 @@
 package se.kth.IV1350.progExe.startup;
 
+import se.kth.IV1350.progExe.view.TotalRevenueView;
 import se.kth.IV1350.progExe.view.View;
+import se.kth.IV1350.progExe.view.logger.TotalRevenueFileOutput;
 import se.kth.IV1350.progExe.controller.Controller;
 import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.integration.external.*;
@@ -28,8 +30,20 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            v = new View(new Controller(new ExternalAccountingSys(), new ExternalInventorySys(),
-                    new ExternalDiscountSys(), new Printer(), new CashRegister()));
+            Controller controller = new Controller(
+                new ExternalAccountingSys(),
+                new ExternalInventorySys(),
+                new ExternalDiscountSys(),
+                new Printer(),
+                new CashRegister()
+            );
+
+            TotalRevenueView revenueView = new TotalRevenueView();
+            TotalRevenueFileOutput fileOutput = new TotalRevenueFileOutput();
+            controller.addObserver(revenueView);
+            controller.addObserver(fileOutput);
+
+            v = new View(controller);
             script();
         } catch (Exception e) {
             System.err.println(e);
@@ -43,6 +57,7 @@ public class Main {
      * endSale, and newPayment.
      */
     public static void script() {
+        // First sale
         v.newSale();
         v.scanItem(1);
         v.scanItem(2, 5);
@@ -51,6 +66,5 @@ public class Main {
         v.scanItem(2,1);
         //v.payment(PaymentType.CASH, 10);
         v.payment(PaymentType.CASH, 100);
-
     }
 }
