@@ -104,6 +104,7 @@ public class SalesHandler {
         double reducedTotalPrice = compositeDiscountInstance().applyDiscount(this.currentSale.getSalePrice());
         this.currentSale.setSaleDiscount(this.currentSale.getSalePrice() - reducedTotalPrice);
         this.currentSale.setSalePrice(reducedTotalPrice);
+        compositeDiscountInstance().removeAll();
     }
 
     /**

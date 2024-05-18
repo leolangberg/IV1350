@@ -28,6 +28,13 @@ public class CompositeDiscount implements Discount {
         matchingDiscount.remove(discount);
     }
 
+    /**
+     * resets the composite Discount list.
+     */
+    public void removeAll() {
+        matchingDiscount = new ArrayList<>();
+    }
+
 
     /**
      * Iterates through entire List and perform the individually
@@ -37,7 +44,6 @@ public class CompositeDiscount implements Discount {
      * @return sum after applied Discounts.
      */
     public double applyDiscount(double sum) {
-        
         Collections.reverse(matchingDiscount);
         for(Discount discount : matchingDiscount) {
             sum = discount.applyDiscount(sum);
