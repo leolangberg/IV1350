@@ -3,6 +3,7 @@ package se.kth.IV1350.progExe.view;
 import se.kth.IV1350.progExe.controller.Controller;
 import se.kth.IV1350.progExe.controller.OperationFailedException;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
+import se.kth.IV1350.progExe.view.logger.ErrorMsgHandler;
 import se.kth.IV1350.progExe.view.logger.StringHandler;
 
 
@@ -19,6 +20,7 @@ public class View {
 
     private Controller ctrl;
     private StringHandler stringHandler;
+    private ErrorMsgHandler errorMsgHandler;
 
     /**
      * View Constructor.
@@ -27,6 +29,7 @@ public class View {
     public View(Controller ctrl) {
 
         this.stringHandler = new StringHandler();
+        this.errorMsgHandler = new ErrorMsgHandler();
         this.ctrl = ctrl;
     }
 
@@ -39,7 +42,7 @@ public class View {
         try{
             stringHandler.newSaleInfo(ctrl.newSale()); 
         } catch(OperationFailedException ope) {
-            stringHandler.log(ope.getMessage());
+            errorMsgHandler.log(ope);
         }
     }
 
@@ -52,7 +55,7 @@ public class View {
         try{
             stringHandler.endSaleInfo(ctrl.endSale());
         } catch (OperationFailedException ope) {
-            stringHandler.log(ope.getMessage());
+            errorMsgHandler.log(ope);
         }
     }
 
@@ -69,7 +72,7 @@ public class View {
         try {
             stringHandler.itemPackageInfo(ctrl.getItem(itemID)); 
         } catch(OperationFailedException ope) {
-            stringHandler.log(ope.getMessage());
+            errorMsgHandler.log(ope);
         }
     }
 
@@ -87,7 +90,7 @@ public class View {
             stringHandler.itemPackageInfo(ctrl.getItem(itemID, quantity)); 
 
         } catch(OperationFailedException ope) {
-            stringHandler.log(ope.getMessage());
+            errorMsgHandler.log(ope);
         }
     }
 
@@ -108,7 +111,7 @@ public class View {
             stringHandler.paymentSuccess(ctrl.Payment(enumType, amountPaid));
 
         } catch (OperationFailedException ope) {
-            stringHandler.log(ope.getMessage());
+            errorMsgHandler.log(ope);
         }
     }
 
@@ -127,7 +130,7 @@ public class View {
         try{
             stringHandler.CustomerDiscountInfo(ctrl.getCustomerDiscount(customerID));
         } catch(OperationFailedException ope) {
-            stringHandler.log(ope.getMessage());
+            errorMsgHandler.log(ope);
         }
     }
 }
