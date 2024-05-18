@@ -12,8 +12,10 @@
     <li>Bug where you can pay multiple times in one sale.</li>
   </ul>
 </h6>
+
 <!--
 <h6>
+
   <ul>
     <li> Seminar 3 = build normal process + tests -> Seminar 4 build fail process. <li>
     <li>Display -> Printer + View</li>
@@ -55,5 +57,7 @@
 
 <h5>Sample Run:</h5>
 
-![iv1350samplerun](https://github.com/leolangberg/IV1350/assets/152855963/1e1a8c77-fca9-4ad5-b698-d5712a9ee3e6)
+<!-- ![iv1350samplerun](https://github.com/leolangberg/IV1350/assets/152855963/1e1a8c77-fca9-4ad5-b698-d5712a9ee3e6) -->
+![seminar4sampleRunSale1](https://github.com/leolangberg/IV1350/assets/152855963/d858eccd-cdaf-462f-ad3c-c7de3bf468f1)
+![seminar4sampleRunSale2](https://github.com/leolangberg/IV1350/assets/152855963/b53e45cf-4fe2-4cba-b0fe-0609a6ced0e3)
 
