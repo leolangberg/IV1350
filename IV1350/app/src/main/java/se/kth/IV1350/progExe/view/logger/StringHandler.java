@@ -122,7 +122,7 @@ public class StringHandler {
             String discPercentage =  " (" + (int) (discount.getDiscountValue() * 100) + "%)\n" ;
             log(disc + discPercentage);
         } catch (InvalidCallException e) {
-            //do nothing.
+            log(e.getMessage());
         }
     }
 }
