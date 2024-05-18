@@ -120,7 +120,7 @@ public class Controller {
      *                                   database calls or ongoing Sale.
      */
     public ItemPackageDTO getItem(int itemID, int quantity) throws OperationFailedException {
-
+        
         try {
             ItemDTO itemDTO = externalInventorySys.getItem(itemID, quantity);
             salesHandler.addItem(itemDTO, quantity);

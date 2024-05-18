@@ -66,14 +66,11 @@ public class View {
      * @return True if the item was found, false otherwise.
      */
     public void scanItem(int itemID) {
-
         try {
             stringHandler.itemPackageInfo(ctrl.getItem(itemID)); 
-
         } catch(OperationFailedException ope) {
             stringHandler.log(ope.getMessage());
         }
-
     }
 
     /**

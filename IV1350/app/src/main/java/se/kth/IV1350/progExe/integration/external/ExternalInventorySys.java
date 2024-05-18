@@ -45,12 +45,7 @@ public class ExternalInventorySys {
      * @throws DatabaseExcpetion in case an Excpetion is catched regarding database calls.
      */
     public ItemDTO getItem(int itemID, int quantity) throws DatabaseException {
-        try {
             return databaseInstance().getItem(itemID, quantity);
-
-        } catch (DatabaseException dbe) {
-            throw new DatabaseException(dbe.getMessage(), dbe);
-        }
     }
 
     /**
@@ -152,6 +147,10 @@ public class ExternalInventorySys {
         * @throws DatabaseConnectionExcpetion if connection to database is not established. 
         */
         public ItemDTO getItem(int itemID, int quantity) throws InvalidIdentifierException, InvalidQuantityException {
+
+            if(itemID == -1) {
+                setDatabaseConnection(false);
+            }
 
             if(itemID < 0 || itemID > inventory.length) {
                 throw new InvalidIdentifierException("ItemID: " + itemID + " is invalid.");
