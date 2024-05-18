@@ -1,7 +1,6 @@
 se/kth/IV1350/progExe/model/Exceptions/SaleException.class
 se/kth/IV1350/progExe/model/Exceptions/InvalidCallException.class
 se/kth/IV1350/progExe/integration/CashRegister.class
-se/kth/IV1350/progExe/view/StringHandler.class
 se/kth/IV1350/progExe/integration/external/ExternalInventorySys$InventorySysDatabase$Shelf.class
 se/kth/IV1350/progExe/integration/external/Exceptions/DatabaseConnectionException.class
 se/kth/IV1350/progExe/integration/Printer.class

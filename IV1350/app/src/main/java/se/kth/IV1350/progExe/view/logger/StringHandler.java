@@ -1,4 +1,4 @@
-package se.kth.IV1350.progExe.view;
+package se.kth.IV1350.progExe.view.logger;
 
 import se.kth.IV1350.progExe.model.DTO.ItemDTO;
 import se.kth.IV1350.progExe.model.DTO.ItemPackageDTO;
@@ -66,14 +66,23 @@ public class StringHandler {
     }
 
     /**
+     * Displays that a new instance of Sale has been created.
+     * @param saleID id of new Sale.
+     */
+    public void newSaleInfo(int saleID) {
+        log("------------ Begin Sale: " + saleID +  " ------------");
+    }
+
+    /**
      * Translates data regarding the ending of the current Sale into String.
      * 
      * @param saleDTO Sale to be read.
      */
-    public void EndSaleInfo(SaleDTO saleDTO) {
+    public void endSaleInfo(SaleDTO saleDTO) {
 
-        String header = "End Sale:";
-        log(header);
+        String header = "End Sale:\n";
+        String discountInfo = "Total Amount of discounts: " + saleDTO.getSaleDiscount() + " SEK";
+        log(header + discountInfo);
         saleInfo(saleDTO.getSalePrice(), saleDTO.getSaleVAT());
     }
 

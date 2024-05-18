@@ -3,6 +3,7 @@ package se.kth.IV1350.progExe.view;
 import se.kth.IV1350.progExe.controller.Controller;
 import se.kth.IV1350.progExe.controller.OperationFailedException;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
+import se.kth.IV1350.progExe.view.logger.StringHandler;
 
 
 /**
@@ -36,7 +37,7 @@ public class View {
      */
     public void newSale() {
         try{
-            ctrl.newSale(); 
+            stringHandler.newSaleInfo(ctrl.newSale()); 
         } catch(OperationFailedException ope) {
             stringHandler.log(ope.getMessage());
         }
@@ -49,7 +50,7 @@ public class View {
      */
     public void endSale() {
         try{
-            stringHandler.EndSaleInfo(ctrl.endSale());
+            stringHandler.endSaleInfo(ctrl.endSale());
         } catch (OperationFailedException ope) {
             stringHandler.log(ope.getMessage());
         }

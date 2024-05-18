@@ -32,14 +32,18 @@ public class Printer {
         SaleDTO saleDTO = receiptDTO.getReceiptSale();
         PaymentDTO paymentDTO = receiptDTO.getReceiptPayment();
         Map<ItemDTO, Integer> itemlist = saleDTO.getSaleItemList();
+        double brutto = 0;
 
         for(Map.Entry<ItemDTO, Integer> entry :  itemlist.entrySet())
         {
             ItemDTO itemDTO = entry.getKey();
             Integer quantity = entry.getValue();
+            brutto += (itemDTO.getItemPrice() * quantity);
             System.out.printf("%-10s%-3s%-2s%-2s%10s SEK%n", itemDTO.getItemName(), quantity, "x", itemDTO.getItemPrice(), (itemDTO.getItemPrice() * quantity));
         }
-
+        System.out.println();
+        System.out.printf("%-10s%8s%10s SEK%n", "Brutto:", "", brutto);
+        System.out.printf("%-10s%8s%10s SEK%n", "Discount:", "", (saleDTO.getSaleDiscount() * (-1)));
         System.out.printf("%-10s%8s%10s SEK%n", "Total:", "", saleDTO.getSalePrice());
         System.out.printf("%-10s%8s%10s SEK%n", "VAT:", "", saleDTO.getSaleVAT());
         System.out.println();
