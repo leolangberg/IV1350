@@ -63,6 +63,7 @@ public class Main {
         v.scanItem(1);
         v.scanItem(2, 5);
         v.endSale(); 
+        v.payment(PaymentType.CARD, 10);
         v.payment(PaymentType.CASH, 100);
         // Second sale
         v.newSale();

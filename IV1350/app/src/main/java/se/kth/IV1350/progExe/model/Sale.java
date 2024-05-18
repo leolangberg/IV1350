@@ -106,27 +106,6 @@ public class Sale {
      */
     public double getSaleDiscount() { return totalDiscount; }
 
-    /**
-     * Applies a numeral discount to the total price and total discount.
-     * 
-     * @param numeral The numeral discount to be applied.
-     */
-    public void applyNumeralDiscount(double numeral) {
-
-        this.totalDiscount += numeral;
-        this.totalPrice = this.totalPrice - numeral;
-    }
-
-    /**
-     * Applies a percentage discount to the total price and updates the total discount.
-     * 
-     * @param percentage The percentage discount to be applied.
-     */
-    public void applyPercentageDiscount(double percentage) {
-        double discountAmount = this.totalPrice * percentage;
-        this.totalDiscount += discountAmount;
-        this.totalPrice -= discountAmount;
-    }
 
     /**
      * Adds a new observer to the list of observers.
@@ -143,7 +122,7 @@ public class Sale {
      * @param amount The amount to be added to the total revenue.
      */
     public void completeSale(double amount) {
-        revenue += amount;
+        this.revenue += amount;
         notifyObservers(amount);
     }
 
