@@ -3,6 +3,7 @@
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/external/Exceptions/InvalidQuantityException.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/view/logger/StringHandler.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/controller/Controller.java
+/Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/HigherGradeTask2/Inheritance.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/Printer.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/startup/Main.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/DTO/SaleDTO.java
@@ -10,6 +11,7 @@
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/DTO/ItemDTO.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/external/Exceptions/DatabaseException.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/Sale.java
+/Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/CashRegister.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/discount/PercentageDiscount.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/discount/NumericalDiscount.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/external/ExternalAccountingSys.java
@@ -25,9 +27,10 @@
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/Exceptions/TransactionFailedException.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/DTO/PaymentDTO.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/view/View.java
+/Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/HigherGradeTask2/Random.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/external/ExternalDiscountSys.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/Exceptions/InvalidCallException.java
+/Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/HigherGradeTask2/Composition.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/ENUM/PaymentType.java
-/Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/cashRegister.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/discount/CompositeDiscount.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/external/Exceptions/DatabaseConnectionException.java

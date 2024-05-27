@@ -8,6 +8,7 @@ import se.kth.IV1350.progExe.integration.*;
 import se.kth.IV1350.progExe.integration.CashRegister;
 import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
+import se.kth.IV1350.progExe.HigherGradeTask2.*;
 
 /**
  * The Main class is the entry point of the application.
@@ -46,6 +47,22 @@ public class Main {
 
             v = new View(controller);
             script();
+
+
+            Inheritance inheritance = new Inheritance();
+            Composition composition = new Composition();
+
+            int integerFromInheritance = inheritance.nextInt();
+            int integerFromComposition = composition.nextInt();
+
+            //System.out.printf("Results: inh: %d  comp: %d\n", integerFromInheritance, integerFromComposition);
+            System.out.println("inh:  " + integerFromInheritance);
+            System.out.println("comp: " + integerFromComposition);
+
+            System.out.println("diceroll 1: comp: " + composition.diceRoll() + "  inh: " + inheritance.diceRoll());
+            System.out.println("diceroll 2: comp: " + composition.diceRoll() + "  inh: " + inheritance.diceRoll());
+            System.out.println("diceroll 3: comp: " + composition.diceRoll() + "  inh: " + inheritance.diceRoll());
+            
         } catch (Exception e) {
             System.err.println(e);
         }
