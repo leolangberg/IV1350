@@ -1,22 +1,40 @@
-// src/main/java/se/kth/IV1350/progExe/view/logger/TotalRevenueFileOutput.java
 package se.kth.IV1350.progExe.view.logger;
 
-import se.kth.IV1350.progExe.model.RevenueObserver;
-
+import se.kth.IV1350.progExe.view.TotalRevenueView;
 import java.io.FileWriter;
-import java.io.IOException;
 
-public class TotalRevenueFileOutput implements RevenueObserver {
-    private double totalRevenue;
 
-    @Override
-    public void newRevenue(double revenue) {
-        totalRevenue += revenue;
-        try (FileWriter fileWriter = new FileWriter("totalRevenue.txt", true)) {
-            fileWriter.write("Total Revenue: " + totalRevenue + "\n");
-        } catch (IOException e) {
-            System.out.println("An error occurred while writing to the file.");
-            e.printStackTrace();
-        }
+/**
+ * TotalRevenueFileOutput extends the abstract super-class TotalRevenueView.
+ * This class therefore implements the inherited abstract method defined in the abstract super-class.
+ */
+public class TotalRevenueFileOutput extends TotalRevenueView {
+    
+    private ErrorMsgHandler errorMsgHandler;
+
+    /**
+     * Constructor for TotalRevenueFileOutput.
+     */
+    public TotalRevenueFileOutput() {
+        this.errorMsgHandler = new ErrorMsgHandler();
     }
+
+    /**
+     * Shows current Total Revenue via Filewrite in 'totalRevenue.txt'.
+     * @throws Exception in case file write or operation fails.
+     */
+    protected void doShowTotalIncome() throws Exception {
+        try(FileWriter fileWriter = new FileWriter("totalRevenue.txt", true)) {
+            fileWriter.write("Total Revenue: " + totalRevenue + "\n");
+        } 
+    }
+
+    /**
+     * Handles error in case Exception erupts.
+     * @param e exception.
+     */
+    protected void handleErrors(Exception e) {
+        errorMsgHandler.log(e);
+    }
+
 }

@@ -1,7 +1,7 @@
 package se.kth.IV1350.progExe.startup;
 
-import se.kth.IV1350.progExe.view.TotalRevenueView;
 import se.kth.IV1350.progExe.view.View;
+import se.kth.IV1350.progExe.view.logger.TotalRevenueConsoleOutput;
 import se.kth.IV1350.progExe.view.logger.TotalRevenueFileOutput;
 import se.kth.IV1350.progExe.controller.Controller;
 import se.kth.IV1350.progExe.integration.*;
@@ -40,7 +40,7 @@ public class Main {
                 new CashRegister()
             );
 
-            TotalRevenueView revenueView = new TotalRevenueView();
+            TotalRevenueConsoleOutput revenueView = new TotalRevenueConsoleOutput();
             TotalRevenueFileOutput fileOutput = new TotalRevenueFileOutput();
             controller.addObserver(revenueView);
             controller.addObserver(fileOutput);
@@ -48,20 +48,14 @@ public class Main {
             v = new View(controller);
             script();
 
-
+            //Printouts for Higher Grade Task 2.
+            /*
             Inheritance inheritance = new Inheritance();
             Composition composition = new Composition();
-
-            int integerFromInheritance = inheritance.nextInt();
-            int integerFromComposition = composition.nextInt();
-
-            //System.out.printf("Results: inh: %d  comp: %d\n", integerFromInheritance, integerFromComposition);
-            System.out.println("inh:  " + integerFromInheritance);
-            System.out.println("comp: " + integerFromComposition);
-
             System.out.println("diceroll 1: comp: " + composition.diceRoll() + "  inh: " + inheritance.diceRoll());
             System.out.println("diceroll 2: comp: " + composition.diceRoll() + "  inh: " + inheritance.diceRoll());
             System.out.println("diceroll 3: comp: " + composition.diceRoll() + "  inh: " + inheritance.diceRoll());
+            */
             
         } catch (Exception e) {
             System.err.println(e);
