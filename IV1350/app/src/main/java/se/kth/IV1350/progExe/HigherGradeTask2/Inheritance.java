@@ -12,13 +12,13 @@ public class Inheritance extends Random {
     /**
      * Overrides the previous implementation of nextInt() method in Random 
      * with this new implementation.
-     * This implementation uses next(64) instead of next(32) (bits).
-     * @return integer.
+     * (Example to show how Inheritance could be used).
+     * @return float.
      */
     @Override
-    public int nextInt()
+    public float nextFloat()
     {
-        return next(32);
+        return next(24) / ((float) (1 << 24));
     }
 
     /**
@@ -29,5 +29,4 @@ public class Inheritance extends Random {
         int a = nextInt(6);
         return a + 1;
     }
-
 }

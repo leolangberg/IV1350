@@ -32,5 +32,6 @@
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/Exceptions/InvalidCallException.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/HigherGradeTask2/Composition.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/ENUM/PaymentType.java
+/Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/view/logger/TotalRevenueConsoleOutput.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/model/discount/CompositeDiscount.java
 /Users/leolangberg/Desktop/IV1350/IV1350/app/src/main/java/se/kth/IV1350/progExe/integration/external/Exceptions/DatabaseConnectionException.java

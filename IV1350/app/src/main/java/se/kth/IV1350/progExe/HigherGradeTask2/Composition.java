@@ -19,10 +19,10 @@ public class Composition {
     /**
      * Passes the method along to the orginial Random method via
      * reference.
-     * @return int.
+     * @return float.
      */
-    public int nextInt() {
-        return random.nextInt();
+    public float nextFloat() {
+        return random.nextFloat();
     }
 
     /**
@@ -33,5 +33,4 @@ public class Composition {
         int a = random.nextInt(6);
         return a + 1;
     }
-
 }
