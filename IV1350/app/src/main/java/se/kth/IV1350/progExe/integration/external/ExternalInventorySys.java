@@ -149,7 +149,7 @@ public class ExternalInventorySys {
         public ItemDTO getItem(int itemID, int quantity) throws InvalidIdentifierException, InvalidQuantityException {
 
             if(itemID == -1) {
-                setDatabaseConnection(false);
+                //setDatabaseConnection(false);
             }
 
             if(itemID < 0 || itemID > inventory.length) {

@@ -6,6 +6,9 @@
 <h2>Notes</h2>
 <h6>
   <ul>
+    <li>Higher Grade Task 1: Inheritance via implementation of GoF 'Template' pattern.</li>
+    <li>Higher Grade Task 2: Inheritance vs Composition, comparison code stored inside program.</li>
+    <li>Higher Grade Task 3: Testing Output, additinally written tests for printer, view & main.</li>
     <li>Update Tests to work with Exceptions.</li>
     <li>GoF 'Singleton' used for databases.</li>
     <li>GoF 'Strategy' & 'Composite' used for Discounts.</li>
@@ -13,28 +16,8 @@
   </ul>
 </h6>
 
-<!--
-<h6>
 
-  <ul>
-    <li> Seminar 3 = build normal process + tests -> Seminar 4 build fail process. <li>
-    <li>Display -> Printer + View</li>
-    <li> Tests </li>
-    <li> Discounts + correct process </li>
-    <li>rename SalesHandler to PoS? </li>
-    <li>View.updateItemQuantity() same as getItem()</li>
-    <li>Discount Handling NOT REQUIRED for SEM3</li>
-  </ul>
-</h6>
--->
-<h2>Questions Seminar 4</h2>
-<h6>
-  <ul>
-    <li>Exception polymorphism?</li>
-    <li>Exceptions all in one folder? (do Excpetions have to be in same package folder?)<li>
-  </ul>
-</h6>
-<!-- <h3>Appropriate response regarding task2 feedback:</h3>
+<!--
 <ul>
   <li>1. DTO must be read only. SaleDTO has reference to the same itemList created by Sale. This violates MVC, since it means the controller can update itemList without going through the Sale Class.</li>
   <h6>

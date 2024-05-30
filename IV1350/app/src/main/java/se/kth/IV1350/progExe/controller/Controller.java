@@ -186,7 +186,7 @@ public class Controller {
      */
     private void updateSaleSystem() throws DatabaseException {
 
-        ReceiptDTO receiptDTO = salesHandler.getReceiptDTO();
+        ReceiptDTO receiptDTO = getReceiptDTO();
         PaymentDTO paymentDTO = receiptDTO.getReceiptPayment();
         SaleDTO saleDTO = receiptDTO.getReceiptSale();
 
@@ -232,5 +232,13 @@ public class Controller {
         catch(DatabaseException | SaleException dbe) {
             throw new OperationFailedException(dbe.getMessage(), dbe);
         }
+    }
+
+    /**
+     * Get method for retreiving saleshandlers current Receipt.
+     * @return ReceiptDTO.
+     */
+    public ReceiptDTO getReceiptDTO() {
+        return salesHandler.getReceiptDTO();
     }
 }

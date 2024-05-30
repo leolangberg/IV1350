@@ -1,18 +1,8 @@
 package se.kth.IV1350.progExe.model.discount;
 
-import se.kth.IV1350.progExe.integration.*;
-import se.kth.IV1350.progExe.model.DTO.*;
-import se.kth.IV1350.progExe.model.ENUM.PaymentType;
 import se.kth.IV1350.progExe.model.Exceptions.InvalidCallException;
-import se.kth.IV1350.progExe.model.Exceptions.TransactionFailedException;
-import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.BeforeClass;

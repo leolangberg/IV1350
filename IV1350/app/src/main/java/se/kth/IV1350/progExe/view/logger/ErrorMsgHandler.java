@@ -29,7 +29,6 @@ public class ErrorMsgHandler {
         logMsgBuilder.append(exception.getMessage());
         logFile.println(logMsgBuilder);
         //exception.printStackTrace();
-        System.out.println(exception.getMessage() + "\n");
     }
 
     private String createTime() {
