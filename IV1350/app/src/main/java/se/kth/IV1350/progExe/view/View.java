@@ -3,6 +3,7 @@ package se.kth.IV1350.progExe.view;
 import se.kth.IV1350.progExe.controller.Controller;
 import se.kth.IV1350.progExe.controller.OperationFailedException;
 import se.kth.IV1350.progExe.model.ENUM.PaymentType;
+import se.kth.IV1350.progExe.model.Exceptions.InvalidCallException;
 import se.kth.IV1350.progExe.view.logger.ErrorMsgHandler;
 import se.kth.IV1350.progExe.view.logger.StringHandler;
 
@@ -129,7 +130,7 @@ public class View {
 
         try{
             stringHandler.CustomerDiscountInfo(ctrl.getCustomerDiscount(customerID));
-        } catch(OperationFailedException ope) {
+        } catch(OperationFailedException | InvalidCallException ope) {
             errorMsgHandler.log(ope);
         }
     }

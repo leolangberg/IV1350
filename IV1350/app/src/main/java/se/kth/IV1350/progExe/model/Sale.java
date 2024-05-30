@@ -72,6 +72,12 @@ public class Sale {
     public void setSaleDiscount(double discountAmount) { this.totalDiscount = discountAmount; }
 
     /**
+     * Sets a new Sale VAT (Amount).
+     * @param VAT total amount of VAT.
+     */
+    public void setSaleVAT(double VAT) {this.totalVAT = VAT; }
+
+    /**
      * Retrieves the sale ID of this Sale.
      * 
      * @return The saleID of this Sale.

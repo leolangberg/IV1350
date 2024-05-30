@@ -53,29 +53,4 @@ public class Printer {
         System.out.println("------------ End receipt ------------");
         System.out.println();
     }
-
-
-    /**
-     * Prints the details of an update to the external inventory.
-     * 
-     * This method prints a message indicating that sale info has been sent to the external accounting system,
-     * and then prints the details of each item in the sale, including the item and the quantity,
-     * indicating that the external inventory system has been told to decrease the inventory quantity of each item.
-     * 
-     * @param saleDTO The SaleDTO whose details are to be printed.
-     */
-    public void printUpdateExternalInventory(SaleDTO saleDTO) {
-
-        System.out.println("Sent sale info to external accounting system.");
-
-        Map<ItemDTO, Integer> itemlist = saleDTO.getSaleItemList();
-        for(Map.Entry<ItemDTO, Integer> entry :  itemlist.entrySet())
-        {
-            ItemDTO itemDTO = entry.getKey();
-            Integer quantity = entry.getValue();
-            System.out.println("Told external inventory system to decrease inventory quantity of item: " + itemDTO + " by " + quantity + "units.");
-        }
-        System.out.println();
-        
-    }
 }

@@ -38,7 +38,7 @@ public class StringHandler {
      * @param itemDTO Item to be read.
      * @param quantity Quantity to be read.
      */
-    public void itemInfo(ItemDTO itemDTO, int quantity) {
+    public String itemInfo(ItemDTO itemDTO, int quantity) {
 
         String header = "Add " + quantity + " item with item id: " + itemDTO.getItemID() + "\n";
         String itemID = "Item ID: " + itemDTO.getItemID() + "\n";
@@ -49,6 +49,7 @@ public class StringHandler {
 
         String itemInfo = header + itemID + itemName + itemCost + itemVAT + itemDesc + "\n";
         log(itemInfo);
+        return itemInfo;
     }
 
     /**
@@ -57,20 +58,23 @@ public class StringHandler {
      * @param runningTotalCost ongoing Sale current cost.
      * @param runningTotalVAT ongoing Sale current VAT.
      */
-    public void saleInfo(double runningTotalCost, double runningTotalVAT) {
+    public String saleInfo(double runningTotalCost, double runningTotalVAT) {
 
         String cost = "Total cost (incl VAT): " + runningTotalCost + " SEK" + "\n";
         String VAT = "Total VAT: " + runningTotalVAT + " SEK" + "\n";
         String saleInfo = cost + VAT;
         log(saleInfo);
+        return saleInfo;
     }
 
     /**
      * Displays that a new instance of Sale has been created.
      * @param saleID id of new Sale.
      */
-    public void newSaleInfo(int saleID) {
-        log("------------ Begin Sale: " + saleID +  " ------------");
+    public String newSaleInfo(int saleID) {
+        String newSaleInfo = "------------ Begin Sale: " + saleID +  " ------------";
+        log(newSaleInfo);
+        return newSaleInfo;
     }
 
     /**
@@ -78,12 +82,13 @@ public class StringHandler {
      * 
      * @param saleDTO Sale to be read.
      */
-    public void endSaleInfo(SaleDTO saleDTO) {
+    public String endSaleInfo(SaleDTO saleDTO) {
 
         String header = "End Sale:\n";
         String discountInfo = "Total Amount of discounts: " + saleDTO.getSaleDiscount() + " SEK";
         log(header + discountInfo);
-        saleInfo(saleDTO.getSalePrice(), saleDTO.getSaleVAT());
+        String saleInfo = saleInfo(saleDTO.getSalePrice(), saleDTO.getSaleVAT());
+        return header + discountInfo + saleInfo;
     }
 
     /**
@@ -91,38 +96,25 @@ public class StringHandler {
      * 
      * @param paymentDTO payment to be read.
      */
-    public void paymentSuccess(PaymentDTO paymentDTO) {
+    public String paymentSuccess(PaymentDTO paymentDTO) {
 
         String transaction = "Payment Transaction Successful.\n";
         String change = "Change to give to customer: " + paymentDTO.getPaymentChange() + " SEK" + "\n";
         log(transaction + change);
-    }
-
-     /**
-     * Translates unsuccessful payment into String information.
-     * 
-     * @param paymentDTO payment to be read.
-     */
-    public void paymentFailure(PaymentDTO paymentDTO) {
-
-        String transaction = "Payment Failure." + "\n";
-        String cost = "Total cost (incl VAT): " + paymentDTO.getPaymentPrice() + " SEK" + "\n";
-        String amountpaid = "Amount Paid: " + paymentDTO.getPaymentPaid() + " SEK" + "\n";
-        log(transaction + cost + amountpaid);
+        return transaction + change;
     }
 
     /**
      * Shows Customer discount Applied.
      * @param discount discount found for Customer ID.
+     * @throws InvalidCallException if call to retrieve discountID is invalid.
      */
-    public void CustomerDiscountInfo(Discount discount) {
-        
+    public String CustomerDiscountInfo(Discount discount) throws InvalidCallException {
         try {
             String disc = "Discount for customerID: " + discount.getDiscountID() + " is valid:";
             String discPercentage =  " (" + (int) (discount.getDiscountValue() * 100) + "%)\n" ;
             log(disc + discPercentage);
-        } catch (InvalidCallException e) {
-            log(e.getMessage());
-        }
+            return disc + discPercentage;
+        } finally {}
     }
 }
