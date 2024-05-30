@@ -8,7 +8,7 @@
   <ul>
     <li>Higher Grade Task 1: Inheritance via implementation of GoF 'Template' pattern.</li>
     <li>Higher Grade Task 2: Inheritance vs Composition, comparison code stored inside program.</li>
-    <li>Higher Grade Task 3: Testing Output, additinally written tests for printer, view & main.</li>
+    <li>Higher Grade Task 3: Testing Output, (StringHandler, TotalRevenueConsoleOutput & Printer)</li>
     <li>Update Tests to work with Exceptions.</li>
     <li>GoF 'Singleton' used for databases.</li>
     <li>GoF 'Strategy' & 'Composite' used for Discounts.</li>
