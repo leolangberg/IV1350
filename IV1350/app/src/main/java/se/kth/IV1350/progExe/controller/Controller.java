@@ -4,7 +4,7 @@ import se.kth.IV1350.progExe.integration.CashRegister;
 import se.kth.IV1350.progExe.integration.Printer;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
 import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 import se.kth.IV1350.progExe.model.RevenueObserver;
@@ -150,7 +150,6 @@ public class Controller {
         getSaleDiscount(saleDTO);
         SaleDTO updatedSaleDTO = salesHandler.getSaleDTO();
         return updatedSaleDTO;
-
     }
 
     /**

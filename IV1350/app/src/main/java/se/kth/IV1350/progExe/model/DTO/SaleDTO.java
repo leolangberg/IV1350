@@ -35,7 +35,7 @@ public class SaleDTO {
             double totalDiscount) {
 
         this.saleID = saleID;
-        this.itemList = Collections.unmodifiableMap(itemList);
+        this.itemList = Collections.unmodifiableMap(new HashMap<>(itemList));
         this.totalPrice = totalPrice;
         this.totalVAT = totalVAT;
         this.totalDiscount = totalDiscount;
@@ -53,7 +53,7 @@ public class SaleDTO {
     public SaleDTO(Sale sale) {
 
         this.saleID = sale.getSaleID();
-        this.itemList = Collections.unmodifiableMap(sale.getSaleItemList());
+        this.itemList = Collections.unmodifiableMap(new HashMap<>(sale.getSaleItemList()));
         this.totalPrice = sale.getSalePrice();
         this.totalVAT = sale.getSaleVAT();
         this.totalDiscount = sale.getSaleDiscount();

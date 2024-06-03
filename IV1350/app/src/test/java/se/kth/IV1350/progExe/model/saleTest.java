@@ -5,6 +5,8 @@ import se.kth.IV1350.progExe.model.DTO.*;
 import se.kth.IV1350.progExe.integration.external.*;
 import se.kth.IV1350.progExe.integration.external.Exceptions.DatabaseException;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import java.util.Map;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -69,5 +71,38 @@ public class saleTest {
         assertEquals(quantity, sale.getSaleItemList().get(itemDTO).intValue());
         assertEquals(itemDTO.getItemPrice() * quantity, sale.getSalePrice(), 0.001);
         assertEquals((itemDTO.getItemVAT() * itemDTO.getItemPrice()) * quantity, sale.getSaleVAT(), 0.001);
+    }
+
+    @Test
+    public void unchangableItemListTest() {
+        ItemDTO itemDTO = new ItemDTO(20, "popcorn", "cheddar", 10.00, 0.12);
+        int quantity = 1;
+        sale.addItem(itemDTO, quantity);
+
+        SaleDTO saleDTO = new SaleDTO(sale);
+        sale.addItem(itemDTO, quantity);
+
+        int saleDTOlistlength = 0;
+        int salelistlength = 0;
+        for (Map.Entry<ItemDTO, Integer> entry : saleDTO.getSaleItemList().entrySet()) {
+            System.out.println("saleDTO" + "key: " + entry.getKey() + "  val: " + entry.getValue());
+            saleDTOlistlength += (entry.getValue());
+        }
+        for(Map.Entry<ItemDTO, Integer> entry : sale.getSaleItemList().entrySet()) {
+            System.out.println("sale: " + "key: " + entry.getKey() + "  val: " + entry.getValue());
+            salelistlength += (entry.getValue());
+        }
+        assertNotEquals(salelistlength, saleDTOlistlength);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void addToUnchangableItemListTest() {
+        ItemDTO itemDTO = new ItemDTO(20, "popcorn", "cheddar", 10.00, 0.12);
+        int quantity = 1;
+        sale.addItem(itemDTO, quantity);
+
+        SaleDTO saleDTO = new SaleDTO(sale);
+        saleDTO.getSaleItemList().put(itemDTO, quantity);
+
     }
 }
